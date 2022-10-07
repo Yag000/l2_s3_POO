@@ -6,14 +6,14 @@ public class Tour extends Piece {
 
     @Override
     public boolean estValide(Deplacement d, Plateau p) {
-        return super.estValide(d, p) && 
-            (d.typeDeplacement() == 'h' || d.typeDeplacement() == 'v' ) && 
-            p.intermVides(d);
+        return super.estValide(d, p) &&
+                (d.typeDeplacement() == 'h' || d.typeDeplacement() == 'v') &&
+                p.intermVides(d);
     }
 
     @Override
-    public boolean estRoi(){
+    public boolean estRoi() {
         return false;
     }
-    
+
 }

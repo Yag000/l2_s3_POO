@@ -10,12 +10,8 @@ public class Roi extends Piece {
     }
 
     @Override
-    public boolean estRoi(){
+    public boolean estRoi() {
         return true;
     }
 
-    
-
-    
-    
 }

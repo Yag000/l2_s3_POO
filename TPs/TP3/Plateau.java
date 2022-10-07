@@ -60,7 +60,6 @@ public class Plateau {
             plateau[y][x].remplirPiece(p);
     }
 
-
     /**
      * Il vérifie si le chemin entre le début et la fin d'un mouvement est vide
      * 
@@ -68,7 +67,7 @@ public class Plateau {
      * @return La méthode renvoie une valeur booléenne.
      */
     public boolean intermVides(Deplacement d) {
-        //TODO : Solve nonFordward movements
+        // TODO : Solve nonFordward movements
         switch (d.typeDeplacement()) {
             case 'h':
                 for (int i = d.getX0(); i <= d.getX1(); i++)
@@ -82,8 +81,9 @@ public class Plateau {
                 return true;
             case 'd':
                 for (int i = 0; i < Math.abs(d.getX0() - d.getX1()); i++) {
-                    if (!plateau[d.getX0() - d.getX1() < 0 ? d.getX0() + i : d.getX0() - i][d.getY0() - d.getY1() < 0?
-                     d.getY0() + i: d.getY0() - i].estVide()) {
+                    if (!plateau[d.getX0() - d.getX1() < 0 ? d.getX0() + i : d.getX0() - i][d.getY0() - d.getY1() < 0
+                            ? d.getY0() + i
+                            : d.getY0() - i].estVide()) {
                         return false;
                     }
                 }
@@ -94,13 +94,12 @@ public class Plateau {
         }
     }
 
-
     /**
      * Il déplace une pièce d'une case à une autre
      * 
      * @param d le geste à faire
      */
-    public Piece deplacer(Deplacement d){
+    public Piece deplacer(Deplacement d) {
         if (this.plateau[d.getX0()][d.getY0()].getPiece().estValide(d, this)) {
             Piece lost = this.plateau[d.getX1()][d.getY1()].getPiece();
             this.videCase(d.getX1(), d.getY1());
@@ -110,7 +109,6 @@ public class Plateau {
         }
         return null;
     }
-    
 
     /**
      * Il affiche le tableau
@@ -123,7 +121,6 @@ public class Plateau {
             System.out.println();
         }
     }
-
 
     public int getLongeur() {
         return longeur;

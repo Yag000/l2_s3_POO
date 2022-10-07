@@ -2,13 +2,10 @@ public class Case {
     private boolean couleur;
     private Piece piece;
 
-
     public Case(boolean couleur, Piece piece) {
         this.couleur = couleur;
         this.piece = piece;
     }
-
-
 
     public Case(boolean couleur) {
         this.couleur = couleur;
@@ -18,7 +15,7 @@ public class Case {
         return piece;
     }
 
-    public boolean estVide(){
+    public boolean estVide() {
         return this.piece == null;
     }
 
@@ -26,16 +23,14 @@ public class Case {
         this.piece = piece;
     }
 
-    public void enleverPiece(){
+    public void enleverPiece() {
         this.piece = null;
     }
 
     public String toString() {
-        if (this.piece == null) return this.couleur ? "." : "#";
-        return this.piece.toString().substring(0,1);
+        if (this.piece == null)
+            return this.couleur ? "." : "#";
+        return this.piece.toString().substring(0, 1);
     }
 
-
-    
-    
 }
