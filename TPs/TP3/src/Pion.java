@@ -21,13 +21,18 @@ public class Pion extends Piece {
         if (!d.movesForward(this.couleur))
             return false;
 
+        if (!p.getCase(d.getX1(), d.getY1()).estVide())
+            return false;
+
         if (d.distY() == 1 && d.distX() == 0)
             return true;
 
+        System.out.println(p.intermVides(d));
+
         if (d.distY() == 2 && d.distX() == 0 &&
-                this.couleur ? d.getY0() == p.getLongeur() - 2
-                        : d.getY0() == 1 &&
-                                p.intermVides(d)) {
+                (this.couleur ? d.getY0() == p.getLongeur() - 2
+                        : d.getY0() == 1)
+                && p.intermVides(d)) {
             return true;
         }
 

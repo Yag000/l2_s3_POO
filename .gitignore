@@ -16,6 +16,7 @@
 *.nar
 *.ear
 *.zip
+*.tar
 *.tar.gz
 *.rar
 
@@ -24,4 +25,4 @@ hs_err_pid*
 
 # Prettier
 *.prettierrc
-*.vscode/settings.json
+.vscode/

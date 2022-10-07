@@ -10,9 +10,9 @@ public class Deplacement {
 
     public Deplacement(String start, String end, int longeur) {
         this.x0 = start.charAt(0) - 'a';
-        this.y0 = longeur - start.charAt(1);
+        this.y0 = longeur - Character.getNumericValue(start.charAt(1));
         this.x1 = end.charAt(0) - 'a';
-        this.y1 = longeur - end.charAt(1);
+        this.y1 = longeur - Character.getNumericValue(end.charAt(1));
     }
 
     /**
@@ -64,9 +64,9 @@ public class Deplacement {
     public int dist() {
         switch (this.typeDeplacement()) {
             case 'v':
-                return distX();
-            case 'h':
                 return distY();
+            case 'h':
+                return distX();
             case 'd':
                 return distY();
             default:
@@ -76,8 +76,8 @@ public class Deplacement {
 
     public boolean movesForward(boolean isWhite) {
         if (isWhite)
-            return y1 > y0;
-        return y1 < y0;
+            return y1 < y0;
+        return y1 > y0;
     }
 
     @Override
