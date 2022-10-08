@@ -37,7 +37,8 @@ public class Deplacement {
     }
 
     /**
-     * Il renvoie un caractère qui représente le type de mouvement effectué par la
+     * Cette fonction renvoie un caractère qui représente le type de mouvement
+     * effectué par la
      * pièce
      * 
      * @return Le type de mouvement de la pièce.
