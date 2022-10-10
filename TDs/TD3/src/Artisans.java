@@ -8,5 +8,5 @@ public class Artisans extends Roturier {
     public String toString() {
         return super.toString() + "/artisans.";
     }
-    
+
 }

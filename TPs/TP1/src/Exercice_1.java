@@ -21,6 +21,6 @@ public class Exercice_1 {
          * 
          */
 
-         System.out.println(args.length);
+        System.out.println(args.length);
     }
 }

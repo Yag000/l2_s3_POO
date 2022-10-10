@@ -3,5 +3,4 @@ public class Joeur {
     private Jeton[] main = new Jeton[7];
     private int score;
 
-
 }

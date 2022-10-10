@@ -1,16 +1,15 @@
-public class A{
+public class A {
     public static int a = 3;
     public int b;
 
-    public A(int c){
+    public A(int c) {
         this.b = c;
     }
 
-    public void g(){
+    public void g() {
         a++;
         b++;
     }
-
 
     /*
      * 

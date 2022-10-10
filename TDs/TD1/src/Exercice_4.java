@@ -1,5 +1,5 @@
 public class Exercice_4 {
-    
+
     public static void main(String[] args) {
         /*
          * Question 1:
@@ -14,8 +14,6 @@ public class Exercice_4 {
          * 
          * 
          */
-
-        
 
     }
 }

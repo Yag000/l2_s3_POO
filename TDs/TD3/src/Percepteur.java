@@ -12,14 +12,12 @@ public class Percepteur extends Personne {
         return super.toString() + "Je suis un percepteur";
     }
 
-    public void impot(){
-        for (Personne p: societe.getSociete()) 
-            if (p instanceof Roturier){
-                if (p.donnerArgent(1)) 
+    public void impot() {
+        for (Personne p : societe.getSociete())
+            if (p instanceof Roturier) {
+                if (p.donnerArgent(1))
                     this.rerecevoirArgent(1);
             }
     }
 
-
-    
 }

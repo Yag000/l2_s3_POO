@@ -6,7 +6,7 @@ public class Paysan extends Roturier {
 
     @Override
     public String toString() {
-        return super.toString()+ "/paysan.";
+        return super.toString() + "/paysan.";
     }
-    
+
 }

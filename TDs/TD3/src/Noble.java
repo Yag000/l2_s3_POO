@@ -1,7 +1,6 @@
-public class Noble extends Personne{
+public class Noble extends Personne {
 
     private int maxDette, dette;
-
 
     public Noble(String name) {
         super(name);
@@ -17,6 +16,4 @@ public class Noble extends Personne{
         return super.donnerArgent(montant - (maxDette - dette));
     }
 
-    
-    
 }

@@ -8,5 +8,5 @@ public class Pretre extends Personne {
     public String toString() {
         return super.toString() + "Je suis un pretre";
     }
-    
+
 }

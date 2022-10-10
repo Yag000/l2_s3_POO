@@ -44,7 +44,7 @@ public class Echecs {
      * @param p      le tableau
      * @return la dernière piece perdue
      */
-    public String jouerTour(Deplacement d, boolean joueur, Plateau p) {
+    public String jouerTour(Deplacement d, Plateau p) {
         return p.deplacer(d);
     }
 
@@ -59,13 +59,13 @@ public class Echecs {
         String lastLost = "";
 
         while (lastLost == null || !lastLost.equals("roi")) {
-            Deplacement d = Communication.demanderDeplacement(joueur, 8);
+            Deplacement d = Communication.demanderDeplacement(joueur, p.getLongeur());
 
             while (p.getCase(d.getX0(), d.getY0()).estVide() ||
                     !p.getCase(d.getX0(), d.getY0()).getPiece().estValide(d, p) ||
                     !p.getCase(d.getX0(), d.getY0()).getPiece().getCouleur() == joueur) {
                 System.out.println("Mouvement impossible");
-                d = Communication.demanderDeplacement(joueur, 8);
+                d = Communication.demanderDeplacement(joueur, p.getLongeur());
 
             }
             lastLost = jouerTour(d, joueur, p).toLowerCase();
