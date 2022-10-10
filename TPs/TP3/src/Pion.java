@@ -21,25 +21,26 @@ public class Pion extends Piece {
         if (!d.movesForward(this.couleur))
             return false;
 
-        if (!p.getCase(d.getX1(), d.getY1()).estVide())
-            return false;
-
-        if (d.distY() == 1 && d.distX() == 0)
-            return true;
-
-        System.out.println(p.intermVides(d));
-
-        if (d.distY() == 2 && d.distX() == 0 &&
-                (this.couleur ? d.getY0() == p.getLongeur() - 2
-                        : d.getY0() == 1)
-                && p.intermVides(d)) {
-            return true;
+        if (!p.getCase(d.getX1(), d.getY1()).estVide()) {
+            if (d.typeDeplacement() == 'd' &&
+                    d.dist() == 1 &&
+                    p.getCase(d.getX1(), d.getY1()).getPiece().couleur != this.couleur) {
+                return true;
+            } else
+                return false;
         }
 
-        if (d.typeDeplacement() == 'd' && d.dist() == 1 &&
-                !p.getCase(d.getX1(), d.getY1()).estVide() &&
-                p.getCase(d.getX1(), d.getY1()).getPiece().couleur != this.couleur) {
-            return true;
+        if (d.typeDeplacement() == 'v') {
+
+            if (d.distY() == 1)
+                return true;
+
+            if (d.distY() == 2 &&
+                    (this.couleur ? d.getY0() == p.getLongeur() - 2 : d.getY0() == 1) &&
+                    p.intermVides(d)) {
+                return true;
+            }
+
         }
 
         return false;
