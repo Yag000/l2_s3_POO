@@ -8,7 +8,7 @@ public class BandeDessinee extends Livre {
 
     @Override
     public String toString() {
-        return super.toString() + "BandeDessinee dessinateur= " + dessinateur;
+        return super.toString() + ", BandeDessinee dessinateur= " + dessinateur;
     }
 
 }

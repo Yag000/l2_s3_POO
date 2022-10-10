@@ -11,7 +11,7 @@ public class Livre extends Media {
 
     @Override
     public String toString() {
-        return super.toString() + "Livre auteur= " + auteur + ", ngPages= " + ngPages;
+        return super.toString() + ", Livre auteur= " + auteur + ", ngPages= " + ngPages;
     }
 
 }

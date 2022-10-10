@@ -28,17 +28,4 @@ public class Media {
         return "id=" + id + ", titre=" + titre;
     }
 
-    public static void main(String[] args) {
-        Media m = new Media("ta mere");
-        Media m2 = new Media("ta mere");
-        Media m3 = new Media("ta mere");
-        Media m4 = new Media("ta mere");
-
-        System.out.println(m.getNumero());
-        System.out.println(m2.getNumero());
-        System.out.println(m3.getNumero());
-        System.out.println(m4.getNumero());
-
-    }
-
 }
