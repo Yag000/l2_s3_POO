@@ -11,4 +11,8 @@ public class BandeDessinee extends Livre {
         return super.toString() + ", BandeDessinee dessinateur= " + dessinateur;
     }
 
+    @Override
+    public int ordreMedia() {
+        return 5;
+    }
 }

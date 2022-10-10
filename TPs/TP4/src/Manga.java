@@ -11,4 +11,9 @@ public class Manga extends BandeDessinee {
         return super.toString() + ", Manga sensInverse=" + sensInverse;
     }
 
+    @Override
+    public int ordreMedia() {
+        return 6;
+    }
+
 }

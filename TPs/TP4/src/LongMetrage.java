@@ -11,4 +11,9 @@ public class LongMetrage extends Video {
         return super.toString() + ", LongMetrage realisateur= " + realisateur;
     }
 
+    @Override
+    public int ordreMedia() {
+        return 3;
+    }
+
 }

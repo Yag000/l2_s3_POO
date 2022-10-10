@@ -12,4 +12,9 @@ public class Video extends Media {
         return super.toString() + ", Video durée= " + duree;
     }
 
+    @Override
+    public int ordreMedia() {
+        return 2;
+    }
+
 }

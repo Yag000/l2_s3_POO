@@ -13,4 +13,8 @@ public class Image extends Media {
         return super.toString() + ", Image largeur= " + largeur + ", hauteur= " + hauteur;
     }
 
+    @Override
+    public int ordreMedia() {
+        return 1;
+    }
 }
