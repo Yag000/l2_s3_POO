@@ -37,6 +37,7 @@ public class Pion extends Piece {
         }
 
         if (d.typeDeplacement() == 'd' && d.dist() == 1 &&
+                !p.getCase(d.getX1(), d.getY1()).estVide() &&
                 p.getCase(d.getX1(), d.getY1()).getPiece().couleur != this.couleur) {
             return true;
         }
