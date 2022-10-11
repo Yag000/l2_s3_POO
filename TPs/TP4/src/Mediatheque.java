@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Mediatheque {
     private ArrayList<Media> baseDeDonnees;
@@ -34,6 +33,12 @@ public class Mediatheque {
             if (p.estVrai(m))
                 res.add(m);
         return res;
+    }
+
+    public static void printArrayListMedia(ArrayList<Media> list) {
+        for (Media m : list) {
+            System.out.println(m);
+        }
     }
 
     @Override
@@ -86,6 +91,21 @@ public class Mediatheque {
         System.out.println();
 
         m.tousLesLivres();
+
+        System.out.println();
+        System.out.println("-----------------------------");
+        System.out.println();
+
+        Et p1 = new Et(new EstUnLivre(), new TitreCommencePar('S'));
+        Et p2 = new Et(new EstUnLivre(), new TitreCommencePar('T'));
+
+        Mediatheque.printArrayListMedia(m.recherche(p1));
+
+        System.out.println();
+        System.out.println("-----------------------------");
+        System.out.println();
+
+        Mediatheque.printArrayListMedia(m.recherche(p2));
 
     }
 
