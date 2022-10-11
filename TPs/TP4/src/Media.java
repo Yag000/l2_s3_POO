@@ -25,7 +25,7 @@ public class Media {
      * public boolean plusPetit(Media doc) {
      * return id < doc.id;
      * }
-     * 
+     *
      * 
      * public boolean plusPetit(Livre doc) {
      * if (this instanceof Livre)

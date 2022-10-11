@@ -13,13 +13,14 @@ public class Livre extends Media {
     public String toString() {
         return super.toString() + ", Livre auteur= " + auteur + ", ngPages= " + ngPages;
     }
-
-    @Override
-    public boolean plusPetit(Media doc) {
-        if (doc instanceof Livre)
-            return super.plusPetit(doc);
-        return false;
-    }
+    /*
+     * @Override
+     * public boolean plusPetit(Media doc) {
+     * if (doc instanceof Livre)
+     * return super.plusPetit(doc);
+     * return false;
+     * }
+     */
 
     @Override
     public int ordreMedia() {

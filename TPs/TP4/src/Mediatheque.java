@@ -28,6 +28,14 @@ public class Mediatheque {
                 System.out.println(m);
     }
 
+    public ArrayList<Media> recherche(Predicat p) {
+        ArrayList<Media> res = new ArrayList<Media>();
+        for (Media m : baseDeDonnees)
+            if (p.estVrai(m))
+                res.add(m);
+        return res;
+    }
+
     @Override
     public String toString() {
         String s = "";
