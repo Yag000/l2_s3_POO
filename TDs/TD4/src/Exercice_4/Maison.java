@@ -2,7 +2,7 @@ package Exercice_4;
 
 public class Maison extends Batiment {
 
-    private double TauxB = 1.5;
+    private static double TauxB = 1.5;
 
     private double surfaceJardin;
     private int nbPieces;

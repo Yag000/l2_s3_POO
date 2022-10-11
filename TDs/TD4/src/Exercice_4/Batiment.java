@@ -2,7 +2,7 @@ package Exercice_4;
 
 public class Batiment {
 
-    private double TauxA = 5.6;
+    private static double TauxA = 5.6;
 
     private String adresse;
     private double surfaceHabitable;
