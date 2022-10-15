@@ -1,5 +1,3 @@
-import javax.swing.UIDefaults.ProxyLazyValue;
-
 public class Media {
     private final String titre;
     private static int numeroElements = 0;
