@@ -19,6 +19,8 @@ public class ParagrapheJoli extends Paragraphe {
             if (lastLine.len() + c.len() <= maxLengthPage) {
                 lastLine.addChaine(c);
             } else {
+                System.out.println(maxLengthPage - lastLine.len());
+                lastLine.justifier(Math.max(0, maxLengthPage - lastLine.len()));
                 lignes.add(new Ligne(c));
             }
         }

@@ -28,6 +28,40 @@ public class Ligne extends ChaineCar {
         elements.add(c);
     }
 
+    public int countSpaces() {
+        int nb = 0;
+        for (ChaineCar c : elements)
+            if (c instanceof Espace)
+                if (elements.getLast() != (ChaineCar) c)
+                    nb++;
+
+        return nb;
+    }
+
+    public void justifier(int longeur) {
+        if (elements == null)
+            return;
+
+        int numberOfSpaces = countSpaces();
+
+        if (numberOfSpaces == 0) {
+            addChaine(new Espace(longeur));
+            return;
+        }
+
+        int minNumber = longeur / numberOfSpaces;
+        int extra = longeur % numberOfSpaces;
+
+        int counter = 0;
+        for (ChaineCar c : elements) {
+            if (c instanceof Espace espace) {
+                espace.addSpaces(counter < extra ? minNumber + 1 : minNumber);
+                counter++;
+            }
+        }
+
+    }
+
     @Override
     public String toString() {
         String s = "";

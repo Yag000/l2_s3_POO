@@ -50,7 +50,7 @@ public class Formateur {
 
     public void print() {
         for (Paragraphe p : texte) {
-            System.out.println(p);
+            System.out.println(p + "\n");
         }
     }
 
