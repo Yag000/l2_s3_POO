@@ -39,6 +39,8 @@ public class Ligne extends ChaineCar {
     }
 
     public void justifier(int longeur) {
+        if (longeur == 0)
+            return;
         if (elements == null)
             return;
 
