@@ -35,7 +35,10 @@ public class FormateurJoli extends Formateur {
     }
 
     private ParagrapheJoli readParagraphe() {
+        Espace tab = new Espace();
+        tab.setSize(4);
         ParagrapheJoli paragraphe = new ParagrapheJoli(maxLengthPage);
+        paragraphe.addChaine(tab);
         String para = sc.next(); /* on extrait le paragraphe suivant */
         Scanner s = new Scanner(para); /* on initialise un nouveau scanner sur ce paragraphe */
         /*
@@ -46,6 +49,7 @@ public class FormateurJoli extends Formateur {
             paragraphe.addChaine(new Mot(s.next()));
             paragraphe.addChaine(new Espace());
         }
+        s.close();
         return paragraphe;
     }
 

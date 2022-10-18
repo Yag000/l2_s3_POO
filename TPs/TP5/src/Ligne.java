@@ -4,9 +4,8 @@ public class Ligne extends ChaineCar {
 
     LinkedList<ChaineCar> elements = new LinkedList<ChaineCar>();
 
-    public Ligne(LinkedList<ChaineCar> elements) {
-        if (elements.size() != 0)
-            this.elements = elements;
+    public Ligne(ChaineCar c) {
+        elements.add(c);
     }
 
     public Ligne() {

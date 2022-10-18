@@ -46,7 +46,7 @@ public class Paragraphe extends ChaineCar {
             for (ChaineCar c : lignes)
                 s += c;
         }
-        return s + "\n";
+        return s;
     }
 
 }

@@ -44,6 +44,7 @@ public class Formateur {
             paragraphe.addChaine(new Mot(s.next()));
             paragraphe.addChaine(new Espace());
         }
+        s.close();
         return paragraphe;
     }
 
