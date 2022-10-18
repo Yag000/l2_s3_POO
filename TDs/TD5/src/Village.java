@@ -1,6 +1,6 @@
 import java.util.LinkedList;
 
-public class Village {
+public class Village implements Cloneable {
 
     LinkedList<Roturier> villageois;
 
@@ -19,6 +19,21 @@ public class Village {
             newvillageois.add((Roturier) r.clone());
 
         return new Village(newvillageois);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj))
+            return true;
+        int len = ((Village) obj).villageois.size();
+        if (len != this.villageois.size())
+            return false;
+        for (int i = 0; i < len; i++)
+            if (!((Village) obj).villageois.get(i).equals(this.villageois.get(i)))
+                return false;
+
+        return true;
+
     }
 
 }
