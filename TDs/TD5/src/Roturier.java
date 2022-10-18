@@ -4,4 +4,13 @@ public class Roturier extends Personne {
         super(nom, argent, pdv);
     }
 
+    public Roturier(Personne p) {
+        super(p);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return (Roturier) super.clone();
+    }
+
 }

@@ -5,6 +5,11 @@ public class Archer extends Roturier {
     }
 
     @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return (Archer) super.clone();
+    }
+
+    @Override
     public void attaque(Personne p) {
         p.tuer();
     }

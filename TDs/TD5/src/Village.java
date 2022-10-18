@@ -12,4 +12,13 @@ public class Village {
         return villageois;
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        var newvillageois = new LinkedList<Roturier>();
+        for (Roturier r : villageois)
+            newvillageois.add((Roturier) r.clone());
+
+        return new Village(newvillageois);
+    }
+
 }

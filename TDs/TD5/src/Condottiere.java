@@ -39,6 +39,6 @@ public class Condottiere extends Personne {
         }
     }
 
-    // TODO: eveywhere test for null and exeptions
+    // TODO: everywhere test for null and exceptions
 
 }

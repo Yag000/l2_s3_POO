@@ -1,4 +1,4 @@
-public class Personne {
+public class Personne implements Cloneable {
 
     protected String nom;
     protected int argent;
@@ -8,6 +8,10 @@ public class Personne {
         this.nom = nom;
         this.argent = argent;
         this.pdv = pdv;
+    }
+
+    public Personne(Personne p) {
+        this(p.nom, p.argent, p.pdv);
     }
 
     public int getArgent() {
@@ -46,6 +50,11 @@ public class Personne {
 
     public void attaque(Personne p, int degats) {
         p.blessure(degats);
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Personne(nom, argent, pdv);
     }
 
     public String toString() {
