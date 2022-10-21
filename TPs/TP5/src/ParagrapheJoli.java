@@ -19,10 +19,11 @@ public class ParagrapheJoli extends Paragraphe {
             if (lastLine.len() + c.len() <= maxLengthPage) {
                 lastLine.addChaine(c);
             } else {
-                if (c instanceof Espace)
-                    return;
+                lastLine.removeLastSpace();
                 lastLine.justifier(Math.max(0, maxLengthPage - lastLine.len()));
-                lignes.add(new Ligne(c));
+                lignes.add(new Ligne());
+                if (!(c instanceof Espace))
+                    lignes.getLast().addChaine(c);
             }
         }
     }

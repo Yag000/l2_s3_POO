@@ -21,13 +21,13 @@ public class Formateur {
         texte = new LinkedList<Paragraphe>();
     }
 
-    // TODO: solve space at the end f document
     // TODO: solve useless lines.
 
     public void read() {
         sc.useDelimiter("\n\\s*\n");
         while (sc.hasNext()) { /* tant qu’il reste un paragraphe `a lire */
             Paragraphe p = readParagraphe();
+            // if (!p.isOnlySpaces())
             texte.add(p);
         }
     }
@@ -42,7 +42,8 @@ public class Formateur {
          */
         while (s.hasNext()) {
             paragraphe.addChaine(new Mot(s.next()));
-            paragraphe.addChaine(new Espace());
+            if (s.hasNext())
+                paragraphe.addChaine(new Espace());
         }
         s.close();
         return paragraphe;

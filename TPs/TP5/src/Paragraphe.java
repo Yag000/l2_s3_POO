@@ -1,5 +1,7 @@
 import java.util.LinkedList;
 
+import javax.lang.model.element.Element;
+
 public class Paragraphe extends ChaineCar {
 
     LinkedList<Ligne> lignes = new LinkedList<Ligne>();
@@ -47,6 +49,13 @@ public class Paragraphe extends ChaineCar {
                 s += c;
         }
         return s;
+    }
+
+    public boolean isOnlySpaces() {
+        for (Ligne l : lignes)
+            if (!l.isOnlySpaces())
+                return false;
+        return true;
     }
 
 }

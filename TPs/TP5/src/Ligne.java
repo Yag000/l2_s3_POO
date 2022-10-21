@@ -38,6 +38,11 @@ public class Ligne extends ChaineCar {
         return nb;
     }
 
+    public void removeLastSpace() {
+        if (elements.size() > 0 && elements.getLast() instanceof Espace)
+            elements.removeLast();
+    }
+
     public void justifier(int longeur) {
         if (longeur == 0)
             return;
@@ -73,6 +78,13 @@ public class Ligne extends ChaineCar {
                 s += c;
         }
         return s;
+    }
+
+    public boolean isOnlySpaces() {
+        for (ChaineCar c : elements)
+            if (c instanceof Mot)
+                return false;
+        return true;
     }
 
 }
