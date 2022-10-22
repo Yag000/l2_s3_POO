@@ -1,3 +1,7 @@
+/**
+ * Casse qui représente une chaîne d'espaces
+ */
+
 public class Espace extends ChaineCar {
 
     private int size = 1;
@@ -9,25 +13,25 @@ public class Espace extends ChaineCar {
     public Espace() {
     }
 
-    public int len() {
-        return size;
-    }
-
-    public void addOneSpace() {
-        size++;
-    }
-
+    /**
+     * Ajoute n espaces à la taille de l'objet.
+     * 
+     * @param n Le nombre d'espaces à ajouter.
+     */
     public void addSpaces(int n) {
         size += n;
-    }
-
-    @Override
-    public String toString() {
-        return " ".repeat(size);
     }
 
     public void setSize(int size) {
         this.size = size;
     }
 
+    public int len() {
+        return size;
+    }
+
+    @Override
+    public String toString() {
+        return " ".repeat(size);
+    }
 }

@@ -1,7 +1,9 @@
+
 import java.util.LinkedList;
 
-import javax.lang.model.element.Element;
-
+/**
+ * Classe qui représente un paragraphe
+ */
 public class Paragraphe extends ChaineCar {
 
     LinkedList<Ligne> lignes = new LinkedList<Ligne>();
@@ -23,6 +25,9 @@ public class Paragraphe extends ChaineCar {
         return length;
     }
 
+    /**
+     * @return renvoie true si le paragraphe est vide, false sinon.
+     */
     public boolean isEmpty() {
         if (lignes.size() == 0)
             return true;
@@ -33,6 +38,11 @@ public class Paragraphe extends ChaineCar {
         return true;
     }
 
+    /**
+     * Ajoute une chaîne de caractères à la dernière ligne du texte
+     * 
+     * @param c Chaîne à ajouter au texte.
+     */
     public void addChaine(ChaineCar c) {
         if (lignes.size() == 0)
             lignes.add(new Ligne());
@@ -50,12 +60,4 @@ public class Paragraphe extends ChaineCar {
         }
         return s;
     }
-
-    public boolean isOnlySpaces() {
-        for (Ligne l : lignes)
-            if (!l.isOnlySpaces())
-                return false;
-        return true;
-    }
-
 }

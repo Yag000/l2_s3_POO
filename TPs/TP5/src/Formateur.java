@@ -2,6 +2,9 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.File;
 
+/**
+ * Formateur de texte basique
+ */
 public class Formateur {
 
     protected Scanner sc;
@@ -21,34 +24,42 @@ public class Formateur {
         texte = new LinkedList<Paragraphe>();
     }
 
-    // TODO: solve useless lines.
-
+    /**
+     * La fonction lit un fichier texte et le stocke dans une liste de paragraphes
+     */
     public void read() {
         sc.useDelimiter("\n\\s*\n");
-        while (sc.hasNext()) { /* tant qu’il reste un paragraphe `a lire */
+        while (sc.hasNext()) { // Boucle sur les paragraphes
             Paragraphe p = readParagraphe();
-            // if (!p.isOnlySpaces())
             texte.add(p);
         }
     }
 
+    /**
+     * La fonction lit un paragraphe du flux d'entrée et le renvoie sous la forme
+     * d'un objet Paragraphe
+     * 
+     * @return Le paragraphe lu.
+     */
+
     private Paragraphe readParagraphe() {
         Paragraphe paragraphe = new Paragraphe();
-        String para = sc.next(); /* on extrait le paragraphe suivant */
-        Scanner s = new Scanner(para); /* on initialise un nouveau scanner sur ce paragraphe */
-        /*
-         * s.useDelimiter("\\s+"); pas nécessaire puisque \\s+ est le délimiteur par
-         * défaut
-         */
+        String para = sc.next(); // on extrait le paragraphe suivant
+        Scanner s = new Scanner(para); // on initialise un nouveau scanner sur ce paragraphe
+
         while (s.hasNext()) {
             paragraphe.addChaine(new Mot(s.next()));
             if (s.hasNext())
                 paragraphe.addChaine(new Espace());
         }
+
         s.close();
         return paragraphe;
     }
 
+    /**
+     * Affiche un texte deja lu
+     */
     public void print() {
         for (Paragraphe p : texte) {
             System.out.println(p + "\n");

@@ -1,3 +1,8 @@
+
+/**
+ * Classe qui représente un paragraphe avec une longeur maximale de caractères
+ * par page, qui indente les paragraphes et qui justifie le texte
+ */
 public class ParagrapheJoli extends Paragraphe {
     private int maxLengthPage;
 
@@ -6,9 +11,11 @@ public class ParagrapheJoli extends Paragraphe {
     }
 
     /**
-     * Adds c to the last line if the length of the last line plus the length of c
-     * is less or equal to the maxLengthPage, else it creates a new line with te new
-     * word
+     * Ajoute une chaîne de caractères à la dernière ligne du texte. La fonction
+     * crée une nouvelle ligne si la ligne dépasse le nombre maximal de caractères
+     * par liges et justifie la ligne précédente.
+     * 
+     * @param c Chaîne à ajouter au texte.
      */
     @Override
     public void addChaine(ChaineCar c) {

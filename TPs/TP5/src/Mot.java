@@ -1,4 +1,6 @@
-
+/**
+ * Classe qui représente un mot
+ */
 public class Mot extends ChaineCar {
 
     private String s;

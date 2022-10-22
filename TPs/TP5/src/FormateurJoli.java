@@ -1,15 +1,16 @@
 import java.util.LinkedList;
 import java.util.Scanner;
+
 import java.io.File;
 
+/**
+ * Classe qui représente un formateur de texte plus avancée qui a une limite de
+ * caractères par ligne, qui indente les paragraphes et qui les justifie.
+ */
 public class FormateurJoli extends Formateur {
     private int maxLengthPage;
     private LinkedList<ParagrapheJoli> texte;
 
-    /**
-     * @param filename
-     * @param maxLengthPage
-     */
     public FormateurJoli(String filename, int maxLengthPage) {
         super(filename);
         this.maxLengthPage = maxLengthPage;
@@ -34,6 +35,13 @@ public class FormateurJoli extends Formateur {
         }
     }
 
+    /**
+     * La fonction lit un paragraphe du flux d'entrée et le renvoie sous la
+     * forme*d'un objet ParagrapheJoli
+     * 
+     * @return Le paragraphe joli.
+     */
+
     private ParagrapheJoli readParagraphe() {
         Espace tab = new Espace();
         tab.setSize(4);
@@ -41,10 +49,7 @@ public class FormateurJoli extends Formateur {
         paragraphe.addChaine(tab);
         String para = sc.next(); /* on extrait le paragraphe suivant */
         Scanner s = new Scanner(para); /* on initialise un nouveau scanner sur ce paragraphe */
-        /*
-         * s.useDelimiter("\\s+"); pas nécessaire puisque \\s+ est le délimiteur par
-         * défaut
-         */
+
         while (s.hasNext()) {
             paragraphe.addChaine(new Mot(s.next()));
             paragraphe.addChaine(new Espace());
