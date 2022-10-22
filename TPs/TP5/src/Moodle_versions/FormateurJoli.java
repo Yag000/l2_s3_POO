@@ -66,25 +66,23 @@ public class FormateurJoli extends Formateur {
 
     public static void main(String[] args) {
         printTest("texte");
-        FormateurJoli texte = new FormateurJoli("./textes/texte", 7);
+        FormateurJoli texte = new FormateurJoli("texte", 7);
         texte.read();
         texte.print();
 
         printTest("texteBis");
-        FormateurJoli texteBis = new FormateurJoli("./textes/texteBis", 50);
+        FormateurJoli texteBis = new FormateurJoli("texteBis", 50);
         texteBis.read();
         texteBis.print();
 
         printTest("vide");
-        FormateurJoli vide = new FormateurJoli("./textes/vide", 1);
+        FormateurJoli vide = new FormateurJoli("vide", 1);
         vide.read();
         vide.print();
 
         printTest("videBis");
-        FormateurJoli videBis = new FormateurJoli("./textes/videBis", 49);
+        FormateurJoli videBis = new FormateurJoli("videBis", 49);
         videBis.read();
         videBis.print();
     }
-
-    // TODO: Modify path to textes
 }
