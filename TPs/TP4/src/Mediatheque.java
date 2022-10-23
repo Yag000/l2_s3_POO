@@ -7,6 +7,7 @@ public class Mediatheque {
         this.baseDeDonnees = new ArrayList<Media>();
     }
 
+
     /**
      * Il ajoute un nouveau média à la base de données, au bon endroit
      * 
@@ -18,6 +19,7 @@ public class Mediatheque {
                 baseDeDonnees.add(i, doc);
                 return;
             }
+
         }
         baseDeDonnees.add(doc);
     }
@@ -30,6 +32,7 @@ public class Mediatheque {
             if (m instanceof Livre)
                 System.out.println(m);
     }
+
 
     /**
      * Renvoie une liste de tous les médias de la base de données qui satisfont
@@ -66,6 +69,7 @@ public class Mediatheque {
 
         return s;
     }
+
 
     /**
      * Il affiche un en-tête pour un test
