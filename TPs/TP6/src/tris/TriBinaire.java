@@ -1,6 +1,5 @@
 package tris;
 
-import java.text.BreakIterator;
 import java.util.Arrays;
 
 //TODO: add test
