@@ -1,3 +1,5 @@
+package figures;
+
 public class Triangle extends Figure implements Deformable {
     private final double base;
     private final double hauteur;

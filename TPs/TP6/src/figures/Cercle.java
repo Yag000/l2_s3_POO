@@ -1,3 +1,5 @@
+package figures;
+
 public class Cercle extends Ellipse {
 
     public Cercle(int x, int y, double rayon) {

@@ -1,3 +1,5 @@
+package figures;
+
 public class Ellipse extends Figure implements Deformable {
     private final double grand_rayon;
     private final double petit_rayon;

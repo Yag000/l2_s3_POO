@@ -1,3 +1,5 @@
+package figures;
+
 public class Rectangle extends Figure implements Deformable {
     private final double largeur;
     private final double hauteur;

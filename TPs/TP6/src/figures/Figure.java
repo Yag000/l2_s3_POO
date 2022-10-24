@@ -1,3 +1,5 @@
+package figures;
+
 public abstract class Figure {
     // coordonnées du centre approximatif de la figure
     private int posX;
