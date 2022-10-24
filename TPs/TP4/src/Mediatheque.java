@@ -18,6 +18,7 @@ public class Mediatheque {
                 baseDeDonnees.add(i, doc);
                 return;
             }
+
         }
         baseDeDonnees.add(doc);
     }
