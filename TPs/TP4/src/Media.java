@@ -1,5 +1,6 @@
 public class Media {
-  private final String titre;
+
+    private final String titre;
     private static int numeroElements = 0;
     private final int id;
 
