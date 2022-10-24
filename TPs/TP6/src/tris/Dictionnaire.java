@@ -21,4 +21,8 @@ public class Dictionnaire implements Triable {
         return tab.length;
     }
 
+    public static void main(String[] args) {
+
+    }
+
 }
