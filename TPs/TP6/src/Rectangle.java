@@ -35,4 +35,9 @@ public class Rectangle extends Figure implements Deformable {
         return hauteur;
     }
 
+    @Override
+    public double surface() {
+        return largeur * hauteur;
+    }
+
 }

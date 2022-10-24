@@ -16,5 +16,16 @@ public abstract class Figure {
         return posY;
     }
 
+    public final double estDistantDe(Figure fig) {
+        return Math.sqrt((posX - fig.posX) * (posX - fig.posX) + (posY - fig.posY) * (posY - fig.posY));
+    }
+
+    public abstract double surface();
+
     public abstract void affiche();
+
+    public void deplacement(int x, int y) {
+        posX += x;
+        posY += y;
+    }
 }

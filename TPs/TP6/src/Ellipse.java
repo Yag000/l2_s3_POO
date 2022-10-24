@@ -35,4 +35,9 @@ public class Ellipse extends Figure implements Deformable {
         return petit_rayon;
     }
 
+    @Override
+    public double surface() {
+        return Math.PI * petit_rayon * grand_rayon;
+    }
+
 }

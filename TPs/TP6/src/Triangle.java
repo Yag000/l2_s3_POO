@@ -23,4 +23,9 @@ public class Triangle extends Figure implements Deformable {
         return "Triangle [posX= " + getPosX() + "posY= " + getPosY() + ", base=" + base + ", hauteur=" + hauteur + "]";
     }
 
+    @Override
+    public double surface() {
+        return (base * hauteur) / 2;
+    }
+
 }
