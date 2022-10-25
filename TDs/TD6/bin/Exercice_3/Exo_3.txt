@@ -24,8 +24,10 @@ public abstract class PercussionPeau extends Corde
 
 public abstract class InstrumentElectronique extends Instrument
 
-public interface SonMecanique
-public interface SonElectronique
+public interface Son
+
+public interface SonMecanique extends Son
+public interface SonElectronique extends Son
 
 2)
 

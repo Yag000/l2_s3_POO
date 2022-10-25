@@ -1,5 +1,7 @@
 package Exercice_4;
 
+import javax.swing.ComboBoxEditor;
+
 public class Exo_4_2 {
 
     public interface Membre {
@@ -32,7 +34,7 @@ public class Exo_4_2 {
     public interface PeutMediter {
     }
 
-    public class Combat {
+    public abstract class Combat {
 
         Combat(PeutCombat p) {
         }
