@@ -26,10 +26,10 @@ public class Exo_4_2 {
     public interface GrandMaitre extends Maitre {
     }
 
-    public interface PeutCombat {
+    public interface PeutCombat extends Orateur {
     }
 
-    public interface PeutMediter {
+    public interface PeutMediter extends Orateur {
     }
 
     public abstract class Combat {
