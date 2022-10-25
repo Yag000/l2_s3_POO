@@ -1,7 +1,9 @@
 package Exercice_4;
 
 public class Exo_4_1 {
-    // Exo 1
+
+    public interface Orateur {
+    }
 
     public interface PeutCombat extends Orateur {
     }
@@ -9,21 +11,18 @@ public class Exo_4_1 {
     public interface PeutMediter extends Orateur {
     }
 
-    public class Combat {
+    public class Cours {
+    }
+
+    public class Combat extends Cours {
 
         Combat(PeutCombat p) {
         }
     }
 
-    public class Meditation {
+    public class Meditation extends Cours {
 
         Meditation(PeutMediter p) {
         }
     }
-
-    public interface Orateur {
-    }
-
-    // Exo 2
-
 }

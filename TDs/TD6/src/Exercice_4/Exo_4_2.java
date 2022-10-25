@@ -32,16 +32,18 @@ public class Exo_4_2 {
     public interface PeutMediter extends Orateur {
     }
 
-    public abstract class Combat {
+    public class Cours {
+    }
+
+    public class Combat extends Cours {
 
         Combat(PeutCombat p) {
         }
     }
 
-    public class Meditation {
+    public class Meditation extends Cours {
 
         Meditation(PeutMediter p) {
         }
     }
-
 }
