@@ -1,3 +1,5 @@
+package Exercice_2;
+
 public class C extends B implements K {
     public void m() {
         System.out.println("C, m");
