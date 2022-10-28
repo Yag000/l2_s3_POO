@@ -1,8 +1,14 @@
 package tris;
 
+import java.util.Arrays;
+
 public class Dictionnaire implements Triable {
 
     private String[] tab;
+
+    public Dictionnaire(String[] tab) {
+        this.tab = tab;
+    }
 
     @Override
     public void echange(int i, int j) {
@@ -13,7 +19,7 @@ public class Dictionnaire implements Triable {
 
     @Override
     public boolean plusGrand(int i, int j) {
-        return tab[i].compareTo(tab[j]) > 0;
+        return tab[i].toLowerCase().compareTo(tab[j].toLowerCase()) > 0;
     }
 
     @Override
@@ -21,8 +27,9 @@ public class Dictionnaire implements Triable {
         return tab.length;
     }
 
-    public static void main(String[] args) {
-
+    @Override
+    public String toString() {
+        return "Dictionnaire [tab=" + Arrays.toString(tab) + "]";
     }
 
 }
