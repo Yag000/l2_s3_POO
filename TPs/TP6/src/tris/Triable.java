@@ -1,16 +1,33 @@
 package tris;
 
+/**
+ * Interface pour les objets triables
+ */
 public interface Triable {
-    // échange les éléments en positions i et j
+    /**
+     * Echange les éléments d'indice i et j
+     * 
+     * @param i
+     * @param j
+     */
     void echange(int i, int j);
 
-    // retourne vrai si l’élément de position i est plus grand que
-    // l’élément de position j
+    /**
+     * @param i
+     * @param j
+     * @return true si l'élément en position i est plus grand que l'élément en
+     *         position j
+     */
     boolean plusGrand(int i, int j);
 
-    // nombre d’éléments à trier
+    /**
+     * @return nombre d'éléments a trier
+     */
     int taille();
 
+    /**
+     * Trie le tableau en utilisant l'algorithme de tri à bulles
+     */
     static void triBulles(Triable tab) {
         boolean change = false;
         do {

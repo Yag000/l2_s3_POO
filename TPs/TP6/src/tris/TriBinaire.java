@@ -1,18 +1,7 @@
 package tris;
 
-//TODO: add test
-
 public class TriBinaire implements Triable {
     private boolean[][] tab;
-
-    public static int binaryToInt(boolean[] tab) {
-        int res = 0;
-
-        for (int i = 0; i < tab.length; i++)
-            res += tab[tab.length - i - 1] ? 1 << i : 0;
-
-        return res;
-    }
 
     public TriBinaire(boolean[][] tab) {
         this.tab = tab;
@@ -25,7 +14,6 @@ public class TriBinaire implements Triable {
         tab[j] = tmp;
     }
 
-    // TODO. make prettier
     @Override
     public boolean plusGrand(int i, int j) {
         return binaryToInt(tab[i]) > binaryToInt(tab[j]);
@@ -34,6 +22,21 @@ public class TriBinaire implements Triable {
     @Override
     public int taille() {
         return tab.length;
+    }
+
+    /**
+     * Convertit un tableau de booléens en entier
+     * 
+     * @param tab
+     * @return
+     */
+    public static int binaryToInt(boolean[] tab) {
+        int res = 0;
+
+        for (int i = 0; i < tab.length; i++)
+            res += tab[tab.length - i - 1] ? 1 << i : 0;
+
+        return res;
     }
 
     @Override

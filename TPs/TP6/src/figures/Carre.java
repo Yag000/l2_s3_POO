@@ -16,4 +16,11 @@ public class Carre extends Rectangle {
         return "Carre [posX= " + getPosX() + ", posY= " + getPosY() + ", longueur=" + getLargeur() + "]";
     }
 
+    /**
+     * @return the longueur
+     */
+    public double getLongueur() {
+        return getLargeur();
+    }
+
 }

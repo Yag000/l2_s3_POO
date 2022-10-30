@@ -30,10 +30,16 @@ public class Ellipse extends Figure implements Deformable {
                 + petit_rayon + "]";
     }
 
+    /**
+     * @return the grand_rayon
+     */
     public double getGrand_rayon() {
         return grand_rayon;
     }
 
+    /**
+     * @return the petit_rayon
+     */
     public double getPetit_rayon() {
         return petit_rayon;
     }

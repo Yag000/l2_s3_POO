@@ -7,14 +7,12 @@ public class Cercle extends Ellipse {
     }
 
     @Override
-    public void affiche() {
-        // TODO Auto-generated method stub
-        super.affiche();
-    }
-
-    @Override
     public String toString() {
         return "Cercle [posX= " + getPosX() + ", posY= " + getPosY() + ", rayon=" + getGrand_rayon() + "]";
+    }
+
+    public double getRayon() {
+        return getGrand_rayon();
     }
 
 }
