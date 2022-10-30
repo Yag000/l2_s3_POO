@@ -1,7 +1,5 @@
 package tris;
 
-import javax.swing.event.DocumentEvent.ElementChange;
-
 public interface Triable {
     // échange les éléments en positions i et j
     void echange(int i, int j);
