@@ -12,7 +12,8 @@ public class Rectangle extends Figure implements Deformable {
 
     @Override
     public String toString() {
-        return "Rectangle [posX= " + getPosX() + "posY= " + getPosY() + ", largeur=" + largeur + ", hauteur=" + hauteur
+        return "Rectangle [posX= " + getPosX() + ", posY= " + getPosY() + ", largeur=" + largeur + ", hauteur="
+                + hauteur
                 + "]";
     }
 

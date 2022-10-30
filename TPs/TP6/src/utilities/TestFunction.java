@@ -4,7 +4,7 @@ public abstract class TestFunction {
 
     public abstract void function();
 
-    public void test(String testName) {
+    public void runTest(String testName) {
         System.out.println();
         System.out.println("-----------\\ Test " + testName + " /-----------");
         System.out.println();

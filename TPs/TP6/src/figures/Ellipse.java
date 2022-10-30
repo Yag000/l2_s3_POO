@@ -25,7 +25,8 @@ public class Ellipse extends Figure implements Deformable {
 
     @Override
     public String toString() {
-        return "Ellipse [posX= " + getPosX() + "posY= " + getPosY() + ", grand_rayon=" + grand_rayon + ", petit_rayon="
+        return "Ellipse [posX= " + getPosX() + ", posY= " + getPosY() + ", grand_rayon=" + grand_rayon
+                + ", petit_rayon="
                 + petit_rayon + "]";
     }
 

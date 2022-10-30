@@ -14,7 +14,7 @@ public class Cercle extends Ellipse {
 
     @Override
     public String toString() {
-        return "Cercle [posX= " + getPosX() + "posY= " + getPosY() + ", rayon=" + getGrand_rayon() + "]";
+        return "Cercle [posX= " + getPosX() + ", posY= " + getPosY() + ", rayon=" + getGrand_rayon() + "]";
     }
 
 }

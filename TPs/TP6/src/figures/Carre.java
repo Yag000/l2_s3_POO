@@ -13,7 +13,7 @@ public class Carre extends Rectangle {
 
     @Override
     public String toString() {
-        return "Carre [posX= " + getPosX() + "posY= " + getPosY() + ", longueur=" + getLargeur() + "]";
+        return "Carre [posX= " + getPosX() + ", posY= " + getPosY() + ", longueur=" + getLargeur() + "]";
     }
 
 }

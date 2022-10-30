@@ -22,7 +22,8 @@ public class Triangle extends Figure implements Deformable {
 
     @Override
     public String toString() {
-        return "Triangle [posX= " + getPosX() + "posY= " + getPosY() + ", base=" + base + ", hauteur=" + hauteur + "]";
+        return "Triangle [posX= " + getPosX() + ", posY= " + getPosY() + ", base=" + base + ", hauteur=" + hauteur
+                + "]";
     }
 
     @Override
