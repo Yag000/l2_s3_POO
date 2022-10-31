@@ -14,6 +14,7 @@ public class Livre extends Media {
         return super.toString() + ", Livre auteur= " + auteur + ", ngPages= " + ngPages;
     }
 
+
     /*
      * @Override
      * public boolean plusPetit(Media doc) {
