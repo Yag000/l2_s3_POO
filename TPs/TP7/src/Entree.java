@@ -18,7 +18,7 @@ public class Entree {
     }
 
     public void supprimer() {
-        parent.remove(this);
+        parent.supprimer(this);
     }
 
     @Override
