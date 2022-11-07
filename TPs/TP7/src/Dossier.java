@@ -19,6 +19,13 @@ public class Dossier extends Element {
         entrees.remove(entree);
     }
 
+    public void ajouter(Element e, String nom) {
+        Entree newEntree = new Entree(null, nom, parent.getParent());
+        newEntree.remplacer(e);
+        entrees.add(newEntree);
+
+    }
+
     @Override
     public String getType() {
         return "dossier";

@@ -3,6 +3,9 @@ public class Entree {
     private String nom;
     private Dossier parent;
 
+    public Entree() {
+    }
+
     public Entree(Element element, String nom, Dossier parent) {
         this.element = element;
         this.nom = nom;
@@ -17,8 +20,16 @@ public class Entree {
         return nom;
     }
 
+    public Dossier getParent() {
+        return parent;
+    }
+
     public void supprimer() {
         parent.supprimer(this);
+
+        parent = null;
+        nom = null;
+        element = null;
     }
 
     public void remplacer(Element e) {
