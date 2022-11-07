@@ -1,7 +1,7 @@
 import java.util.List;
 import java.util.LinkedList;
 
-public class Dossier extends Element {
+public class Dossier extends Element implements Affichable {
 
     Entree parent;
     List<Entree> entrees;
@@ -29,6 +29,17 @@ public class Dossier extends Element {
     @Override
     public String getType() {
         return "dossier";
+    }
+
+    @Override
+    public void afficher() {
+        System.out.println(". " + getType());
+        if (parent != null)
+            System.out.println(".. " + getType());
+
+        for (Entree e : entrees) {
+            System.out.println(e);
+        }
     }
 
 }
