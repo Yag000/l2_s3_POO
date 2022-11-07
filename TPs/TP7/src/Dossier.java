@@ -9,6 +9,10 @@ public class Dossier extends Element {
         this.parent = parent;
     }
 
+    public void supprimer(Entree entree) {
+        entrees.remove(entree);
+    }
+
     @Override
     public String getType() {
         return "dossier";
