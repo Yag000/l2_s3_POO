@@ -21,6 +21,14 @@ public class Entree {
         parent.supprimer(this);
     }
 
+    public void remplacer(Element e) {
+        element = e;
+
+        if (e instanceof Dossier dossier) {
+            parent = dossier.getParent().parent;
+        }
+    }
+
     @Override
     public String toString() {
         return nom + " (" + element.getType() + ")";

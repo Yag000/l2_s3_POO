@@ -1,12 +1,18 @@
 import java.util.List;
+import java.util.LinkedList;
 
 public class Dossier extends Element {
 
-    Dossier parent;
+    Entree parent;
     List<Entree> entrees;
 
-    public Dossier(Dossier parent) {
+    public Dossier(Entree parent) {
         this.parent = parent;
+        entrees = new LinkedList<Entree>();
+    }
+
+    public Entree getParent() {
+        return parent;
     }
 
     public void supprimer(Entree entree) {
