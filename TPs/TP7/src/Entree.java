@@ -37,7 +37,7 @@ public class Entree {
 
         element = e;
 
-        if (e instanceof Dossier dossier)
+        if (element instanceof Dossier dossier)
             dossier.setParent(this);
 
     }
