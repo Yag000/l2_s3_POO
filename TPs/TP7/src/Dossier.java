@@ -27,7 +27,17 @@ public class Dossier extends Element implements Affichable {
         Entree newEntree = new Entree(null, nom, parent.getParent());
         newEntree.remplacer(e);
         entrees.add(newEntree);
+    }
 
+    public Entree getEntree(String nom) {
+        Entree result = null;
+
+        for (Entree e : entrees) {
+            if (e.getNom().equals(nom))
+                result = e;
+        }
+
+        return result;
     }
 
     @Override

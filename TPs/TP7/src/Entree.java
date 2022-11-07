@@ -28,8 +28,6 @@ public class Entree {
         parent.supprimer(this);
 
         parent = null;
-        nom = null;
-        element = null;
     }
 
     public void remplacer(Element e) {

@@ -26,7 +26,7 @@ public class FichierTexte extends Element implements Affichable, Editable {
 
         String nextValue = sc.nextLine();
 
-        if (nextValue == ".")
+        if (nextValue.equals("."))
             return;
 
         do {
@@ -36,7 +36,7 @@ public class FichierTexte extends Element implements Affichable, Editable {
 
             nextValue = sc.nextLine();
 
-        } while (sc.hasNext() && nextValue != ".");
+        } while (sc.hasNext() && !nextValue.equals("."));
     }
 
 }
