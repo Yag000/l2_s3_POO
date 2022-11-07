@@ -15,6 +15,10 @@ public class Dossier extends Element implements Affichable {
         return parent;
     }
 
+    public void setParent(Entree e) {
+        this.parent = e;
+    }
+
     public void supprimer(Entree entree) {
         entrees.remove(entree);
     }

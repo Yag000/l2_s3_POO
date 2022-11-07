@@ -33,11 +33,15 @@ public class Entree {
     }
 
     public void remplacer(Element e) {
+
+        if (element instanceof Dossier dossier)
+            dossier.setParent(null);
+
         element = e;
 
-        if (e instanceof Dossier dossier) {
-            parent = dossier.getParent().parent;
-        }
+        if (e instanceof Dossier dossier)
+            dossier.setParent(this);
+
     }
 
     @Override
