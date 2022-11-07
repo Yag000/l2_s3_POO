@@ -9,6 +9,8 @@ public class Dossier extends Element implements Affichable {
     public Dossier(Entree parent) {
         this.parent = parent;
         entrees = new LinkedList<Entree>();
+        entrees.add(new EntreeSpeciale(this, ".", this));
+        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
     }
 
     public Entree getParent() {
@@ -31,20 +33,18 @@ public class Dossier extends Element implements Affichable {
 
     // Ça compile :)
     public Entree getEntree(String nom, boolean creer) {
-        Entree result = null;
-
         for (Entree e : entrees) {
             if (e.getNom().equals(nom))
-                result = e;
+                return e;
         }
 
-        if (creer && result == null) {
+        if (creer) {
             Entree newEntree = new Entree(null, nom, parent.getParent());
             entrees.add(newEntree);
-            result = newEntree;
+            return newEntree;
         }
 
-        return result;
+        return null;
     }
 
     @Override
@@ -54,9 +54,6 @@ public class Dossier extends Element implements Affichable {
 
     @Override
     public void afficher() {
-        System.out.println(". " + getType());
-        System.out.println(".. " + getType());
-
         for (Entree e : entrees) {
             System.out.println(e);
         }
