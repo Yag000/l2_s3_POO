@@ -29,6 +29,7 @@ public class Dossier extends Element implements Affichable {
         entrees.add(newEntree);
     }
 
+    // Ça compile :)
     public Entree getEntree(String nom, boolean creer) {
         Entree result = null;
 
@@ -54,8 +55,7 @@ public class Dossier extends Element implements Affichable {
     @Override
     public void afficher() {
         System.out.println(". " + getType());
-        if (parent != null)
-            System.out.println(".. " + getType());
+        System.out.println(".. " + getType());
 
         for (Entree e : entrees) {
             System.out.println(e);
