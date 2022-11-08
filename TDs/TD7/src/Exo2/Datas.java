@@ -26,7 +26,7 @@ public class Datas {
     }
 
     private class EvenIterator implements DatasIterator {
-        int position = 0;
+        private int position = 0;
 
         @Override
         public boolean hasNext() {
@@ -48,7 +48,7 @@ public class Datas {
     public void printOdd() {
 
         class OddIterator implements DatasIterator {
-            int position = 1;
+            private int position = 1;
 
             @Override
             public boolean hasNext() {
@@ -69,7 +69,7 @@ public class Datas {
     public void printBackwards() {
         print(new DatasIterator() {
 
-            int position = SIZE - 1;
+            private int position = SIZE - 1;
 
             @Override
             public boolean hasNext() {
