@@ -39,7 +39,17 @@ public class Entree {
 
         if (element instanceof Dossier dossier)
             dossier.setParent(this);
+    }
 
+    public String getChemin() {
+        if (parent.getParent() == this)
+            return "/";
+
+        String s = parent.getChemin();
+        if (s == "/")
+            return s + nom;
+        else
+            return s + "/" + nom;
     }
 
     @Override

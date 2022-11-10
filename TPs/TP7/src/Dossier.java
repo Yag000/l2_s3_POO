@@ -36,7 +36,7 @@ public class Dossier extends Element implements Affichable {
     }
 
     public void ajouter(Element e, String nom) {
-        Entree newEntree = new Entree(null, nom, parent.getParent());
+        Entree newEntree = new Entree(null, nom, this);
         newEntree.remplacer(e);
         entrees.add(newEntree);
     }
@@ -55,6 +55,10 @@ public class Dossier extends Element implements Affichable {
         }
 
         return null;
+    }
+
+    public String getChemin() {
+        return parent.getChemin();
     }
 
     @Override

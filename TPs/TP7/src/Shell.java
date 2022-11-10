@@ -118,6 +118,45 @@ public class Shell {
         return null;
     }
 
+    /**
+     * Cherche un dossier dans l'arborescence, en gérant les / et les ...
+     * 
+     * @param path
+     * @return
+     */
+
+    private Dossier findLastDossier(String path) {
+
+        String[] pathList = path.split("/");
+        Dossier current = this.current;
+        Dossier res = null;
+        int counter = 0;
+
+        for (String s : pathList) {
+            Entree e = current.getEntree(s, false);
+            if (e == null) {
+                if (counter == pathList.length - 1)
+                    return res;
+                return null;
+            }
+
+            if (e.getElement() instanceof Dossier) {
+                res = (Dossier) e.getElement();
+                current = res;
+            } else {
+                return counter == pathList.length - 1 ? res : null;
+            }
+
+            counter++;
+
+        }
+
+        return res;
+    }
+
+    // Commandes
+
+    // Works
     public void cat(String name) {
         FichierTexte texte = findFichierTexte(name);
 
@@ -128,6 +167,7 @@ public class Shell {
 
     }
 
+    // Works
     public void cd(String folderName) {
         String[] s = folderName.split("/");
 
@@ -167,6 +207,7 @@ public class Shell {
     }
 
     // TODO: Can create test/tes1/test2
+    // TODO: incorrecte parent
 
     public void mkdir(String name) {
 
@@ -187,11 +228,14 @@ public class Shell {
         }
 
         if (e.getElement() instanceof Dossier dossier) {
+            System.out.print("done");
             dossier.ajouter(new Dossier(e), path[path.length - 1]);
         } else {
             System.out.println("mkdir: " + name + ": Not a directory");
         }
     }
+
+    // TODO: update to use findLastDossier
 
     public void mv(String name, String newFolder) {
 
@@ -244,18 +288,21 @@ public class Shell {
 
         Entree e;
 
+        System.out.println(path.length);
+
         if (path.length == 1) {
             current.ajouter(new FichierTexte(""), filename);
             e = current.getEntree(filename, true);
         } else {
-            Entree folderEntry = find(filename, -1);
-            if (folderEntry.getElement() instanceof Dossier dossier) {
-                dossier.ajouter(new FichierTexte(""), path[path.length - 1]);
-                e = dossier.getEntree(path[path.length - 1], false);
-            } else {
+            Dossier dossier = findLastDossier(filename);
+
+            if (dossier == null) {
                 System.out.println("ed: " + filename + ": Not a directory");
                 return;
             }
+
+            dossier.ajouter(new FichierTexte(""), path[path.length - 1]);
+            e = dossier.getEntree(path[path.length - 1], false);
         }
 
         FichierTexte f = (FichierTexte) e.getElement();
@@ -267,18 +314,27 @@ public class Shell {
 
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
         f.editer(scanner, false);
-        System.out.println("fin");
     }
 
     public void cp(String name, String newFolder) {
 
-        if (name == null || name.equals("")) {
+        if (name == null || name.equals("") || newFolder.equals("")) {
             System.out.println("mv: missing operand");
             return;
         }
 
         Entree entreeOfOriginal = find(name);
-        Entree entreeOfNew = find(newFolder);
+        if (entreeOfOriginal == null) {
+            System.out.println("cp: " + name + ": No such file or directory");
+            return;
+        }
+
+        Entree entreeOfNew;
+
+        if (newFolder.split("/").length == 1)
+            entreeOfNew = current.getParent();
+        else
+            entreeOfNew = find(newFolder);
 
         if (entreeOfNew.getElement() instanceof Dossier dossier) {
             dossier.ajouter(entreeOfOriginal.getElement().clone(), entreeOfOriginal.getNom());
@@ -286,9 +342,13 @@ public class Shell {
             System.out.println("mv: " + name + ": Not a directory");
     }
 
+    public void pwd() {
+        System.out.println(current.getChemin());
+    }
+
     private void parser() {
         while (true) {
-            System.out.print(current.getParent().getNom() + "$ ");
+            System.out.print(current.getChemin() + "$ ");
             String[] s = scanner.nextLine().split(" ");
 
             switch (s[0]) {
@@ -315,6 +375,9 @@ public class Shell {
                     break;
                 case "cp":
                     cp(s[1], s[2]);
+                    break;
+                case "pwd":
+                    pwd();
                     break;
                 case "exit":
                     scanner.close();
