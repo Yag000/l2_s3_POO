@@ -135,7 +135,7 @@ public class Shell {
         Entree e = find(Arrays.copyOfRange(path, 0, path.length - 2 > 0 ? path.length - 2 : 0));
 
         if (e == null) {
-            if (path.length == 0)
+            if (path.length == 1)
                 current.ajouter(e.getElement(), path[0]);
             else
                 System.out.println("mkdir: cannot create directory '" + name + "': No such file or directory");
