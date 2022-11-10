@@ -66,6 +66,10 @@ public class Shell {
 
     }
 
+    public void mkdir(String name) {
+        current.ajouter(new Dossier(current.getParent()), name);
+    }
+
     public static void main(String[] args) {
 
     }
