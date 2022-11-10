@@ -50,6 +50,20 @@ public class Shell {
 
     public void ls(String name) {
 
+        if (name == null) {
+            current.afficher();
+            return;
+        }
+
+        Entree e = current.getEntree(name, false);
+
+        if (e == null)
+            System.out.println("Folder not found");
+        else if (e.getElement() instanceof Dossier dossier)
+            dossier.afficher();
+        else
+            System.out.println(e.getNom() + " is not a folder");
+
     }
 
     public static void main(String[] args) {
