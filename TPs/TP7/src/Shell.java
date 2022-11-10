@@ -65,6 +65,40 @@ public class Shell {
         return res;
     }
 
+    /**
+     * Cherche un element dans l'arborescence, en gérant les / et les ...
+     * 
+     * @param path  Chemin du dossier à chercher
+     * @param depth Profondeur de la recherche
+     * @return
+     */
+    private Entree find(String path, int depth) {
+
+        String[] pathList = path.split("/");
+
+        if (depth == 0)
+            return find(pathList);
+        else if (depth >= pathList.length)
+            return find(pathList);
+        else if (depth < 0)
+            depth = pathList.length - (-depth % pathList.length);
+
+        System.out.println(depth);
+
+        Dossier current = this.current;
+        Entree res = null;
+
+        for (int i = 0; i < depth; i++) {
+            res = current.getEntree(pathList[i], false);
+            if (res == null)
+                return null;
+            if (res.getElement() instanceof Dossier)
+                current = (Dossier) res.getElement();
+        }
+
+        return res;
+    }
+
     private FichierTexte findFichierTexte(String path) {
         Entree e = find(path);
         if (e == null)
@@ -132,18 +166,18 @@ public class Shell {
         }
 
         String[] path = name.split("/");
-        Entree e = find(Arrays.copyOfRange(path, 0, path.length - 2 > 0 ? path.length - 2 : 0));
+        Entree e = find(name, -1);
 
         if (e == null) {
             if (path.length == 1)
-                current.ajouter(e.getElement(), path[0]);
+                current.ajouter(new Dossier(current.getParent()), path[0]);
             else
                 System.out.println("mkdir: cannot create directory '" + name + "': No such file or directory");
             return;
         }
 
         if (e.getElement() instanceof Dossier dossier) {
-            dossier.ajouter(e.getElement(), path[path.length - 1]);
+            dossier.ajouter(new Dossier(e), path[path.length - 1]);
         } else {
             System.out.println("mkdir: " + name + ": Not a directory");
         }
@@ -192,6 +226,7 @@ public class Shell {
 
     public void ed(String filename) {
         FichierTexte f = findFichierTexte(filename);
+
         if (f == null) {
             System.out.println("File not found");
             return;
@@ -199,6 +234,7 @@ public class Shell {
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
         Scanner sc = new Scanner(System.in);
         f.editer(sc, false);
+        sc.close();
     }
 
     public void cp(String name, String newFolder) {
@@ -250,6 +286,7 @@ public class Shell {
                     cp(s[1], s[2]);
                     break;
                 case "exit":
+                    sc.close();
                     return;
                 default:
                     System.out.println("Command not found");
