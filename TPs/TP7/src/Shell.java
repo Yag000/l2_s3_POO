@@ -14,6 +14,11 @@ public class Shell {
         root = tmp;
     }
 
+    /**
+     * Cherche un element dans l'arborescence, en gérant les / et les ...
+     * 
+     * @param name Nom de l'élément à chercher
+     */
     private Entree find(String name) {
         String[] path = name.split("/");
         Dossier current = this.current;
@@ -65,12 +70,12 @@ public class Shell {
 
     public void ls(String name) {
 
-        if (name == null) {
+        if (name == null || name.equals("")) {
             current.afficher();
             return;
         }
 
-        Entree e = current.getEntree(name, false);
+        Entree e = find(name);
 
         if (e == null)
             System.out.println("Folder not found");
