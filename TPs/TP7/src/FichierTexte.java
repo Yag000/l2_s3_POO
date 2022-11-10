@@ -39,4 +39,9 @@ public class FichierTexte extends Element implements Affichable, Editable {
         } while (sc.hasNext() && !nextValue.equals("."));
     }
 
+    @Override
+    protected FichierTexte clone() {
+        return new FichierTexte(contenu);
+    }
+
 }

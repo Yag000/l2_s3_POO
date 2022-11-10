@@ -1,5 +1,6 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Shell {
 
@@ -58,6 +59,15 @@ public class Shell {
         }
 
         return res;
+    }
+
+    private FichierTexte findFichierTexte(String path) {
+        Entree e = find(path);
+        if (e == null)
+            return null;
+        if (e.getElement() instanceof FichierTexte)
+            return (FichierTexte) e.getElement();
+        return null;
     }
 
     public void cat(String name) {
@@ -168,7 +178,77 @@ public class Shell {
             System.out.println("rm: " + name + ": Is a directory");
     }
 
+    public void ed(String filename) {
+        FichierTexte f = findFichierTexte(filename);
+        if (f == null) {
+            System.out.println("File not found");
+            return;
+        }
+        System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
+        Scanner sc = new Scanner(System.in);
+        f.editer(sc, false);
+    }
+
+    public void cp(String name, String newFolder) {
+
+        if (name == null || name.equals("")) {
+            System.out.println("mv: missing operand");
+            return;
+        }
+
+        Entree entreeOfOriginal = find(name);
+        Entree entreeOfNew = find(newFolder);
+
+        if (entreeOfNew.getElement() instanceof Dossier dossier) {
+            dossier.ajouter(entreeOfOriginal.getElement().clone(), entreeOfOriginal.getNom());
+        } else
+            System.out.println("mv: " + name + ": Not a directory");
+    }
+
+    private void parser() {
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.print(current.getParent().getNom() + "$ ");
+            String[] s = sc.nextLine().split(" ");
+
+            switch (s[0]) {
+                case "cat":
+                    cat(s[1]);
+                    break;
+                case "cd":
+                    cd(s[1]);
+                    break;
+                case "ls":
+                    ls(s.length > 1 ? s[1] : null);
+                    break;
+                case "mkdir":
+                    mkdir(s[1]);
+                    break;
+                case "mv":
+                    mv(s[1], s[2]);
+                    break;
+                case "rm":
+                    rm(s[1]);
+                    break;
+                case "ed":
+                    ed(s[1]);
+                    break;
+                case "cp":
+                    cp(s[1], s[2]);
+                    break;
+                case "exit":
+                    return;
+                default:
+                    System.out.println("Command not found");
+            }
+        }
+    }
+
     public static void main(String[] args) {
+
+        Shell s = new Shell(new Dossier());
+        s.parser();
 
     }
 

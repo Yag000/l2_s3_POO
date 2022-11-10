@@ -6,6 +6,14 @@ public class Dossier extends Element implements Affichable {
     Entree parent;
     List<Entree> entrees;
 
+    /**
+     * COnstructeur de root
+     */
+    public Dossier() {
+        entrees = new LinkedList<Entree>();
+        parent = new Entree(this, "/", this);
+    }
+
     public Dossier(Entree parent) {
         this.parent = parent;
         entrees = new LinkedList<Entree>();
@@ -57,6 +65,15 @@ public class Dossier extends Element implements Affichable {
         for (Entree e : entrees) {
             System.out.println(e);
         }
+    }
+
+    @Override
+    public Dossier clone() {
+        Dossier clone = new Dossier(parent);
+        for (Entree e : entrees) {
+            clone.ajouter((Element) e.getElement().clone(), e.getNom());
+        }
+        return clone;
     }
 
 }
