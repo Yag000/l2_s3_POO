@@ -28,4 +28,32 @@ public class Shell {
 
     }
 
+    public void cd(String folderName) {
+        String[] s = folderName.split("/");
+
+        for (String folder : s) {
+            Entree e = current.getEntree(folder, false);
+
+            if (e == null) {
+                System.out.println("Folder not found");
+                return;
+            }
+
+            if (e.getElement() instanceof Dossier dossier)
+                current = dossier;
+            else {
+                System.out.println(e.getNom() + " is not a folder");
+                return;
+            }
+        }
+    }
+
+    public void ls(String name) {
+
+    }
+
+    public static void main(String[] args) {
+
+    }
+
 }
