@@ -1,10 +1,11 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Shell {
 
     public Dossier root;
     public Dossier current;
+
+    private Scanner scanner;
 
     public Shell(Dossier first) {
         current = first;
@@ -20,6 +21,11 @@ public class Shell {
 
             root = tmp;
         }
+
+        scanner = new Scanner(System.in);
+
+        parser();
+
     }
 
     /**
@@ -83,8 +89,6 @@ public class Shell {
         else if (depth < 0)
             depth = pathList.length - (-depth % pathList.length);
 
-        System.out.println(depth);
-
         Dossier current = this.current;
         Entree res = null;
 
@@ -99,6 +103,12 @@ public class Shell {
         return res;
     }
 
+    /**
+     * Cherche un fichier de texte dans l'arborescence, en gérant les / et les ...
+     * 
+     * @param path
+     * @return
+     */
     private FichierTexte findFichierTexte(String path) {
         Entree e = find(path);
         if (e == null)
@@ -193,8 +203,7 @@ public class Shell {
         Entree entreeOfOriginal = find(name);
 
         String[] pathToNew = newFolder.split("/");
-        Entree entreeOfNew = find(
-                Arrays.copyOfRange(pathToNew, 0, pathToNew.length - 2 > 0 ? pathToNew.length - 2 : 0));
+        Entree entreeOfNew = find(newFolder, -1);
 
         if (entreeOfNew.getElement() instanceof Dossier dossier) {
             Entree lastEntreeOfNew = dossier.getEntree(pathToNew[pathToNew.length - 1], false);
@@ -225,16 +234,38 @@ public class Shell {
     }
 
     public void ed(String filename) {
-        FichierTexte f = findFichierTexte(filename);
+
+        if (filename == null || filename.equals("")) {
+            System.out.println("ed: missing operand");
+            return;
+        }
+
+        String[] path = filename.split("/");
+
+        Entree e;
+
+        if (path.length == 1) {
+            e = current.getEntree(filename, false);
+        } else {
+            Entree folderEntry = find(filename, -1);
+            if (folderEntry.getElement() instanceof Dossier dossier) {
+                dossier.ajouter(new FichierTexte(""), path[path.length - 1]);
+                e = dossier.getEntree(path[path.length - 1], false);
+            } else {
+                System.out.println("ed: " + filename + ": Not a directory");
+                return;
+            }
+        }
+
+        FichierTexte f = (FichierTexte) e.getElement();
 
         if (f == null) {
             System.out.println("File not found");
             return;
         }
+
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
-        Scanner sc = new Scanner(System.in);
-        f.editer(sc, false);
-        sc.close();
+        f.editer(scanner, true);
     }
 
     public void cp(String name, String newFolder) {
@@ -254,11 +285,9 @@ public class Shell {
     }
 
     private void parser() {
-        Scanner sc = new Scanner(System.in);
-
         while (true) {
             System.out.print(current.getParent().getNom() + "$ ");
-            String[] s = sc.nextLine().split(" ");
+            String[] s = scanner.nextLine().split(" ");
 
             switch (s[0]) {
                 case "cat":
@@ -286,7 +315,7 @@ public class Shell {
                     cp(s[1], s[2]);
                     break;
                 case "exit":
-                    sc.close();
+                    scanner.close();
                     return;
                 default:
                     System.out.println("Command not found");
@@ -296,9 +325,7 @@ public class Shell {
 
     public static void main(String[] args) {
 
-        Shell s = new Shell(new Dossier());
-        s.parser();
-
+        new Shell(new Dossier());
     }
 
 }

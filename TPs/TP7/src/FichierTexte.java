@@ -31,6 +31,7 @@ public class FichierTexte extends Element implements Affichable, Editable {
 
         do {
             contenu += nextValue + "\n";
+
             if (echo)
                 System.out.println(nextValue);
 
