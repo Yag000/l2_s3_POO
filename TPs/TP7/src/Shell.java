@@ -1,3 +1,6 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Shell {
 
     public Dossier root;
@@ -107,7 +110,20 @@ public class Shell {
     }
 
     public void mkdir(String name) {
-        current.ajouter(new Dossier(current.getParent()), name);
+
+        if (name == null || name.equals("")) {
+            System.out.println("mkdir: missing operand");
+            return;
+        }
+
+        String[] path = name.split("/");
+        Entree e = find(Arrays.copyOfRange(path, 0, path.length - 2 > 0 ? path.length - 2 : 0));
+
+        if (e.getElement() instanceof Dossier dossier) {
+            dossier.ajouter(e.getElement(), path[path.length - 1]);
+        } else {
+            System.out.println("mkdir: " + name + ": Not a directory");
+        }
     }
 
     public void mv(String name, String newFolder) {
