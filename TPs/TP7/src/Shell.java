@@ -17,10 +17,31 @@ public class Shell {
     /**
      * Cherche un element dans l'arborescence, en gérant les / et les ...
      * 
-     * @param name Nom de l'élément à chercher
+     * @param path Nom de l'élément à chercher
      */
-    private Entree find(String name) {
-        String[] path = name.split("/");
+    private Entree find(String path) {
+        String[] pathList = path.split("/");
+        Dossier current = this.current;
+        Entree res = null;
+
+        for (String s : pathList) {
+            res = current.getEntree(s, false);
+            if (res == null)
+                return null;
+            if (res.getElement() instanceof Dossier)
+                current = (Dossier) res.getElement();
+
+        }
+
+        return res;
+    }
+
+    /**
+     * Cherche un element dans l'arborescence, en gérant les / et les ...
+     * 
+     * @param path Nom de l'élément à chercher
+     */
+    private Entree find(String[] path) {
         Dossier current = this.current;
         Entree res = null;
 
@@ -34,7 +55,6 @@ public class Shell {
         }
 
         return res;
-
     }
 
     public void cat(String name) {
