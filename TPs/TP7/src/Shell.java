@@ -119,14 +119,12 @@ public class Shell {
     }
 
     public void cat(String name) {
-        Entree e = current.getEntree(name, false);
+        FichierTexte texte = findFichierTexte(name);
 
-        if (e == null)
+        if (texte == null)
             System.out.println("File not found");
-        else if (e.getElement() instanceof FichierTexte texte)
-            texte.afficher();
         else
-            System.out.println("cat: " + name + ": Is a directory");
+            texte.afficher();
 
     }
 
@@ -167,6 +165,8 @@ public class Shell {
             System.out.println(e.getNom() + " is not a folder");
 
     }
+
+    // TODO: Can create test/tes1/test2
 
     public void mkdir(String name) {
 
