@@ -245,7 +245,8 @@ public class Shell {
         Entree e;
 
         if (path.length == 1) {
-            e = current.getEntree(filename, false);
+            current.ajouter(new FichierTexte(""), filename);
+            e = current.getEntree(filename, true);
         } else {
             Entree folderEntry = find(filename, -1);
             if (folderEntry.getElement() instanceof Dossier dossier) {
@@ -265,7 +266,8 @@ public class Shell {
         }
 
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
-        f.editer(scanner, true);
+        f.editer(scanner, false);
+        System.out.println("fin");
     }
 
     public void cp(String name, String newFolder) {

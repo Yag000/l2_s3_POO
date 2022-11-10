@@ -26,18 +26,19 @@ public class FichierTexte extends Element implements Affichable, Editable {
 
         String nextValue = sc.nextLine();
 
-        if (nextValue.equals("."))
-            return;
-
-        do {
-            contenu += nextValue + "\n";
+        while (!nextValue.equals(".") && sc.hasNext()) {
+            contenu += nextValue;
 
             if (echo)
                 System.out.println(nextValue);
 
             nextValue = sc.nextLine();
+            System.out.println("nextValue: " + nextValue);
 
-        } while (sc.hasNext() && !nextValue.equals("."));
+            if (!nextValue.equals("."))
+                contenu += "\n";
+
+        }
     }
 
     @Override
