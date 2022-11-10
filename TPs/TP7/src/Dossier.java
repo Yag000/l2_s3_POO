@@ -13,14 +13,14 @@ public class Dossier extends Element implements Affichable {
         entrees = new LinkedList<Entree>();
         parent = new Entree(this, "/", this);
         entrees.add(new EntreeSpeciale(this, ".", this));
-        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
+        entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
     }
 
     public Dossier(Entree parent) {
         this.parent = parent;
         entrees = new LinkedList<Entree>();
         entrees.add(new EntreeSpeciale(this, ".", this));
-        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
+        entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
     }
 
     public Entree getParent() {

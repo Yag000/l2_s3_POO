@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+//TODO: Work with entree spéciale
+
 public class Shell {
 
     public Dossier root;
@@ -228,7 +230,6 @@ public class Shell {
         }
 
         if (e.getElement() instanceof Dossier dossier) {
-            System.out.print("done");
             dossier.ajouter(new Dossier(e), path[path.length - 1]);
         } else {
             System.out.println("mkdir: " + name + ": Not a directory");
