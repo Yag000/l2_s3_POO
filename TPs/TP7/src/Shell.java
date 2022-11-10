@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -10,12 +9,17 @@ public class Shell {
     public Shell(Dossier first) {
         current = first;
 
-        Dossier tmp = first;
+        if (first.getParent().getElement() == first) {
+            root = first;
+        } else {
 
-        while (tmp.getParent().getParent() != null)
-            tmp = tmp.getParent().getParent();
+            Dossier tmp = first;
 
-        root = tmp;
+            while (tmp.getParent().getParent() != null)
+                tmp = tmp.getParent().getParent();
+
+            root = tmp;
+        }
     }
 
     /**
@@ -129,6 +133,14 @@ public class Shell {
 
         String[] path = name.split("/");
         Entree e = find(Arrays.copyOfRange(path, 0, path.length - 2 > 0 ? path.length - 2 : 0));
+
+        if (e == null) {
+            if (path.length == 0)
+                current.ajouter(e.getElement(), path[0]);
+            else
+                System.out.println("mkdir: cannot create directory '" + name + "': No such file or directory");
+            return;
+        }
 
         if (e.getElement() instanceof Dossier dossier) {
             dossier.ajouter(e.getElement(), path[path.length - 1]);

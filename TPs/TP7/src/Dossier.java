@@ -12,6 +12,8 @@ public class Dossier extends Element implements Affichable {
     public Dossier() {
         entrees = new LinkedList<Entree>();
         parent = new Entree(this, "/", this);
+        entrees.add(new EntreeSpeciale(this, ".", this));
+        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
     }
 
     public Dossier(Entree parent) {
