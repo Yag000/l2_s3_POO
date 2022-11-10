@@ -62,6 +62,7 @@ public class Shell {
 
     public void cat(String name) {
         Entree e = current.getEntree(name, false);
+
         if (e == null)
             System.out.println("File not found");
         else if (e.getElement() instanceof FichierTexte texte)
@@ -127,35 +128,33 @@ public class Shell {
     }
 
     public void mv(String name, String newFolder) {
-        Entree e = current.getEntree(name, false);
 
-        if (e == null) {
-            System.out.println("File not found");
+        if (name == null || name.equals("")) {
+            System.out.println("mv: missing operand");
             return;
         }
 
-        String[] s = newFolder.split("/");
+        Entree entreeOfOriginal = find(name);
 
-        Dossier tmp = current;
+        String[] pathToNew = newFolder.split("/");
+        Entree entreeOfNew = find(
+                Arrays.copyOfRange(pathToNew, 0, pathToNew.length - 2 > 0 ? pathToNew.length - 2 : 0));
 
-        for (String folder : s) {
-            Entree entree = tmp.getEntree(folder, false);
-
-            if (entree == null) {
-                System.out.println("Folder not found");
+        if (entreeOfNew.getElement() instanceof Dossier dossier) {
+            Entree lastEntreeOfNew = dossier.getEntree(pathToNew[pathToNew.length - 1], false);
+            if (lastEntreeOfNew == null) {
+                System.out.println("mv: " + name + ": Not a directory");
                 return;
             }
 
-            if (entree.getElement() instanceof Dossier dossier)
-                tmp = dossier;
-            else {
-                System.out.println(entree.getNom() + " is not a folder");
-                return;
-            }
-        }
+            if (lastEntreeOfNew.getElement() instanceof Dossier newDossier)
+                newDossier.ajouter(entreeOfOriginal.getElement(), pathToNew[pathToNew.length - 1]);
+            else
+                dossier.ajouter(entreeOfOriginal.getElement(), lastEntreeOfNew.getNom());
 
-        tmp.ajouter(e.getElement(), e.getNom());
-        current.supprimer(e);
+            entreeOfOriginal.supprimer();
+        } else
+            System.out.println("mv: " + name + ": Not a directory");
     }
 
     public static void main(String[] args) {
