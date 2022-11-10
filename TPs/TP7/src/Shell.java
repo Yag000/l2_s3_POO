@@ -157,6 +157,17 @@ public class Shell {
             System.out.println("mv: " + name + ": Not a directory");
     }
 
+    public void rm(String name) {
+        Entree e = find(name);
+
+        if (e == null)
+            System.out.println("File not found");
+        else if (e.getElement() instanceof FichierTexte texte)
+            e.supprimer();
+        else
+            System.out.println("rm: " + name + ": Is a directory");
+    }
+
     public static void main(String[] args) {
 
     }
