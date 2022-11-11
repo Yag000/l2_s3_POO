@@ -29,7 +29,14 @@ public class Dossier extends Element implements Affichable {
         return parent;
     }
 
-    // TODO: Does not wok...
+    public void updateParent() {
+        getEntree("..", false).setParent(this);
+        getEntree("..", false).setElement(parent.getParent());
+
+        System.out.println("Parent updated");
+        System.out.println(getEntree("..", false).getParent().getChemin());
+    }
+
     public void setParent(Entree e) {
         parent = e;
     }

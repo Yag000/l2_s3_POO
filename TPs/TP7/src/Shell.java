@@ -1,8 +1,8 @@
 import java.util.Scanner;
-//TODO: Work with entree spéciale
 
 public class Shell {
 
+    private static final String NO_SUCH_FILE_OR_DIRECTORY = ": No such file or directory";
     private static final String NOT_A_DIRECTORY = ": Not a directory";
     private static final String FILE_NOT_FOUND = "File not found";
 
@@ -267,9 +267,7 @@ public class Shell {
         }
     }
 
-    // TODO: update to use findLastDossier
-    // TODO: completely broken
-
+    // Works
     private void mv(String name, String newFolder) {
 
         if (name == null || name.equals("")) {
@@ -279,29 +277,54 @@ public class Shell {
 
         Entree entreeOfOriginal = find(name);
 
-        String[] pathToNew = newFolder.split("/");
-        Entree entreeOfNew = find(newFolder, -1);
+        if (entreeOfOriginal == null) {
+            System.out.println("mv: " + name + NO_SUCH_FILE_OR_DIRECTORY);
+            return;
+        }
 
-        if (entreeOfNew.getElement() instanceof Dossier dossier) {
-            Entree lastEntreeOfNew = dossier.getEntree(pathToNew[pathToNew.length - 1], false);
-            if (lastEntreeOfNew == null) {
-                System.out.println("mv: " + name + NOT_A_DIRECTORY);
-                return;
-            }
+        if (entreeOfOriginal instanceof EntreeSpeciale) {
+            System.out.println("mv: " + name + " is a special file");
+            return;
+        }
 
-            if (lastEntreeOfNew.getElement() instanceof Dossier newDossier)
-                newDossier.ajouter(entreeOfOriginal.getElement(), pathToNew[pathToNew.length - 1]);
-            else
-                dossier.ajouter(entreeOfOriginal.getElement(), lastEntreeOfNew.getNom());
+        String[] pathList = newFolder.split("/");
+        Dossier newDossier;
 
-            entreeOfOriginal.supprimer();
-        } else
-            System.out.println("mv: " + name + NOT_A_DIRECTORY);
+        if (pathList.length == 1) {
+            Entree tmp = current.getEntree(newFolder, false);
+            newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? current : (Dossier) tmp.getElement();
+        }
+
+        else
+            newDossier = findLastDossier(newFolder);
+
+        if (newDossier == null) {
+            System.out.println("mv: " + newFolder + NO_SUCH_FILE_OR_DIRECTORY);
+            return;
+        }
+
+        String newName = newDossier.getParent().getNom().equals(pathList[pathList.length - 1])
+                ? entreeOfOriginal.getNom()
+                : pathList[pathList.length - 1];
+
+        // Only problem ""..""
+        newDossier.ajouter(entreeOfOriginal.getElement(), newName);
+
+        entreeOfOriginal.supprimer();
+
+        if (newDossier.getEntree(newName, false).getElement() instanceof Dossier dossier) {
+            dossier.updateParent();
+        }
     }
 
     // Works
     private void rm(String name) {
         Entree e = find(name);
+
+        if (e instanceof EntreeSpeciale) {
+            System.out.println("mv: " + name + " is a special file");
+            return;
+        }
 
         if (e == null)
             System.out.println(FILE_NOT_FOUND);
@@ -322,8 +345,6 @@ public class Shell {
         String[] path = filename.split("/");
 
         Entree e;
-
-        System.out.println(path.length);
 
         if (path.length == 1) {
             current.ajouter(new FichierTexte(""), filename);
@@ -361,7 +382,12 @@ public class Shell {
 
         Entree oldDossier = find(oldFolder);
         if (oldDossier == null) {
-            System.out.println("cp: " + oldFolder + ": No such file or directory");
+            System.out.println("cp: " + oldFolder + NO_SUCH_FILE_OR_DIRECTORY);
+            return;
+        }
+
+        if (oldDossier instanceof EntreeSpeciale) {
+            System.out.println("mv: " + oldFolder + " is a special file");
             return;
         }
 
@@ -430,9 +456,12 @@ public class Shell {
                 case "pwd":
                     pwd();
                     break;
+                case "quit":
                 case "exit":
                     scanner.close();
                     return;
+                case "":
+                    break;
                 default:
                     System.out.println("Command not found");
             }
