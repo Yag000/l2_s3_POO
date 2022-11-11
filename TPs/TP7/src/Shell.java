@@ -53,34 +53,31 @@ public class Shell {
 
     }
 
-    public Shell(boolean test) {
+    public Shell(String filename) {
         root = new Dossier();
         courant = root;
         System.out.println();
         System.out.println("---------------------");
         System.out.println("Bienvenue dans le shell");
+        System.out.println("Cette interaction avec la console est un test");
+        System.out.println("Les commandes sont dans le fichier " + filename);
+        System.out.println();
 
-        if (test) {
-            try {
-                File f = new File("./src/test.txt");
-                scanner = new Scanner(f);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println("Cette interaction avec la console est un test");
-            System.out.println("Les commandes sont dans le fichier test.txt");
-            System.out.println();
-        } else
-            scanner = new Scanner(System.in);
-
-        parser(test);
-
-        if (test) {
-            System.out.println();
-            System.out.println("---------------------");
-            System.out.println("Fin du test");
+        try {
+            File f = new File(filename);
+            scanner = new Scanner(f);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        parser(true);
+
+        System.out.println();
+        System.out.println("---------------------");
+        System.out.println("Fin du test");
+        System.out.println();
     }
+
     // Helpers
 
     /**
@@ -686,8 +683,8 @@ public class Shell {
     }
 
     public static void main(String[] args) {
-        new Shell(true);
+        new Shell("./src/test.txt");
 
-        new Shell(false);
+        new Shell();
     }
 }
