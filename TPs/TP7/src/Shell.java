@@ -1,7 +1,5 @@
 import java.util.Scanner;
 
-import javax.lang.model.util.ElementScanner14;
-
 public class Shell {
 
     // Constantes pour les messages d'erreur
@@ -26,6 +24,8 @@ public class Shell {
         root = new Dossier();
         courant = root;
         scanner = new Scanner(System.in);
+
+        parser();
     }
 
     public Shell(Dossier first) {
