@@ -24,9 +24,7 @@ public class Shell {
     public Shell() {
         root = new Dossier();
         courant = root;
-
-        System.out.println("Bienvenue dans le shell");
-
+        printWelcomeMessage();
         scanner = new Scanner(System.in);
 
         parser(false);
@@ -47,7 +45,7 @@ public class Shell {
             root = tmp;
         }
 
-        System.out.println("Bienvenue dans le shell");
+        printWelcomeMessage();
 
         scanner = new Scanner(System.in);
 
@@ -77,8 +75,9 @@ public class Shell {
         System.out.println();
         System.out.println("---------------------");
         System.out.println("Fin du test");
-
+        System.out.println();
     }
+
     // Helpers
 
     /**
@@ -97,6 +96,27 @@ public class Shell {
      */
     private void printTooManyOperands(String command) {
         System.out.println(command + ": too many operands");
+    }
+
+    private void printWelcomeMessage() {
+        System.out.println("--------------------");
+        System.out.println("Bienvenue dans le shell");
+        System.out.println();
+        System.out.println("Les commandes sont :");
+
+        System.out.println("cat <nom> : affiche le contenu d'un fichier");
+        System.out.println("ls : liste les fichiers du dossier courant");
+        System.out.println("cd <nom> : change le dossier courant");
+        System.out.println("mkdir <nom> : crée un dossier");
+        System.out.println("mv <nom> <nom> : déplace un element");
+        System.out.println("rm <nom> : supprime un fichier");
+        System.out.println("ed <nom> : édite le contenu d'un fichier");
+        System.out.println("cp <nom> <nom> : copie un element");
+        System.out.println("pwd : affiche le chemin absolu du dossier courant");
+
+        System.out.println("exit : quitte le shell");
+        System.out.println("quit : quitte le shell");
+        System.out.println("--------------------");
     }
 
     // Méthodes de type Find
