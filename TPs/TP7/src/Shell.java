@@ -6,8 +6,8 @@ public class Shell {
     private static final String NOT_A_DIRECTORY = ": Not a directory";
     private static final String FILE_NOT_FOUND = "File not found";
 
-    public Dossier root;
-    public Dossier current;
+    private final Dossier root;
+    private Dossier current;
 
     private Scanner scanner;
 
@@ -31,6 +31,8 @@ public class Shell {
         parser();
 
     }
+
+    // Méthodes de type Find
 
     /**
      * Cherche un element dans l'arborescence, en gérant les / et les ...
@@ -158,10 +160,34 @@ public class Shell {
         return res;
     }
 
+    /**
+     * @param path
+     * @return true si tout les éléments sont des dossiers ou ils n'existent pas
+     */
+    private boolean isAllFolders(String path) {
+
+        String[] pathList = path.split("/");
+        Dossier tmp = this.current;
+
+        for (String s : pathList) {
+            Entree e = tmp.getEntree(s, false);
+
+            if (e == null)
+                return true;
+
+            if (e.getElement() instanceof Dossier)
+                tmp = (Dossier) e.getElement();
+            else
+                return false;
+        }
+
+        return false;
+    }
+
     // Commandes
 
     // Works
-    public void cat(String name) {
+    private void cat(String name) {
         FichierTexte texte = findFichierTexte(name);
 
         if (texte == null)
@@ -172,7 +198,7 @@ public class Shell {
     }
 
     // Works
-    public void cd(String folderName) {
+    private void cd(String folderName) {
         String[] s = folderName.split("/");
 
         for (String folder : s) {
@@ -192,7 +218,13 @@ public class Shell {
         }
     }
 
-    public void ls(String name) {
+    // Works
+    private void cd() {
+        current = root;
+    }
+
+    // Works
+    private void ls(String name) {
 
         if (name == null || name.equals("")) {
             current.afficher();
@@ -210,36 +242,35 @@ public class Shell {
 
     }
 
-    // TODO: Can create test/tes1/test2
-    public void mkdir(String name) {
+    // Works
+    private void mkdir(String name) {
 
         if (name == null || name.equals("")) {
             System.out.println("mkdir: missing operand");
             return;
         }
 
-        String[] path = name.split("/");
-        Entree e = find(name, -1);
+        if (isAllFolders(name)) {
+            Dossier tmp = current;
+            String[] pathList = name.split("/");
 
-        if (e == null) {
-            if (path.length == 1)
-                current.ajouter(new Dossier(current.getParent()), path[0]);
-            else
-                System.out.println("mkdir: cannot create directory '" + name + "': No such file or directory");
-            return;
-        }
+            for (String s : pathList) {
+                Entree e = tmp.getEntree(s, false);
 
-        if (e.getElement() instanceof Dossier dossier) {
-            dossier.ajouter(new Dossier(e), path[path.length - 1]);
-        } else {
-            System.out.println("mkdir: " + name + NOT_A_DIRECTORY);
+                if (e == null) {
+                    tmp.ajouter(new Dossier(new Entree(null, s, tmp)), s);
+                    e = tmp.getEntree(s, false);
+                }
+
+                tmp = (Dossier) e.getElement();
+            }
         }
     }
 
     // TODO: update to use findLastDossier
     // TODO: completely broken
 
-    public void mv(String name, String newFolder) {
+    private void mv(String name, String newFolder) {
 
         if (name == null || name.equals("")) {
             System.out.println("mv: missing operand");
@@ -268,7 +299,8 @@ public class Shell {
             System.out.println("mv: " + name + NOT_A_DIRECTORY);
     }
 
-    public void rm(String name) {
+    // Works
+    private void rm(String name) {
         Entree e = find(name);
 
         if (e == null)
@@ -279,7 +311,8 @@ public class Shell {
             System.out.println("rm: " + name + ": Is a directory");
     }
 
-    public void ed(String filename) {
+    // Works
+    private void ed(String filename) {
 
         if (filename == null || filename.equals("")) {
             System.out.println("ed: missing operand");
@@ -318,8 +351,8 @@ public class Shell {
         f.editer(scanner, false);
     }
 
-    // TODO: does not work
-    public void cp(String oldFolder, String newFolder) {
+    // Works
+    private void cp(String oldFolder, String newFolder) {
 
         if (oldFolder == null || oldFolder.equals("") || newFolder.equals("")) {
             System.out.println("mv: missing operand");
@@ -355,10 +388,12 @@ public class Shell {
         newDossier.ajouter(oldDossier.getElement().copy(newEntree), newName);
     }
 
-    public void pwd() {
+    // Works
+    private void pwd() {
         System.out.println(current.getChemin());
     }
 
+    // Works
     private void parser() {
         while (true) {
             System.out.print(current.getChemin() + "$ ");
@@ -369,7 +404,10 @@ public class Shell {
                     cat(s[1]);
                     break;
                 case "cd":
-                    cd(s[1]);
+                    if (s.length == 1)
+                        cd();
+                    else
+                        cd(s[1]);
                     break;
                 case "ls":
                     ls(s.length > 1 ? s[1] : null);
@@ -402,8 +440,6 @@ public class Shell {
     }
 
     public static void main(String[] args) {
-
         new Shell(new Dossier());
     }
-
 }
