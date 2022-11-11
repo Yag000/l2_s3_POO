@@ -12,7 +12,7 @@ public class Shell {
     // Attributs des dossiers
 
     private final Dossier root;
-    private Dossier current;
+    private Dossier courant;
 
     // Scanner pour gérer les entrées du Shell
 
@@ -22,12 +22,12 @@ public class Shell {
 
     public Shell() {
         root = new Dossier();
-        current = root;
+        courant = root;
         scanner = new Scanner(System.in);
     }
 
     public Shell(Dossier first) {
-        current = first;
+        courant = first;
 
         if (first.getParent().getElement() == first) {
             root = first;
@@ -56,7 +56,7 @@ public class Shell {
      */
     private Entree find(String path) {
         String[] pathList = path.split("/");
-        Dossier tmp = this.current;
+        Dossier tmp = this.courant;
         Entree res = null;
 
         for (String s : pathList) {
@@ -77,7 +77,7 @@ public class Shell {
      * @param pathList Nom de l'élément à chercher
      */
     private Entree find(String[] pathList) {
-        Dossier tmp = this.current;
+        Dossier tmp = this.courant;
         Entree res = null;
 
         for (String s : pathList) {
@@ -110,7 +110,7 @@ public class Shell {
         else if (depth < 0)
             depth = pathList.length - (-depth % pathList.length);
 
-        Dossier tmp = this.current;
+        Dossier tmp = this.courant;
         Entree res = null;
 
         for (int i = 0; i < depth; i++) {
@@ -149,7 +149,7 @@ public class Shell {
     private Dossier findLastDossier(String path) {
 
         String[] pathList = path.split("/");
-        Dossier tmp = this.current;
+        Dossier tmp = this.courant;
         Dossier res = null;
         int counter = 0;
 
@@ -182,7 +182,7 @@ public class Shell {
     private boolean isAllFolders(String path) {
 
         String[] pathList = path.split("/");
-        Dossier tmp = this.current;
+        Dossier tmp = this.courant;
 
         for (String s : pathList) {
             Entree e = tmp.getEntree(s, false);
@@ -201,6 +201,11 @@ public class Shell {
 
     // Commandes
 
+    /**
+     * Affiche le contenu du fichier passé en paramètre
+     * 
+     * @param path
+     */
     private void cat(String path) {
         FichierTexte texte = findFichierTexte(path);
 
@@ -211,11 +216,16 @@ public class Shell {
 
     }
 
+    /**
+     * Le shell change de dossier courant
+     * 
+     * @param path
+     */
     private void cd(String path) {
         String[] pathList = path.split("/");
 
         for (String folder : pathList) {
-            Entree e = current.getEntree(folder, false);
+            Entree e = courant.getEntree(folder, false);
 
             if (e == null) {
                 System.out.println("Folder not found");
@@ -223,7 +233,7 @@ public class Shell {
             }
 
             if (e.getElement() instanceof Dossier dossier) {
-                current = dossier;
+                courant = dossier;
             } else {
                 System.out.println(e.getNom() + " is not a folder");
                 return;
@@ -231,14 +241,22 @@ public class Shell {
         }
     }
 
+    /**
+     * Le dossier courant devient root
+     */
     private void cd() {
-        current = root;
+        courant = root;
     }
 
+    /**
+     * Affiche les contenus du dossier passé en argument
+     * 
+     * @param path
+     */
     private void ls(String path) {
 
         if (path == null || path.equals("")) {
-            current.afficher();
+            courant.afficher();
             return;
         }
 
@@ -253,6 +271,13 @@ public class Shell {
 
     }
 
+    /**
+     * Affiche les contenus du dossier courant
+     */
+    private void ls() {
+        courant.afficher();
+    }
+
     private void mkdir(String path) {
 
         if (path == null || path.equals("")) {
@@ -261,7 +286,7 @@ public class Shell {
         }
 
         if (isAllFolders(path)) {
-            Dossier tmp = current;
+            Dossier tmp = courant;
             String[] pathList = path.split("/");
 
             for (String s : pathList) {
@@ -300,8 +325,8 @@ public class Shell {
         Dossier newDossier;
 
         if (newPathList.length == 1) {
-            Entree tmp = current.getEntree(newPath, false);
-            newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? current : (Dossier) tmp.getElement();
+            Entree tmp = courant.getEntree(newPath, false);
+            newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? courant : (Dossier) tmp.getElement();
         }
 
         else
@@ -354,8 +379,8 @@ public class Shell {
         Entree e;
 
         if (pathList.length == 1) {
-            current.ajouter(new FichierTexte(""), path);
-            e = current.getEntree(path, true);
+            courant.ajouter(new FichierTexte(""), path);
+            e = courant.getEntree(path, true);
         } else {
             Dossier dossier = findLastDossier(path);
 
@@ -402,8 +427,8 @@ public class Shell {
         String newName;
 
         if (newPath.split("/").length == 1) {
-            newEntree = current.getParent();
-            newDossier = current;
+            newEntree = courant.getParent();
+            newDossier = courant;
             newName = newPath;
         } else {
             newDossier = findLastDossier(newPath);
@@ -421,12 +446,12 @@ public class Shell {
     }
 
     private void pwd() {
-        System.out.println(current.getChemin());
+        System.out.println(courant.getChemin());
     }
 
     private void parser() {
         while (true) {
-            System.out.print(current.getChemin() + "$ ");
+            System.out.print(courant.getChemin() + "$ ");
             String[] commande = scanner.nextLine().split(" ");
 
             switch (commande[0]) {
