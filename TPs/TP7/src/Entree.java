@@ -54,7 +54,7 @@ public class Entree {
             return "/";
 
         String s = parent.getChemin();
-        if (s == "/")
+        if (s.equals("/"))
             return s + nom;
         else
             return s + "/" + nom;
