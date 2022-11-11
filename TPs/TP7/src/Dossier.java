@@ -10,7 +10,7 @@ public class Dossier extends Element implements Affichable {
      * Constructeur de root
      */
     public Dossier() {
-        entrees = new LinkedList<Entree>();
+        entrees = new LinkedList<>();
         parent = new Entree(this, "/", this);
 
         entrees.add(new EntreeSpeciale(this, ".", this));
@@ -19,7 +19,7 @@ public class Dossier extends Element implements Affichable {
 
     public Dossier(Entree parent) {
         this.parent = parent;
-        entrees = new LinkedList<Entree>();
+        entrees = new LinkedList<>();
 
         entrees.add(new EntreeSpeciale(this, ".", this));
         entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));

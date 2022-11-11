@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Shell {
 
+    private static final String IS_A_SPECIAL_FILE = " is a special file";
     private static final String NO_SUCH_FILE_OR_DIRECTORY = ": No such file or directory";
     private static final String NOT_A_DIRECTORY = ": Not a directory";
     private static final String FILE_NOT_FOUND = "File not found";
@@ -283,7 +284,7 @@ public class Shell {
         }
 
         if (entreeOfOriginal instanceof EntreeSpeciale) {
-            System.out.println("mv: " + name + " is a special file");
+            System.out.println("mv: " + name + IS_A_SPECIAL_FILE);
             return;
         }
 
@@ -322,7 +323,7 @@ public class Shell {
         Entree e = find(name);
 
         if (e instanceof EntreeSpeciale) {
-            System.out.println("mv: " + name + " is a special file");
+            System.out.println("mv: " + name + IS_A_SPECIAL_FILE);
             return;
         }
 
@@ -387,7 +388,7 @@ public class Shell {
         }
 
         if (oldDossier instanceof EntreeSpeciale) {
-            System.out.println("mv: " + oldFolder + " is a special file");
+            System.out.println("mv: " + oldFolder + IS_A_SPECIAL_FILE);
             return;
         }
 
