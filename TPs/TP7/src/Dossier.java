@@ -7,11 +7,11 @@ public class Dossier extends Element implements Affichable {
     List<Entree> entrees;
 
     /**
-     * COnstructeur de root
+     * Constructeur de root
      */
     public Dossier() {
+        entrees = new LinkedList<Entree>();
         parent = new Entree(this, "/", this);
-        entrees = new LinkedList<>();
 
         entrees.add(new EntreeSpeciale(this, ".", this));
         entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
@@ -19,7 +19,7 @@ public class Dossier extends Element implements Affichable {
 
     public Dossier(Entree parent) {
         this.parent = parent;
-        entrees = new LinkedList<>();
+        entrees = new LinkedList<Entree>();
 
         entrees.add(new EntreeSpeciale(this, ".", this));
         entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
@@ -32,12 +32,6 @@ public class Dossier extends Element implements Affichable {
     // TODO: Does not wok...
     public void setParent(Entree e) {
         parent = e;
-        for (Entree entree : entrees)
-            if (entree.getNom().equals("..")) {
-                entree.setElement(parent.getElement());
-                entree.setParent(this);
-                return;
-            }
     }
 
     public void supprimer(Entree entree) {
