@@ -34,10 +34,12 @@ public class FichierTexte extends Element implements Affichable, Editable {
         if (!sc.hasNext())
             return;
 
+        StringBuilder bld = new StringBuilder();
+
         String nextValue = sc.nextLine();
 
         while (!nextValue.equals(".") && sc.hasNext()) {
-            contenu += nextValue;
+            bld.append(nextValue);
 
             if (echo)
                 System.out.println(nextValue);
@@ -45,9 +47,11 @@ public class FichierTexte extends Element implements Affichable, Editable {
             nextValue = sc.nextLine();
 
             if (!nextValue.equals("."))
-                contenu += "\n";
+                bld.append("\n");
 
         }
+
+        contenu = bld.toString();
     }
 
     @Override
