@@ -1,4 +1,8 @@
+import java.io.File;
+import java.time.format.TextStyle;
 import java.util.Scanner;
+
+import javax.lang.model.util.ElementScanner14;
 
 public class Shell {
 
@@ -23,9 +27,12 @@ public class Shell {
     public Shell() {
         root = new Dossier();
         courant = root;
+
+        System.out.println("Bienvenue dans le shell");
+
         scanner = new Scanner(System.in);
 
-        parser();
+        parser(false);
     }
 
     public Shell(Dossier first) {
@@ -43,18 +50,58 @@ public class Shell {
             root = tmp;
         }
 
+        System.out.println("Bienvenue dans le shell");
+
         scanner = new Scanner(System.in);
 
-        parser();
+        parser(false);
 
     }
 
+    public Shell(boolean test) {
+        root = new Dossier();
+        courant = root;
+        System.out.println();
+        System.out.println("---------------------");
+        System.out.println("Bienvenue dans le shell");
+
+        if (test) {
+            try {
+                File f = new File("./src/test.txt");
+                scanner = new Scanner(f);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("Cette interaction avec la console est un test");
+            System.out.println("Les commandes sont dans le fichier test.txt");
+            System.out.println();
+        } else
+            scanner = new Scanner(System.in);
+
+        parser(test);
+
+        if (test) {
+            System.out.println();
+            System.out.println("---------------------");
+            System.out.println("Fin du test");
+        }
+    }
     // Helpers
 
+    /**
+     * Affiche un message d’erreur pour un nombre insuffisant d’arguments.
+     * 
+     * @param command
+     */
     private void printMissingOperand(String command) {
         System.out.println(command + ": missing operand");
     }
 
+    /**
+     * Affiche un message d’erreur pour un nombre excessif d’arguments.
+     * 
+     * @param command
+     */
     private void printTooManyOperands(String command) {
         System.out.println(command + ": too many operands");
     }
@@ -410,11 +457,13 @@ public class Shell {
 
     /**
      * Permet la modification du contenu d'un fichier passé en argument. Si le
-     * fichier n'existait aps déjà il est crée.
+     * fichier n'existait aps déjà il est crée. Su echo est vrai le contenu est
+     * affiché après chaque ligne
      * 
+     * @param echo
      * @param path
      */
-    private void ed(String path) {
+    private void ed(String path, boolean echo) {
 
         if (path == null || path.equals("")) {
             printMissingOperand("ed");
@@ -445,9 +494,23 @@ public class Shell {
         }
 
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
-        file.editer(scanner, false);
+        file.editer(scanner, echo);
+
+        // On affiche le point final qui ne s'affiche pas avec la fonction editer
+        if (echo)
+            System.out.println(".");
     }
 
+    private void ed(String path) {
+        ed(path, false);
+    }
+
+    /**
+     * Permet de copier un fichier vers un nouveau dossier
+     * 
+     * @param oldPath
+     * @param newPath
+     */
     private void cp(String oldPath, String newPath) {
 
         if (oldPath == null || oldPath.equals("") || newPath.equals("")) {
@@ -455,7 +518,10 @@ public class Shell {
             return;
         }
 
+        // Gestion des cas où on ne peux pas copier le premier element
+
         Entree oldEntree = find(oldPath);
+
         if (oldEntree == null) {
             System.out.println("cp: " + oldPath + NO_SUCH_FILE_OR_DIRECTORY);
             return;
@@ -465,6 +531,8 @@ public class Shell {
             System.out.println("mv: " + oldPath + IS_A_SPECIAL_FILE);
             return;
         }
+
+        // Obtention de la destination et du nouveau nom de l’élément.
 
         Entree newEntree;
         Dossier newDossier;
@@ -486,102 +554,124 @@ public class Shell {
             }
         }
 
+        // On ajoute le nouveau objet au dossier
         newDossier.ajouter(oldEntree.getElement().copy(newEntree), newName);
     }
 
+    /**
+     * Affiche le chemin absolu vers le repertoire courant
+     */
     private void pwd() {
         System.out.println(courant.getChemin());
     }
 
-    private void parser() {
-        while (true) {
-            System.out.print(courant.getChemin() + "$ ");
-            String[] commande = scanner.nextLine().split(" ");
+    /**
+     * Boucle pour parseCommande
+     */
+    private void parser(boolean test) {
+        boolean exit = false;
 
-            switch (commande[0]) {
-                case "cat":
-                    if (commande.length == 2)
-                        cat(commande[1]);
-                    else if (commande.length < 2)
-                        printMissingOperand("cat");
-                    else
-                        printTooManyOperands("cat");
-                    break;
-                case "cd":
-                    if (commande.length == 1)
-                        cd();
-                    else if (commande.length == 2)
-                        cd(commande[1]);
-                    else
-                        printTooManyOperands("cd");
-                    break;
-                case "ls":
-                    if (commande.length == 1)
-                        ls();
-                    else if (commande.length == 2)
-                        ls(commande[1]);
-                    else
-                        printTooManyOperands("ls");
-                    break;
-                case "mkdir":
-                    if (commande.length == 2)
-                        mkdir(commande[1]);
-                    else if (commande.length < 2)
-                        printMissingOperand("mkdir");
-                    else
-                        printTooManyOperands("mkdir");
-                    break;
-                case "mv":
-                    if (commande.length == 3)
-                        mv(commande[1], commande[2]);
-                    else if (commande.length < 3)
-                        printMissingOperand("mv");
-                    else
-                        printTooManyOperands("mv");
-                    break;
-                case "rm":
-                    if (commande.length == 2)
-                        rm(commande[1]);
-                    else if (commande.length < 2)
-                        printMissingOperand("rm");
-                    else
-                        printTooManyOperands("rm");
-                    break;
-                case "ed":
-                    if (commande.length == 2)
-                        ed(commande[1]);
-                    else if (commande.length < 2)
-                        printMissingOperand("ed");
-                    else
-                        printTooManyOperands("ed");
-                    break;
-                case "cp":
-                    if (commande.length == 3)
-                        cp(commande[1], commande[2]);
-                    else if (commande.length < 3)
-                        printMissingOperand("cp");
-                    else
-                        printTooManyOperands("cp");
-                    break;
-                case "pwd":
-                    if (commande.length == 1)
-                        pwd();
-                    else
-                        printTooManyOperands("pwd");
-                    break;
-                case "quit":
-                case "exit":
-                    scanner.close();
-                    return;
-                case "":
-                    break;
-                default:
-                    System.out.println("Command not found");
-            }
+        while (!exit) {
+            System.out.print(courant.getChemin() + "$ ");
+            String input = scanner.nextLine();
+            if (test)
+                System.out.println(input);
+            exit = parseCommande(input, test);
         }
     }
 
+    /**
+     * Analyse l'entrée de l'utilisateur et appelle la fonction appropriée
+     */
+    private boolean parseCommande(String s, boolean test) {
+        String[] commande = s.split(" ");
+
+        switch (commande[0]) {
+            case "cat":
+                if (commande.length == 2)
+                    cat(commande[1]);
+                else if (commande.length < 2)
+                    printMissingOperand("cat");
+                else
+                    printTooManyOperands("cat");
+                break;
+            case "cd":
+                if (commande.length == 1)
+                    cd();
+                else if (commande.length == 2)
+                    cd(commande[1]);
+                else
+                    printTooManyOperands("cd");
+                break;
+            case "ls":
+                if (commande.length == 1)
+                    ls();
+                else if (commande.length == 2)
+                    ls(commande[1]);
+                else
+                    printTooManyOperands("ls");
+                break;
+            case "mkdir":
+                if (commande.length == 2)
+                    mkdir(commande[1]);
+                else if (commande.length < 2)
+                    printMissingOperand("mkdir");
+                else
+                    printTooManyOperands("mkdir");
+                break;
+            case "mv":
+                if (commande.length == 3)
+                    mv(commande[1], commande[2]);
+                else if (commande.length < 3)
+                    printMissingOperand("mv");
+                else
+                    printTooManyOperands("mv");
+                break;
+            case "rm":
+                if (commande.length == 2)
+                    rm(commande[1]);
+                else if (commande.length < 2)
+                    printMissingOperand("rm");
+                else
+                    printTooManyOperands("rm");
+                break;
+            case "ed":
+                if (commande.length == 2)
+                    ed(commande[1], test);
+                else if (commande.length < 2)
+                    printMissingOperand("ed");
+                else
+                    printTooManyOperands("ed");
+                break;
+            case "cp":
+                if (commande.length == 3)
+                    cp(commande[1], commande[2]);
+                else if (commande.length < 3)
+                    printMissingOperand("cp");
+                else
+                    printTooManyOperands("cp");
+                break;
+            case "pwd":
+                if (commande.length == 1)
+                    pwd();
+                else
+                    printTooManyOperands("pwd");
+                break;
+            case "quit":
+            case "exit":
+                scanner.close();
+                return true;
+            case "":
+                break;
+            default:
+                System.out.println("Command not found");
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
-        new Shell();
+        new Shell(true);
+
+        new Shell(false);
     }
 }
