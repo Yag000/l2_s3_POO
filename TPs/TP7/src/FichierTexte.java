@@ -46,11 +46,6 @@ public class FichierTexte extends Element implements Affichable, Editable {
 
     @Override
     public FichierTexte copy(Entree e) {
-        return clone();
-    }
-
-    @Override
-    protected FichierTexte clone() {
         FichierTexte clone = new FichierTexte();
         clone.contenu = this.contenu;
         return clone;

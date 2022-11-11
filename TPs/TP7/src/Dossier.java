@@ -14,7 +14,7 @@ public class Dossier extends Element implements Affichable {
         entrees = new LinkedList<>();
 
         entrees.add(new EntreeSpeciale(this, ".", this));
-        entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
+        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
     }
 
     public Dossier(Entree parent) {
@@ -22,7 +22,7 @@ public class Dossier extends Element implements Affichable {
         entrees = new LinkedList<>();
 
         entrees.add(new EntreeSpeciale(this, ".", this));
-        entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
+        entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
     }
 
     public Entree getParent() {
@@ -34,7 +34,7 @@ public class Dossier extends Element implements Affichable {
         parent = e;
         for (Entree entree : entrees)
             if (entree.getNom().equals("..")) {
-                entree.setElement(((Dossier) parent.getElement()).getParent().getElement());
+                entree.setElement(parent.getElement());
                 entree.setParent(this);
                 return;
             }
@@ -84,25 +84,14 @@ public class Dossier extends Element implements Affichable {
 
     public Dossier copy(Entree newParent) {
         Dossier newDossier = new Dossier(newParent);
-        for (Entree e : entrees) {
-            if (e.getElement() instanceof Dossier d) {
-                newDossier.ajouter(d.copy(new Entree(newDossier, e.getNom(), newDossier)), e.getNom());
-            } else {
-                newDossier.ajouter(e.getElement().clone(), e.getNom());
-            }
-        }
-        return newDossier;
-    }
-
-    @Override
-    public Dossier clone() {
-        Dossier clone = new Dossier(parent);
 
         for (Entree e : entrees)
-            if (!e.getNom().equals(".") && !e.getNom().equals(".."))
-                clone.ajouter(e.getElement().clone(), e.getNom());
+            if (!(e instanceof EntreeSpeciale)) {
+                newDossier.ajouter(null, e.getNom());
+                Entree newE = newDossier.getEntree(e.getNom(), false);
+                newE.setElement(e.getElement().copy(newE));
+            }
 
-        return clone;
+        return newDossier;
     }
-
 }

@@ -184,7 +184,6 @@ public class Shell {
             }
 
             if (e.getElement() instanceof Dossier dossier) {
-                System.out.println(dossier.getEntree("..", false).getParent().getChemin());
                 current = dossier;
             } else {
                 System.out.println(e.getNom() + " is not a folder");
@@ -353,7 +352,7 @@ public class Shell {
             }
         }
 
-        newDossier.ajouter(oldDossier.getElement().clone(), newName);
+        newDossier.ajouter(oldDossier.getElement().copy(newEntree), newName);
     }
 
     public void pwd() {

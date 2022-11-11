@@ -1,4 +1,4 @@
-abstract class Element implements Cloneable {
+public abstract class Element {
     public abstract String getType();
 
     public String toString() {
@@ -7,8 +7,5 @@ abstract class Element implements Cloneable {
     }
 
     public abstract Element copy(Entree newParent);
-
-    @Override
-    protected abstract Element clone();
 
 }
