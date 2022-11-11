@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import javax.lang.model.util.ElementScanner14;
+
 public class Shell {
 
     // Constantes pour les messages d'erreur
@@ -45,6 +47,16 @@ public class Shell {
 
         parser();
 
+    }
+
+    // Helpers
+
+    private void printMissingOperand(String command) {
+        System.out.println(command + ": missing operand");
+    }
+
+    private void printTooManyOperands(String command) {
+        System.out.println(command + ": too many operands");
     }
 
     // Méthodes de type Find
@@ -281,7 +293,7 @@ public class Shell {
     private void mkdir(String path) {
 
         if (path == null || path.equals("")) {
-            System.out.println("mkdir: missing operand");
+            printMissingOperand("mkdir");
             return;
         }
 
@@ -305,7 +317,7 @@ public class Shell {
     private void mv(String oldPath, String newPath) {
 
         if (oldPath == null || oldPath.equals("")) {
-            System.out.println("mv: missing operand");
+            printMissingOperand("mv");
             return;
         }
 
@@ -370,7 +382,7 @@ public class Shell {
     private void ed(String path) {
 
         if (path == null || path.equals("")) {
-            System.out.println("ed: missing operand");
+            printMissingOperand("ed");
             return;
         }
 
@@ -407,7 +419,7 @@ public class Shell {
     private void cp(String oldPath, String newPath) {
 
         if (oldPath == null || oldPath.equals("") || newPath.equals("")) {
-            System.out.println("mv: missing operand");
+            printMissingOperand("cp");
             return;
         }
 
@@ -456,34 +468,74 @@ public class Shell {
 
             switch (commande[0]) {
                 case "cat":
-                    cat(commande[1]);
+                    if (commande.length == 2)
+                        cat(commande[1]);
+                    else if (commande.length < 2)
+                        printMissingOperand("cat");
+                    else
+                        printTooManyOperands("cat");
                     break;
                 case "cd":
                     if (commande.length == 1)
                         cd();
-                    else
+                    else if (commande.length == 2)
                         cd(commande[1]);
+                    else
+                        printTooManyOperands("cd");
                     break;
                 case "ls":
-                    ls(commande.length > 1 ? commande[1] : null);
+                    if (commande.length == 1)
+                        ls();
+                    else if (commande.length == 2)
+                        ls(commande[1]);
+                    else
+                        printTooManyOperands("ls");
                     break;
                 case "mkdir":
-                    mkdir(commande[1]);
+                    if (commande.length == 2)
+                        mkdir(commande[1]);
+                    else if (commande.length < 2)
+                        printMissingOperand("mkdir");
+                    else
+                        printTooManyOperands("mkdir");
                     break;
                 case "mv":
-                    mv(commande[1], commande[2]);
+                    if (commande.length == 3)
+                        mv(commande[1], commande[2]);
+                    else if (commande.length < 3)
+                        printMissingOperand("mv");
+                    else
+                        printTooManyOperands("mv");
                     break;
                 case "rm":
-                    rm(commande[1]);
+                    if (commande.length == 2)
+                        rm(commande[1]);
+                    else if (commande.length < 2)
+                        printMissingOperand("rm");
+                    else
+                        printTooManyOperands("rm");
                     break;
                 case "ed":
-                    ed(commande[1]);
+                    if (commande.length == 2)
+                        ed(commande[1]);
+                    else if (commande.length < 2)
+                        printMissingOperand("ed");
+                    else
+                        printTooManyOperands("ed");
                     break;
                 case "cp":
-                    cp(commande[1], commande[2]);
+                    if (commande.length == 3)
+                        cp(commande[1], commande[2]);
+                    else if (commande.length < 3)
+                        printMissingOperand("cp");
+                    else
+                        printTooManyOperands("cp");
                     break;
                 case "pwd":
-                    pwd();
+                    if (commande.length == 1)
+                        pwd();
+                    else
+                        printTooManyOperands("pwd");
                     break;
                 case "quit":
                 case "exit":
