@@ -379,7 +379,6 @@ public class Shell {
         file.editer(scanner, false);
     }
 
-    // Works
     private void cp(String oldPath, String newPath) {
 
         if (oldPath == null || oldPath.equals("") || newPath.equals("")) {
@@ -421,12 +420,10 @@ public class Shell {
         newDossier.ajouter(oldEntree.getElement().copy(newEntree), newName);
     }
 
-    // Works
     private void pwd() {
         System.out.println(current.getChemin());
     }
 
-    // Works
     private void parser() {
         while (true) {
             System.out.print(current.getChemin() + "$ ");
