@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class FichierTexte extends Element implements Affichable, Editable {
     private String contenu;
 
+    // Constructeurs
+
     public FichierTexte() {
         contenu = "";
     }
@@ -11,10 +13,14 @@ public class FichierTexte extends Element implements Affichable, Editable {
         this.contenu = contenu;
     }
 
+    // Getter
+
     @Override
     public String getType() {
         return "texte";
     }
+
+    // Méthodes
 
     @Override
     public void afficher() {

@@ -314,7 +314,7 @@ public class Shell {
         entreeOfOriginal.supprimer();
 
         if (newDossier.getEntree(newName, false).getElement() instanceof Dossier dossier) {
-            dossier.updateParent();
+            dossier.updateParentDirectory();
         }
     }
 

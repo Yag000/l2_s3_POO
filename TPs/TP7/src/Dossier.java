@@ -6,6 +6,8 @@ public class Dossier extends Element implements Affichable {
     Entree parent;
     List<Entree> entrees;
 
+    // Constructeurs
+
     /**
      * Constructeur de root
      */
@@ -25,33 +27,13 @@ public class Dossier extends Element implements Affichable {
         entrees.add(new EntreeSpeciale(parent.getParent(), "..", this));
     }
 
+    // Getters
+
     public Entree getParent() {
         return parent;
     }
 
-    public void updateParent() {
-        getEntree("..", false).setParent(this);
-        getEntree("..", false).setElement(parent.getParent());
-
-        System.out.println("Parent updated");
-        System.out.println(getEntree("..", false).getParent().getChemin());
-    }
-
-    public void setParent(Entree e) {
-        parent = e;
-    }
-
-    public void supprimer(Entree entree) {
-        entrees.remove(entree);
-    }
-
-    public void ajouter(Element e, String nom) {
-        Entree newEntree = new Entree(null, nom, this);
-        newEntree.remplacer(e);
-        entrees.add(newEntree);
-    }
-
-    // Ça compile :)
+    // On a besoin que ce soit public pour pouvoir l'utiliser dans la classe Shell
     public Entree getEntree(String nom, boolean creer) {
         for (Entree e : entrees) {
             if (e.getNom().equals(nom))
@@ -67,6 +49,9 @@ public class Dossier extends Element implements Affichable {
         return null;
     }
 
+    /**
+     * @return le chemin absolu du dossier
+     */
     public String getChemin() {
         return parent.getChemin();
     }
@@ -74,6 +59,29 @@ public class Dossier extends Element implements Affichable {
     @Override
     public String getType() {
         return "dossier";
+    }
+
+    // Setter
+
+    public void setParent(Entree e) {
+        parent = e;
+    }
+
+    // Methods
+
+    public void updateParentDirectory() {
+        getEntree("..", false).setParent(this);
+        getEntree("..", false).setElement(parent.getParent());
+    }
+
+    public void supprimer(Entree entree) {
+        entrees.remove(entree);
+    }
+
+    public void ajouter(Element e, String nom) {
+        Entree newEntree = new Entree(null, nom, this);
+        newEntree.remplacer(e);
+        entrees.add(newEntree);
     }
 
     @Override
