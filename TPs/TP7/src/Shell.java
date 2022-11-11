@@ -290,6 +290,13 @@ public class Shell {
         courant.afficher();
     }
 
+    /**
+     * Crée un dossier à partir du dossier courrait. Il peut y avoir plusieurs
+     * dossiers à créer dans la même arborescence. Par exemple : mkdir mkdir a/b/c/c
+     * peut créer créer les dossiers a,b,c,d si a n'existe pas.
+     * 
+     * @param path
+     */
     private void mkdir(String path) {
 
         if (path == null || path.equals("")) {
@@ -314,12 +321,22 @@ public class Shell {
         }
     }
 
+    /**
+     * Déplace le premier element vers le deuxième. Si le deuxième est un dossier,
+     * le fichier est déplacé dans ce dossier. Si le deuxième path fini par un nom
+     * non défini l'element et déplacé et renommé.
+     * 
+     * @param oldPath
+     * @param newPath
+     */
     private void mv(String oldPath, String newPath) {
 
         if (oldPath == null || oldPath.equals("")) {
             printMissingOperand("mv");
             return;
         }
+
+        // Gestion des cas où on ne peux pas déplacer le premier element
 
         Entree originalEntree = find(oldPath);
 
@@ -332,6 +349,8 @@ public class Shell {
             System.out.println("mv: " + oldPath + IS_A_SPECIAL_FILE);
             return;
         }
+
+        // Obtention de la destination et du nouveau nom de l’élément.
 
         String[] newPathList = newPath.split("/");
         Dossier newDossier;
@@ -353,24 +372,34 @@ public class Shell {
                 ? originalEntree.getNom()
                 : newPathList[newPathList.length - 1];
 
-        // Only problem ""..""
+        // Ajout de l'élément a sa nouvelle destination
         newDossier.ajouter(originalEntree.getElement(), newName);
 
+        // On supprime l'élément de son ancienne destination
         originalEntree.supprimer();
 
+        // Si l’élément est un dossier on actualise aussi son parent (en particulier
+        // pour l'entrée "..")
         if (newDossier.getEntree(newName, false).getElement() instanceof Dossier dossier) {
             dossier.updateParentDirectory();
         }
     }
 
+    /**
+     * Élimine un fichier, ne marche pas sur les dossiers
+     * 
+     * @param path
+     */
     private void rm(String path) {
         Entree lastEntree = find(path);
 
+        // Gestion des cas spéciaux
         if (lastEntree instanceof EntreeSpeciale) {
             System.out.println("mv: " + path + IS_A_SPECIAL_FILE);
             return;
         }
 
+        // On cherche a éliminer que les fichiers.
         if (lastEntree == null)
             System.out.println(FILE_NOT_FOUND);
         else if (lastEntree.getElement() instanceof FichierTexte)
@@ -379,6 +408,12 @@ public class Shell {
             System.out.println("rm: " + path + ": Is a directory");
     }
 
+    /**
+     * Permet la modification du contenu d'un fichier passé en argument. Si le
+     * fichier n'existait aps déjà il est crée.
+     * 
+     * @param path
+     */
     private void ed(String path) {
 
         if (path == null || path.equals("")) {
@@ -386,30 +421,27 @@ public class Shell {
             return;
         }
 
-        String[] pathList = path.split("/");
+        FichierTexte file = findFichierTexte(path);
 
-        Entree e;
-
-        if (pathList.length == 1) {
-            courant.ajouter(new FichierTexte(""), path);
-            e = courant.getEntree(path, true);
-        } else {
-            Dossier dossier = findLastDossier(path);
-
-            if (dossier == null) {
-                System.out.println("ed: " + path + NOT_A_DIRECTORY);
-                return;
-            }
-
-            dossier.ajouter(new FichierTexte(""), pathList[pathList.length - 1]);
-            e = dossier.getEntree(pathList[pathList.length - 1], false);
-        }
-
-        FichierTexte file = (FichierTexte) e.getElement();
-
+        // Si le fichier n’existe pas il est crée
         if (file == null) {
-            System.out.println(FILE_NOT_FOUND);
-            return;
+            String[] pathList = path.split("/");
+
+            if (pathList.length == 1) {
+                courant.ajouter(new FichierTexte(""), path);
+                file = (FichierTexte) courant.getEntree(path, true).getElement();
+
+            } else {
+                Dossier dossier = findLastDossier(path);
+
+                if (dossier == null) {
+                    System.out.println("ed: " + path + NOT_A_DIRECTORY);
+                    return;
+                }
+
+                dossier.ajouter(new FichierTexte(""), pathList[pathList.length - 1]);
+                file = (FichierTexte) dossier.getEntree(pathList[pathList.length - 1], false).getElement();
+            }
         }
 
         System.out.println("Entrez le texte du fichier (terminez par une ligne contenant seulement un point)");
