@@ -1,5 +1,5 @@
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Dossier extends Element implements Affichable {
 
@@ -10,15 +10,17 @@ public class Dossier extends Element implements Affichable {
      * COnstructeur de root
      */
     public Dossier() {
-        entrees = new LinkedList<Entree>();
         parent = new Entree(this, "/", this);
+        entrees = new LinkedList<>();
+
         entrees.add(new EntreeSpeciale(this, ".", this));
         entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
     }
 
     public Dossier(Entree parent) {
         this.parent = parent;
-        entrees = new LinkedList<Entree>();
+        entrees = new LinkedList<>();
+
         entrees.add(new EntreeSpeciale(this, ".", this));
         entrees.add(new EntreeSpeciale(parent.getElement(), "..", this));
     }
@@ -27,8 +29,15 @@ public class Dossier extends Element implements Affichable {
         return parent;
     }
 
+    // TODO: Does not wok...
     public void setParent(Entree e) {
-        this.parent = e;
+        parent = e;
+        for (Entree entree : entrees)
+            if (entree.getNom().equals("..")) {
+                entree.setElement(((Dossier) parent.getElement()).getParent().getElement());
+                entree.setParent(this);
+                return;
+            }
     }
 
     public void supprimer(Entree entree) {
@@ -73,12 +82,26 @@ public class Dossier extends Element implements Affichable {
         }
     }
 
+    public Dossier copy(Entree newParent) {
+        Dossier newDossier = new Dossier(newParent);
+        for (Entree e : entrees) {
+            if (e.getElement() instanceof Dossier d) {
+                newDossier.ajouter(d.copy(new Entree(newDossier, e.getNom(), newDossier)), e.getNom());
+            } else {
+                newDossier.ajouter(e.getElement().clone(), e.getNom());
+            }
+        }
+        return newDossier;
+    }
+
     @Override
     public Dossier clone() {
         Dossier clone = new Dossier(parent);
-        for (Entree e : entrees) {
-            clone.ajouter((Element) e.getElement().clone(), e.getNom());
-        }
+
+        for (Entree e : entrees)
+            if (!e.getNom().equals(".") && !e.getNom().equals(".."))
+                clone.ajouter(e.getElement().clone(), e.getNom());
+
         return clone;
     }
 

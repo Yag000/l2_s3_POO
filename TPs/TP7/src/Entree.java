@@ -24,6 +24,14 @@ public class Entree {
         return parent;
     }
 
+    public void setParent(Dossier parent) {
+        this.parent = parent;
+    }
+
+    public void setElement(Element element) {
+        this.element = element;
+    }
+
     public void supprimer() {
         parent.supprimer(this);
 

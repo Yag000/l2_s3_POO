@@ -3,6 +3,10 @@ import java.util.Scanner;
 public class FichierTexte extends Element implements Affichable, Editable {
     private String contenu;
 
+    public FichierTexte() {
+        contenu = "";
+    }
+
     public FichierTexte(String contenu) {
         this.contenu = contenu;
     }
@@ -41,8 +45,15 @@ public class FichierTexte extends Element implements Affichable, Editable {
     }
 
     @Override
+    public FichierTexte copy(Entree e) {
+        return clone();
+    }
+
+    @Override
     protected FichierTexte clone() {
-        return new FichierTexte(contenu);
+        FichierTexte clone = new FichierTexte();
+        clone.contenu = this.contenu;
+        return clone;
     }
 
 }

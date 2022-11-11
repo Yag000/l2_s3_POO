@@ -6,6 +6,8 @@ abstract class Element implements Cloneable {
 
     }
 
+    public abstract Element copy(Entree newParent);
+
     @Override
     protected abstract Element clone();
 

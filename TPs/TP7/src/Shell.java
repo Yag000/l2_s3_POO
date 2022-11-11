@@ -1,8 +1,10 @@
 import java.util.Scanner;
-
 //TODO: Work with entree spéciale
 
 public class Shell {
+
+    private static final String NOT_A_DIRECTORY = ": Not a directory";
+    private static final String FILE_NOT_FOUND = "File not found";
 
     public Dossier root;
     public Dossier current;
@@ -37,15 +39,15 @@ public class Shell {
      */
     private Entree find(String path) {
         String[] pathList = path.split("/");
-        Dossier current = this.current;
+        Dossier tmp = this.current;
         Entree res = null;
 
         for (String s : pathList) {
-            res = current.getEntree(s, false);
+            res = tmp.getEntree(s, false);
             if (res == null)
                 return null;
             if (res.getElement() instanceof Dossier)
-                current = (Dossier) res.getElement();
+                tmp = (Dossier) res.getElement();
 
         }
 
@@ -58,15 +60,15 @@ public class Shell {
      * @param path Nom de l'élément à chercher
      */
     private Entree find(String[] path) {
-        Dossier current = this.current;
+        Dossier tmp = this.current;
         Entree res = null;
 
         for (String s : path) {
-            res = current.getEntree(s, false);
+            res = tmp.getEntree(s, false);
             if (res == null)
                 return null;
             if (res.getElement() instanceof Dossier)
-                current = (Dossier) res.getElement();
+                tmp = (Dossier) res.getElement();
 
         }
 
@@ -91,15 +93,15 @@ public class Shell {
         else if (depth < 0)
             depth = pathList.length - (-depth % pathList.length);
 
-        Dossier current = this.current;
+        Dossier tmp = this.current;
         Entree res = null;
 
         for (int i = 0; i < depth; i++) {
-            res = current.getEntree(pathList[i], false);
+            res = tmp.getEntree(pathList[i], false);
             if (res == null)
                 return null;
             if (res.getElement() instanceof Dossier)
-                current = (Dossier) res.getElement();
+                tmp = (Dossier) res.getElement();
         }
 
         return res;
@@ -130,12 +132,12 @@ public class Shell {
     private Dossier findLastDossier(String path) {
 
         String[] pathList = path.split("/");
-        Dossier current = this.current;
+        Dossier tmp = this.current;
         Dossier res = null;
         int counter = 0;
 
         for (String s : pathList) {
-            Entree e = current.getEntree(s, false);
+            Entree e = tmp.getEntree(s, false);
             if (e == null) {
                 if (counter == pathList.length - 1)
                     return res;
@@ -144,7 +146,7 @@ public class Shell {
 
             if (e.getElement() instanceof Dossier) {
                 res = (Dossier) e.getElement();
-                current = res;
+                tmp = res;
             } else {
                 return counter == pathList.length - 1 ? res : null;
             }
@@ -163,7 +165,7 @@ public class Shell {
         FichierTexte texte = findFichierTexte(name);
 
         if (texte == null)
-            System.out.println("File not found");
+            System.out.println(FILE_NOT_FOUND);
         else
             texte.afficher();
 
@@ -181,9 +183,10 @@ public class Shell {
                 return;
             }
 
-            if (e.getElement() instanceof Dossier dossier)
+            if (e.getElement() instanceof Dossier dossier) {
+                System.out.println(dossier.getEntree("..", false).getParent().getChemin());
                 current = dossier;
-            else {
+            } else {
                 System.out.println(e.getNom() + " is not a folder");
                 return;
             }
@@ -209,8 +212,6 @@ public class Shell {
     }
 
     // TODO: Can create test/tes1/test2
-    // TODO: incorrecte parent
-
     public void mkdir(String name) {
 
         if (name == null || name.equals("")) {
@@ -232,11 +233,12 @@ public class Shell {
         if (e.getElement() instanceof Dossier dossier) {
             dossier.ajouter(new Dossier(e), path[path.length - 1]);
         } else {
-            System.out.println("mkdir: " + name + ": Not a directory");
+            System.out.println("mkdir: " + name + NOT_A_DIRECTORY);
         }
     }
 
     // TODO: update to use findLastDossier
+    // TODO: completely broken
 
     public void mv(String name, String newFolder) {
 
@@ -253,7 +255,7 @@ public class Shell {
         if (entreeOfNew.getElement() instanceof Dossier dossier) {
             Entree lastEntreeOfNew = dossier.getEntree(pathToNew[pathToNew.length - 1], false);
             if (lastEntreeOfNew == null) {
-                System.out.println("mv: " + name + ": Not a directory");
+                System.out.println("mv: " + name + NOT_A_DIRECTORY);
                 return;
             }
 
@@ -264,15 +266,15 @@ public class Shell {
 
             entreeOfOriginal.supprimer();
         } else
-            System.out.println("mv: " + name + ": Not a directory");
+            System.out.println("mv: " + name + NOT_A_DIRECTORY);
     }
 
     public void rm(String name) {
         Entree e = find(name);
 
         if (e == null)
-            System.out.println("File not found");
-        else if (e.getElement() instanceof FichierTexte texte)
+            System.out.println(FILE_NOT_FOUND);
+        else if (e.getElement() instanceof FichierTexte)
             e.supprimer();
         else
             System.out.println("rm: " + name + ": Is a directory");
@@ -298,7 +300,7 @@ public class Shell {
             Dossier dossier = findLastDossier(filename);
 
             if (dossier == null) {
-                System.out.println("ed: " + filename + ": Not a directory");
+                System.out.println("ed: " + filename + NOT_A_DIRECTORY);
                 return;
             }
 
@@ -309,7 +311,7 @@ public class Shell {
         FichierTexte f = (FichierTexte) e.getElement();
 
         if (f == null) {
-            System.out.println("File not found");
+            System.out.println(FILE_NOT_FOUND);
             return;
         }
 
@@ -317,30 +319,41 @@ public class Shell {
         f.editer(scanner, false);
     }
 
-    public void cp(String name, String newFolder) {
+    // TODO: does not work
+    public void cp(String oldFolder, String newFolder) {
 
-        if (name == null || name.equals("") || newFolder.equals("")) {
+        if (oldFolder == null || oldFolder.equals("") || newFolder.equals("")) {
             System.out.println("mv: missing operand");
             return;
         }
 
-        Entree entreeOfOriginal = find(name);
-        if (entreeOfOriginal == null) {
-            System.out.println("cp: " + name + ": No such file or directory");
+        Entree oldDossier = find(oldFolder);
+        if (oldDossier == null) {
+            System.out.println("cp: " + oldFolder + ": No such file or directory");
             return;
         }
 
-        Entree entreeOfNew;
+        Entree newEntree;
+        Dossier newDossier;
+        String newName;
 
-        if (newFolder.split("/").length == 1)
-            entreeOfNew = current.getParent();
-        else
-            entreeOfNew = find(newFolder);
+        if (newFolder.split("/").length == 1) {
+            newEntree = current.getParent();
+            newDossier = current;
+            newName = newFolder;
+        } else {
+            newDossier = findLastDossier(newFolder);
 
-        if (entreeOfNew.getElement() instanceof Dossier dossier) {
-            dossier.ajouter(entreeOfOriginal.getElement().clone(), entreeOfOriginal.getNom());
-        } else
-            System.out.println("mv: " + name + ": Not a directory");
+            if (newDossier == null) {
+                System.out.println("cp: " + oldFolder + NOT_A_DIRECTORY);
+                return;
+            } else {
+                newName = newFolder.split("/")[newFolder.split("/").length - 1];
+                newEntree = find(newFolder, -1);
+            }
+        }
+
+        newDossier.ajouter(oldDossier.getElement().clone(), newName);
     }
 
     public void pwd() {
