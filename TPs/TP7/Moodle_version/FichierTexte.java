@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+/**
+ * Cette classe represente un fichier texte. Elle contient le contenu du
+ * fichier.
+ */
 public class FichierTexte extends Element implements Affichable, Editable {
     private String contenu;
 
