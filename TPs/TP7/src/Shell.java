@@ -410,27 +410,31 @@ public class Shell {
             return;
         }
 
-        // Obtention de la destination et du nouveau nom de l’élément.
+        // Obtention de la destination
 
         String[] newPathList = newPath.split("/");
         Dossier newDossier;
 
         if (newPathList.length == 1) {
+            // Gestion d'un mv de la forme mv a b (a est déplacé dans le dossier courant et
+            // renommé b)
             Entree tmp = courant.getEntree(newPath, false);
             newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? courant : (Dossier) tmp.getElement();
-        }
-
-        else
+        } else {
+            // Gestion du cas géneral
             newDossier = findLastDossier(newPath);
+        }
 
         if (newDossier == null) {
             System.out.println("mv: " + newPath + NO_SUCH_FILE_OR_DIRECTORY);
             return;
         }
 
+        // Obtention du nouveau nom de l’élément
+
         String newName = newDossier.getParent().getNom().equals(newPathList[newPathList.length - 1])
-                ? originalEntree.getNom()
-                : newPathList[newPathList.length - 1];
+                ? originalEntree.getNom() // Si le dernier élément du path est le nom du dossier parent
+                : newPathList[newPathList.length - 1]; // Sinon on prend le dernier élément du path
 
         // Ajout de l'élément a sa nouvelle destination
         newDossier.ajouter(originalEntree.getElement(), newName);

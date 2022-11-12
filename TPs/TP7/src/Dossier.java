@@ -69,6 +69,9 @@ public class Dossier extends Element implements Affichable {
 
     // Methods
 
+    /**
+     * Actualise l'entrée ".." du dossier. Utile lorsqu'on déplace un dossier.
+     */
     public void updateParentDirectory() {
         getEntree("..", false).setParent(this);
         getEntree("..", false).setElement(parent.getParent());
@@ -91,6 +94,14 @@ public class Dossier extends Element implements Affichable {
         }
     }
 
+    /**
+     * Renvoie une copie en profondeur du dossier en modifiant le dossier parent
+     * 
+     * @param newParent le nouveau parent du dossier
+     * @return Une copie en profondeur de ce dossier avec le nouveau parent
+     * 
+     */
+    @Override
     public Dossier copy(Entree newParent) {
         Dossier newDossier = new Dossier(newParent);
 
