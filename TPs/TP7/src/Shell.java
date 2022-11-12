@@ -326,12 +326,6 @@ public class Shell {
      * @param path
      */
     private void ls(String path) {
-
-        if (path == null || path.equals("")) {
-            courant.afficher();
-            return;
-        }
-
         Entree lastFolder = find(path);
 
         if (lastFolder == null)
@@ -358,12 +352,6 @@ public class Shell {
      * @param path
      */
     private void mkdir(String path) {
-
-        if (path == null || path.equals("")) {
-            printMissingOperand("mkdir");
-            return;
-        }
-
         if (isAllFolders(path)) {
             Dossier tmp = courant;
             String[] pathList = path.split("/");
@@ -390,12 +378,6 @@ public class Shell {
      * @param newPath
      */
     private void mv(String oldPath, String newPath) {
-
-        if (oldPath == null || oldPath.equals("")) {
-            printMissingOperand("mv");
-            return;
-        }
-
         // Gestion des cas où on ne peux pas déplacer le premier element
 
         Entree originalEntree = find(oldPath);
@@ -481,12 +463,6 @@ public class Shell {
      * @param path
      */
     private void ed(String path, boolean echo) {
-
-        if (path == null || path.equals("")) {
-            printMissingOperand("ed");
-            return;
-        }
-
         FichierTexte file = findFichierTexte(path);
 
         // Si le fichier n’existe pas il est crée
@@ -529,12 +505,6 @@ public class Shell {
      * @param newPath
      */
     private void cp(String oldPath, String newPath) {
-
-        if (oldPath == null || oldPath.equals("") || newPath.equals("")) {
-            printMissingOperand("cp");
-            return;
-        }
-
         // Gestion des cas où on ne peux pas copier le premier element
 
         Entree oldEntree = find(oldPath);
