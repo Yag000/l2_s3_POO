@@ -109,7 +109,7 @@ public class Shell {
         System.out.println("cd <nom> : change le dossier courant");
         System.out.println("mkdir <nom> : crée un dossier");
         System.out.println("mv <nom> <nom> : déplace un element");
-        System.out.println("rm <nom> : supprime un fichier");
+        System.out.println("rm <nom> : supprime un fichier ou une liste de fichiers séparés par des espaces");
         System.out.println("ed <nom> : édite le contenu d'un fichier");
         System.out.println("cp <nom> <nom> : copie un element");
         System.out.println("pwd : affiche le chemin absolu du dossier courant");
@@ -326,12 +326,6 @@ public class Shell {
      * @param path
      */
     private void ls(String path) {
-
-        if (path == null || path.equals("")) {
-            courant.afficher();
-            return;
-        }
-
         Entree lastFolder = find(path);
 
         if (lastFolder == null)
@@ -358,12 +352,6 @@ public class Shell {
      * @param path
      */
     private void mkdir(String path) {
-
-        if (path == null || path.equals("")) {
-            printMissingOperand("mkdir");
-            return;
-        }
-
         if (isAllFolders(path)) {
             Dossier tmp = courant;
             String[] pathList = path.split("/");
@@ -390,12 +378,6 @@ public class Shell {
      * @param newPath
      */
     private void mv(String oldPath, String newPath) {
-
-        if (oldPath == null || oldPath.equals("")) {
-            printMissingOperand("mv");
-            return;
-        }
-
         // Gestion des cas où on ne peux pas déplacer le premier element
 
         Entree originalEntree = find(oldPath);
@@ -410,27 +392,31 @@ public class Shell {
             return;
         }
 
-        // Obtention de la destination et du nouveau nom de l’élément.
+        // Obtention de la destination
 
         String[] newPathList = newPath.split("/");
         Dossier newDossier;
 
         if (newPathList.length == 1) {
+            // Gestion d'un mv de la forme mv a b (a est déplacé dans le dossier courant et
+            // renommé b)
             Entree tmp = courant.getEntree(newPath, false);
             newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? courant : (Dossier) tmp.getElement();
-        }
-
-        else
+        } else {
+            // Gestion du cas géneral
             newDossier = findLastDossier(newPath);
+        }
 
         if (newDossier == null) {
             System.out.println("mv: " + newPath + NO_SUCH_FILE_OR_DIRECTORY);
             return;
         }
 
+        // Obtention du nouveau nom de l’élément
+
         String newName = newDossier.getParent().getNom().equals(newPathList[newPathList.length - 1])
-                ? originalEntree.getNom()
-                : newPathList[newPathList.length - 1];
+                ? originalEntree.getNom() // Si le dernier élément du path est le nom du dossier parent
+                : newPathList[newPathList.length - 1]; // Sinon on prend le dernier élément du path
 
         // Ajout de l'élément a sa nouvelle destination
         newDossier.ajouter(originalEntree.getElement(), newName);
@@ -477,12 +463,6 @@ public class Shell {
      * @param path
      */
     private void ed(String path, boolean echo) {
-
-        if (path == null || path.equals("")) {
-            printMissingOperand("ed");
-            return;
-        }
-
         FichierTexte file = findFichierTexte(path);
 
         // Si le fichier n’existe pas il est crée
@@ -525,12 +505,6 @@ public class Shell {
      * @param newPath
      */
     private void cp(String oldPath, String newPath) {
-
-        if (oldPath == null || oldPath.equals("") || newPath.equals("")) {
-            printMissingOperand("cp");
-            return;
-        }
-
         // Gestion des cas où on ne peux pas copier le premier element
 
         Entree oldEntree = find(oldPath);
@@ -641,12 +615,11 @@ public class Shell {
                     printTooManyOperands("mv");
                 break;
             case "rm":
-                if (commande.length == 2)
-                    rm(commande[1]);
-                else if (commande.length < 2)
-                    printMissingOperand("rm");
+                if (commande.length == 1)
+                    printMissingOperand(s);
                 else
-                    printTooManyOperands("rm");
+                    for (int i = 1; i < commande.length; i++)
+                        rm(commande[i]);
                 break;
             case "ed":
                 if (commande.length == 2)
