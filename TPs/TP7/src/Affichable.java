@@ -1,3 +1,6 @@
+/**
+ * Élément affichable
+ */
 public interface Affichable {
 
     /**

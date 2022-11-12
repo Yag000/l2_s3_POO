@@ -1,3 +1,6 @@
+/**
+ * Un élément d'un arborescence
+ */
 public abstract class Element {
     public abstract String getType();
 

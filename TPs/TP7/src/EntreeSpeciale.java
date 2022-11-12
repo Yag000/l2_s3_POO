@@ -1,3 +1,7 @@
+
+/**
+ * Entrée Speciale qui ne peux pas être supprimée ou remplacée ("." et "..")
+ */
 public class EntreeSpeciale extends Entree {
 
     // Constructeurs
@@ -13,12 +17,12 @@ public class EntreeSpeciale extends Entree {
 
     @Override
     public void remplacer(Element e) {
-        System.out.println("Error");
+        System.out.println("Error: this entry can't be replaced");
     }
 
     @Override
     public void supprimer() {
-        System.out.println("Error");
+        System.out.println("Error: this entry can't be deleted");
     }
 
 }

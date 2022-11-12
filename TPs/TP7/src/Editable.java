@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Élément editable
+ */
 public interface Editable {
 
     /**

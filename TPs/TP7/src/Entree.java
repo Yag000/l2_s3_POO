@@ -1,3 +1,7 @@
+/**
+ * Cette classe represente l'entrée d'un élément de l'arborescence. Elle
+ * contient l'élément, son nom et son parent.
+ */
 public class Entree {
     private Element element;
     private String nom;
@@ -53,13 +57,16 @@ public class Entree {
         this.element = element;
     }
 
+    // Méthodes
+
+    /**
+     * Supprime l'entrée de l'arborescence
+     */
     public void supprimer() {
         parent.supprimer(this);
 
         parent = null;
     }
-
-    // Méthodes
 
     /**
      * Remplace l'élément par un autre
