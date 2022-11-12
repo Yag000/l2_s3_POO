@@ -109,7 +109,7 @@ public class Shell {
         System.out.println("cd <nom> : change le dossier courant");
         System.out.println("mkdir <nom> : crée un dossier");
         System.out.println("mv <nom> <nom> : déplace un element");
-        System.out.println("rm <nom> : supprime un fichier");
+        System.out.println("rm <nom> : supprime un fichier ou une liste de fichiers séparés par des espaces");
         System.out.println("ed <nom> : édite le contenu d'un fichier");
         System.out.println("cp <nom> <nom> : copie un element");
         System.out.println("pwd : affiche le chemin absolu du dossier courant");
@@ -615,12 +615,11 @@ public class Shell {
                     printTooManyOperands("mv");
                 break;
             case "rm":
-                if (commande.length == 2)
-                    rm(commande[1]);
-                else if (commande.length < 2)
-                    printMissingOperand("rm");
+                if (commande.length == 1)
+                    printMissingOperand(s);
                 else
-                    printTooManyOperands("rm");
+                    for (int i = 1; i < commande.length; i++)
+                        rm(commande[i]);
                 break;
             case "ed":
                 if (commande.length == 2)
