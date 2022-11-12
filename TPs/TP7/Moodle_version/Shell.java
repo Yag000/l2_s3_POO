@@ -101,13 +101,16 @@ public class Shell {
      */
     private void printWelcomeMessage() {
         System.out.println("--------------------");
+        System.out.println();
         System.out.println("Bienvenue dans le shell");
         System.out.println();
         System.out.println("Les commandes sont :");
 
         System.out.println("cat <nom> : affiche le contenu d'un fichier");
+        System.out.println("ls <nom> : liste les fichiers d'un dossier");
         System.out.println("ls : liste les fichiers du dossier courant");
-        System.out.println("cd <nom> : change le dossier courant");
+        System.out.println("cd <nom> : déplace vers un dossier");
+        System.out.println("cd : déplace vers la racine");
         System.out.println("mkdir <nom> : crée un dossier");
         System.out.println("mv <nom> <nom> : déplace un element");
         System.out.println("rm <nom> : supprime un fichier ou une liste de fichiers séparés par des espaces");
@@ -117,7 +120,10 @@ public class Shell {
 
         System.out.println("exit : quitte le shell");
         System.out.println("quit : quitte le shell");
+        System.out.println();
+
         System.out.println("--------------------");
+        System.out.println();
     }
 
     // Affichage d'erreurs
