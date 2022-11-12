@@ -1,6 +1,10 @@
 import java.io.File;
 import java.util.Scanner;
 
+/**
+ * Cette classe un Shell Unix. Elle permet de naviguer dans l'arborescence et de
+ * la modifier.
+ */
 public class Shell {
 
     // Constantes pour les messages d'erreur
@@ -21,6 +25,9 @@ public class Shell {
 
     // Constructeur
 
+    /**
+     * Constructeur du Shell basique
+     */
     public Shell() {
         root = new Dossier();
         courant = root;
@@ -30,6 +37,9 @@ public class Shell {
         parser(false);
     }
 
+    /**
+     * Constructeur d'un Shell avec une arborescence non-vide
+     */
     public Shell(Dossier first) {
         courant = first;
 
@@ -53,7 +63,11 @@ public class Shell {
 
     }
 
-    public Shell(String filename) {
+    /**
+     * Constructeur pour un shell de test. Il permet de lire un fichier de texte et
+     * d'interpreter le contenu du fichier comme une suite de commandes.
+     */
+    private Shell(String filename) {
         root = new Dossier();
         courant = root;
         System.out.println();
@@ -78,26 +92,13 @@ public class Shell {
         System.out.println();
     }
 
+    // Méthodes
+
     // Helpers
 
     /**
-     * Affiche un message d’erreur pour un nombre insuffisant d’arguments.
-     * 
-     * @param command
+     * Affiche le message de bienvenue du shell
      */
-    private void printMissingOperand(String command) {
-        System.out.println(command + ": missing operand");
-    }
-
-    /**
-     * Affiche un message d’erreur pour un nombre excessif d’arguments.
-     * 
-     * @param command
-     */
-    private void printTooManyOperands(String command) {
-        System.out.println(command + ": too many operands");
-    }
-
     private void printWelcomeMessage() {
         System.out.println("--------------------");
         System.out.println("Bienvenue dans le shell");
@@ -119,12 +120,33 @@ public class Shell {
         System.out.println("--------------------");
     }
 
+    // Affichage d'erreurs
+
+    /**
+     * Affiche un message d’erreur pour un nombre insuffisant d’arguments.
+     * 
+     * @param command
+     */
+    private void printMissingOperand(String command) {
+        System.out.println(command + ": missing operand");
+    }
+
+    /**
+     * Affiche un message d’erreur pour un nombre excessif d’arguments.
+     * 
+     * @param command
+     */
+    private void printTooManyOperands(String command) {
+        System.out.println(command + ": too many operands");
+    }
+
     // Méthodes de type Find
 
     /**
-     * Cherche un element dans l'arborescence, en gérant les / et les ..
+     * Cherche un élément dans l'arborescence, en gérant les / et les ..
      * 
      * @param path Nom de l'élément à chercher
+     * @return L'élément trouvé, null si non trouvé
      */
     private Entree find(String path) {
         String[] pathList = path.split("/");
@@ -144,9 +166,10 @@ public class Shell {
     }
 
     /**
-     * Cherche un element dans l'arborescence, en gérant les / et les ..
+     * Cherche un élément dans l'arborescence, en gérant les / et les ..
      * 
      * @param pathList Nom de l'élément à chercher
+     * @return L'élément trouvé, null si non trouvé
      */
     private Entree find(String[] pathList) {
         Dossier tmp = this.courant;
@@ -165,11 +188,11 @@ public class Shell {
     }
 
     /**
-     * Cherche un element dans l'arborescence, en gérant les / et les ..
+     * Cherche un élément dans l'arborescence, en gérant les / et les ..
      * 
      * @param path  Chemin du dossier à chercher
      * @param depth Profondeur de la recherche
-     * @return
+     * @return L'élément trouvé, null si non trouvé
      */
     private Entree find(String path, int depth) {
 
@@ -200,7 +223,7 @@ public class Shell {
      * Cherche un fichier de texte dans l'arborescence, en gérant les / et les ..
      * 
      * @param path
-     * @return
+     * @return Le fichier trouvé, null si non trouvé
      */
     private FichierTexte findFichierTexte(String path) {
         Entree e = find(path);
@@ -215,7 +238,7 @@ public class Shell {
      * Cherche un dossier dans l'arborescence, en gérant les / et les ..
      * 
      * @param path
-     * @return
+     * @return Le dossier trouvé, null si non trouvé
      */
 
     private Dossier findLastDossier(String path) {
@@ -352,11 +375,15 @@ public class Shell {
      * @param path
      */
     private void mkdir(String path) {
+        // On commence par tester si le chemin est valide
         if (isAllFolders(path)) {
             Dossier tmp = courant;
             String[] pathList = path.split("/");
 
             for (String s : pathList) {
+                // On parcoure le path et si on trouve un dossier qui n'est pas encore défini on
+                // le crée
+
                 Entree e = tmp.getEntree(s, false);
 
                 if (e == null) {
@@ -378,7 +405,7 @@ public class Shell {
      * @param newPath
      */
     private void mv(String oldPath, String newPath) {
-        // Gestion des cas où on ne peux pas déplacer le premier element
+        // Gestion des cas où on ne peux pas déplacer le premier élément
 
         Entree originalEntree = find(oldPath);
 
@@ -403,7 +430,7 @@ public class Shell {
             Entree tmp = courant.getEntree(newPath, false);
             newDossier = tmp == null || !(tmp.getElement() instanceof Dossier) ? courant : (Dossier) tmp.getElement();
         } else {
-            // Gestion du cas géneral
+            // Gestion du cas général
             newDossier = findLastDossier(newPath);
         }
 
@@ -469,11 +496,13 @@ public class Shell {
         if (file == null) {
             String[] pathList = path.split("/");
 
+            // Gestion du cas où le fichier est dans le dossier courant
             if (pathList.length == 1) {
                 courant.ajouter(new FichierTexte(""), path);
                 file = (FichierTexte) courant.getEntree(path, true).getElement();
 
             } else {
+                // Gestion du cas général
                 Dossier dossier = findLastDossier(path);
 
                 if (dossier == null) {
@@ -526,10 +555,14 @@ public class Shell {
         String newName;
 
         if (newPath.split("/").length == 1) {
+            // Gestion du cas où le fichier est dans le dossier courant
+
             newEntree = courant.getParent();
             newDossier = courant;
             newName = newPath;
         } else {
+            // Gestion du cas général
+
             newDossier = findLastDossier(newPath);
 
             if (newDossier == null) {
@@ -554,6 +587,8 @@ public class Shell {
 
     /**
      * Boucle pour parseCommande
+     * 
+     * @param test Si vrai la commande ed affiche le contenu du fichier
      */
     private void parser(boolean test) {
         boolean exit = false;
@@ -568,7 +603,11 @@ public class Shell {
     }
 
     /**
-     * Analyse l'entrée de l'utilisateur et appelle la fonction appropriée
+     * * Analyse l'entrée de l'utilisateur et appelle la fonction appropriée
+     * 
+     * @param s    Commande à analyser
+     * @param test Si vrai la commande ed affiche le contenu du fichier
+     * @return vrai si l'utilisateur decide de quitter le shell
      */
     private boolean parseCommande(String s, boolean test) {
         String[] commande = s.split(" ");
@@ -656,6 +695,7 @@ public class Shell {
     }
 
     public static void main(String[] args) {
+        // Test du shell avec l'exemple du tp
         new Shell("./src/test.txt");
 
         new Shell();
