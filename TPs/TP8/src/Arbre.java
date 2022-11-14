@@ -52,6 +52,13 @@ public class Arbre {
                 nom = t.transf(nom);
 
         }
+
+        public void traverser(String extension) {
+            if (repertoire)
+                fils.forEach((Noeud n) -> n.traverser(extension));
+            else if (nom.endsWith("." + extension))
+                afficher(0);
+        }
     }
 
     public Arbre(String path) throws FileNotFoundException {
@@ -66,27 +73,46 @@ public class Arbre {
         racine.map(t);
     }
 
+    public void traverser(String extension) {
+        racine.traverser(extension);
+    }
+
     public static void main(String[] args) {
         StringTransformation addBlah = (String s) -> s + ".blah";
 
-        Arbre test;
+        String path = "./Test/racine";
 
-        try {
-            test = new Arbre("./Test/racine");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("Le fichier n'existe pas");
-            return;
-        }
+        new TestFunction() {
+            public void function(Arbre a) {
+                a.afficher();
+            };
+        }.runTest("afficher", path);
 
-        System.out.println("--------------------");
+        new TestFunction() {
+            public void function(Arbre a) {
 
-        test.afficher();
+                System.out.print("Avant le map");
+                a.afficher();
 
-        test.map(addBlah);
+                System.out.println("--------------------");
 
-        System.out.println("--------------------");
+                a.map(addBlah);
 
-        test.afficher();
+                System.out.print("Après le map");
+                a.afficher();
+            };
+        }.runTest("map", path);
+
+        new TestFunction() {
+            public void function(Arbre a) {
+                a.afficher();
+
+                System.out.println("--------------------");
+
+                a.traverser("txt");
+
+            };
+        }.runTest("traverser avec txt", path);
+
     }
 }
