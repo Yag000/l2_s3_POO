@@ -13,6 +13,8 @@ public class Arbre {
         private boolean repertoire;
         private ArrayList<Noeud> fils;
 
+        private final File file;
+
         public Noeud(File f) throws FileNotFoundException {
 
             if (!f.exists())
@@ -33,6 +35,8 @@ public class Arbre {
                     }
                 }
             }
+
+            file = f;
         }
 
         public void afficher(int profondeur) {
@@ -59,6 +63,29 @@ public class Arbre {
             else if (nom.endsWith("." + extension))
                 afficher(0);
         }
+
+        void supprimer(String extension) throws UnableToDeleteFileException {
+            if (!repertoire)
+                return;
+
+            for (int i = 0; i < fils.size(); i++) {
+                Noeud enfant = fils.get(i);
+
+                if (enfant.repertoire) {
+                    try {
+                        enfant.supprimer(extension);
+                    } catch (UnableToDeleteFileException e) {
+                        System.out.println(e.getMessage());
+                    }
+                } else if (enfant.nom.endsWith("." + extension)) {
+                    if (enfant.file.getParentFile().canWrite())
+                        fils.remove(i);
+                    else
+                        throw new UnableToDeleteFileException(enfant.file.getPath());
+                }
+            }
+
+        }
     }
 
     public Arbre(String path) throws FileNotFoundException {
@@ -77,10 +104,17 @@ public class Arbre {
         racine.traverser(extension);
     }
 
+    void supprimer(String extension) {
+        try {
+            racine.supprimer(extension);
+        } catch (UnableToDeleteFileException e) {
+        }
+    }
+
     public static void main(String[] args) {
         StringTransformation addBlah = (String s) -> s + ".blah";
 
-        String path = "./Test/racine";
+        String path = "Test/racine";
 
         new TestFunction() {
             public void function(Arbre a) {
@@ -91,14 +125,14 @@ public class Arbre {
         new TestFunction() {
             public void function(Arbre a) {
 
-                System.out.print("Avant le map");
+                System.out.println("Avant le map");
                 a.afficher();
 
                 System.out.println("--------------------");
 
                 a.map(addBlah);
 
-                System.out.print("Après le map");
+                System.out.println("Après le map");
                 a.afficher();
             };
         }.runTest("map", path);
@@ -113,6 +147,22 @@ public class Arbre {
 
             };
         }.runTest("traverser avec txt", path);
+
+        new TestFunction() {
+            public void function(Arbre a) {
+
+                System.out.println("Avant le supprimer");
+                a.afficher();
+
+                System.out.println("--------------------");
+
+                a.supprimer("txt");
+
+                System.out.println("Après le supprimer");
+                a.afficher();
+
+            };
+        }.runTest("supprimer", path);
 
     }
 }
