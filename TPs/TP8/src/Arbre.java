@@ -9,8 +9,8 @@ public class Arbre {
     private class Noeud {
         private String nom;
         private int taille;
-        private boolean repertoire;
 
+        private boolean repertoire;
         private ArrayList<Noeud> fils;
 
         public Noeud(File f) throws FileNotFoundException {
@@ -34,9 +34,20 @@ public class Arbre {
                 }
             }
         }
+
+        public void afficher(int profondeur) {
+            System.out.println("\t".repeat(profondeur) + nom + " [" + taille + "]");
+            if (repertoire)
+                for (Noeud enfant : fils)
+                    enfant.afficher(profondeur + 1);
+        }
     }
 
     public Arbre(String path) throws FileNotFoundException {
         racine = new Noeud(new File(path));
+    }
+
+    public void afficher() {
+        racine.afficher(0);
     }
 }
