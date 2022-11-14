@@ -4,6 +4,9 @@ public abstract class TestFunction {
 
     public abstract void function(Arbre a);
 
+    /**
+     * @param path
+     */
     private void test(String path) {
         Arbre test1;
 
@@ -18,6 +21,10 @@ public abstract class TestFunction {
         function(test1);
     }
 
+    /**
+     * @param testName
+     * @param path
+     */
     public void runTest(String testName, String path) {
         System.out.println();
         System.out.println("-----------\\ Test " + testName + " /-----------");

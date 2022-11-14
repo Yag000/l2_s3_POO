@@ -96,21 +96,30 @@ public class Arbre {
         racine.afficher(0);
     }
 
+    /**
+     * @param t
+     */
     public void map(StringTransformation t) {
         racine.map(t);
     }
 
+    /**
+     * @param extension
+     */
     public void traverser(String extension) {
         racine.traverser(extension);
     }
 
-    void supprimer(String extension) {
-        try {
-            racine.supprimer(extension);
-        } catch (UnableToDeleteFileException e) {
-        }
+    /**
+     * @param extension
+     */
+    void supprimer(String extension) throws UnableToDeleteFileException {
+        racine.supprimer(extension);
     }
 
+    /**
+     * @param args
+     */
     public static void main(String[] args) {
         StringTransformation addBlah = (String s) -> s + ".blah";
 
@@ -156,7 +165,12 @@ public class Arbre {
 
                 System.out.println("--------------------");
 
-                a.supprimer("txt");
+                try {
+                    a.supprimer("txt");
+
+                } catch (UnableToDeleteFileException e) {
+                    System.out.println("Au moins un fichier n'a aps été supprimé");
+                }
 
                 System.out.println("Après supprimer");
                 a.afficher();
