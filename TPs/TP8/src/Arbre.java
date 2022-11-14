@@ -36,10 +36,21 @@ public class Arbre {
         }
 
         public void afficher(int profondeur) {
-            System.out.println("\t".repeat(profondeur) + nom + " [" + taille + "]");
+            System.out.println("  ".repeat(profondeur) + nom + " [" + taille + "]");
+
             if (repertoire)
                 for (Noeud enfant : fils)
                     enfant.afficher(profondeur + 1);
+
+        }
+
+        public void map(StringTransformation t) {
+
+            if (repertoire)
+                fils.forEach((Noeud n) -> n.map(t));
+            else
+                nom = t.transf(nom);
+
         }
     }
 
@@ -49,5 +60,33 @@ public class Arbre {
 
     public void afficher() {
         racine.afficher(0);
+    }
+
+    public void map(StringTransformation t) {
+        racine.map(t);
+    }
+
+    public static void main(String[] args) {
+        StringTransformation addBlah = (String s) -> s + ".blah";
+
+        Arbre test;
+
+        try {
+            test = new Arbre("./Test/racine");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("Le fichier n'existe pas");
+            return;
+        }
+
+        System.out.println("--------------------");
+
+        test.afficher();
+
+        test.map(addBlah);
+
+        System.out.println("--------------------");
+
+        test.afficher();
     }
 }
