@@ -16,7 +16,7 @@ public class UnableToDeleteFileException extends Exception {
      * @param path Chemin du fichier
      */
     public UnableToDeleteFileException(String path) {
-        super("File " + path + " could not be opened");
+        super("File: " + path + " could not be opened");
     }
 
 }

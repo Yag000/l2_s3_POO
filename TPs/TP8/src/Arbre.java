@@ -238,6 +238,11 @@ public class Arbre {
 
     }
 
+    // Helper function
+    private static void printLine() {
+        System.out.println("--------------------");
+    }
+
     public static void main(String[] args) {
         StringTransformation addBlah = (String s) -> s + ".blah";
 
@@ -255,9 +260,8 @@ public class Arbre {
                 System.out.println("Avant map");
                 a.afficher();
 
-                System.out.println("--------------------");
-
                 a.map(addBlah);
+                printLine();
 
                 System.out.println("Après map");
                 a.afficher();
@@ -267,11 +271,8 @@ public class Arbre {
         new TestFunction() {
             public void function(Arbre a) {
                 a.afficher();
-
-                System.out.println("--------------------");
-
+                printLine();
                 a.traverser("txt");
-
             }
         }.runTest("traverser avec txt", path);
 
@@ -281,7 +282,7 @@ public class Arbre {
                 System.out.println("Avant supprimer");
                 a.afficher();
 
-                System.out.println("--------------------");
+                printLine();
 
                 try {
                     a.supprimer("txt");
