@@ -1,5 +1,6 @@
 package Exo_4;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.time.LocalTime;
@@ -22,6 +23,16 @@ public class Exo4 {
 
         Timer t1 = new Timer(delay, afficheHeure);
 
-        t1.start();
+        delay = 2000; // milliseconds
+        ActionListener compterMoutons = new ActionListener() {
+            private int last = 0;
+
+            public void actionPerformed(ActionEvent evt) {
+                System.out.println(++last);
+            }
+        };
+
+        Timer t2 = new Timer(delay, compterMoutons);
+        t2.start();
     }
 }
