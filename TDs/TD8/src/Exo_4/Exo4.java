@@ -34,5 +34,7 @@ public class Exo4 {
 
         Timer t2 = new Timer(delay, compterMoutons);
         t2.start();
+
+        // Nope, pas de lambda
     }
 }
