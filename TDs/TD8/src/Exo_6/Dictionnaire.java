@@ -1,5 +1,6 @@
 package Exo_6;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import Exo_5.ListeDEntier;
@@ -39,5 +40,45 @@ public class Dictionnaire {
                 return p.value;
 
         throw new ValeurNonTrouveeException();
+    }
+
+    Iterator<String> parcoursCles() {
+        class KeyIterator implements Iterator<String> {
+
+            Iterator<Pair> it = list.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return it.hasNext();
+            }
+
+            @Override
+            public String next() {
+                return it.next().key;
+            }
+
+        }
+
+        return new KeyIterator();
+    }
+
+    Iterator<Integer> parcoursValeurs() {
+        class KeyIterator implements Iterator<Integer> {
+
+            Iterator<Pair> it = list.iterator();
+
+            @Override
+            public boolean hasNext() {
+                return it.hasNext();
+            }
+
+            @Override
+            public Integer next() {
+                return it.next().value;
+            }
+
+        }
+
+        return new KeyIterator();
     }
 }
