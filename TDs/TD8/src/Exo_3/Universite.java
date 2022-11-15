@@ -1,5 +1,7 @@
 package Exo_3;
 
+import java.util.Random;
+
 public class Universite {
     private int nbEtu; // nombre d’étudiants inscrits à l’université
     private int capALL; // capacité en arts, lettres, langues
@@ -40,6 +42,28 @@ public class Universite {
         this.capALL = capALL;
         this.capSHS = capSHS;
         this.capSTS = capSTS;
+    }
+
+    void restrictionBudgetaire() throws DirectiveMinisterielleException, TropPeuDCapaciteException {
+        Random rd = new Random();
+        int nCapALL = capALL - rd.nextInt((int) (0.5 * capALL));
+        int nCapSHS = capSHS - rd.nextInt((int) (0.5 * capSHS));
+        int nCapSTS = capSTS - rd.nextInt((int) (0.5 * capSTS));
+        try {
+            restructuration(nCapALL, nCapSHS, nCapSTS);
+        } catch (TropPeuDCapaciteException e) {
+            reduction(10);
+        } catch (DirectiveMinisterielleException e) {
+            nCapALL = capALL - rd.nextInt((int) (0.5 * capALL));
+            nCapSHS = capSHS - rd.nextInt((int) (0.5 * capSHS));
+            nCapSTS = capSTS - rd.nextInt((int) (0.5 * capSTS));
+        } finally {
+            restructuration(nCapALL, nCapSHS, nCapSTS);
+        }
+    }
+
+    public void reduction(int nb) {
+        nbEtu -= nb;
     }
 
 }
