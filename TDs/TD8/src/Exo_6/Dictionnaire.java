@@ -3,8 +3,6 @@ package Exo_6;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import Exo_5.ListeDEntier;
-
 public class Dictionnaire {
 
     LinkedList<Pair> list;
