@@ -21,9 +21,21 @@ public class Universite {
         this.capSTS = capSTS;
     }
 
-    void restructuration(int capALL, int capSHS, int capSTS) {
+    void restructuration(int capALL, int capSHS, int capSTS) throws DirectiveMinisterielleException {
         if (capALL + capSHS + capSTS < nbEtu)
             throw new TropPeuDCapaciteException();
+
+        if (capALL > capSHS + capSTS) {
+            throw new DirectiveMinisterielleException("capALL");
+        }
+
+        if (capSHS > capALL + capSTS) {
+            throw new DirectiveMinisterielleException("capSHS");
+        }
+
+        if (capSTS > capSHS + capSHS) {
+            throw new DirectiveMinisterielleException("capSTS");
+        }
 
         this.capALL = capALL;
         this.capSHS = capSHS;
