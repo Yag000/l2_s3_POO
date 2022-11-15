@@ -12,13 +12,19 @@ public class Universite {
         if (nbEtu <= 0 || capALL < 0 || capSHS < 0 || capSTS < 0)
             throw new IllegalArgumentException();
 
-        if (nbEtu > capALL)
-            throw new IllegalArgumentException();
-
-        if (capALL != capSHS + capSTS)
+        if (nbEtu > capALL + capSHS + capSTS)
             throw new IllegalArgumentException();
 
         this.nbEtu = nbEtu;
+        this.capALL = capALL;
+        this.capSHS = capSHS;
+        this.capSTS = capSTS;
+    }
+
+    void restructuration(int capALL, int capSHS, int capSTS) {
+        if (capALL + capSHS + capSTS < nbEtu)
+            throw new TropPeuDCapaciteException();
+
         this.capALL = capALL;
         this.capSHS = capSHS;
         this.capSTS = capSTS;
