@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Classe qui represente une arborescence de fichiers et dossier avec certaines
@@ -136,8 +138,8 @@ public class Arbre {
 
             ArrayList<Noeud> enfantsASupprimer = new ArrayList<>();
 
-            ArrayList<Boolean> flag = new ArrayList<>(); // Flag pour savoir s'il y a eu un fichier qui devrait être
-                                                         // supprimé mais qui ne l'a pas été
+            Set<Boolean> flag = new HashSet<>(); // Flag pour savoir s'il y a eu un fichier qui devrait être
+                                                 // supprimé mais qui ne l'a pas été
 
             fils.forEach((Noeud enfant) -> {
                 if (enfant.repertoire) {
@@ -146,8 +148,9 @@ public class Arbre {
                     } catch (UnableToDeleteFileException e) {
                         flag.add(true);
                     }
-                } else if (enfant.nom.endsWith(extension))
+                } else if (enfant.nom.endsWith(extension)) {
                     enfantsASupprimer.add(enfant);
+                }
             });
 
             enfantsASupprimer.forEach((Noeud enfant) -> {
@@ -197,7 +200,7 @@ public class Arbre {
 
     /**
      * Affiche les fichier qui ont une extension particulière. Pour chercher tous
-     * les fichier te type txt on peut appeler la fonction de deux manières
+     * les fichier te type <b>txt</b> on peut appeler la fonction de deux manières
      * diferentes:
      * 
      * <pre>
@@ -235,7 +238,6 @@ public class Arbre {
      */
     void supprimer(String extension) throws UnableToDeleteFileException {
         racine.supprimer(extension.startsWith(".") ? extension : "." + extension);
-
     }
 
     // Helper function
