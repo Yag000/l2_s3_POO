@@ -1,0 +1,13 @@
+Exo 1
+
+1 ->  Checked hérite de Exception et  Uncheck hérite de RuntimeException
+
+2 -> 
+
+    NullPointerException -> RuntimeException    
+    ArrayIndexOutOfBoundsException -> RuntimeException
+    IOException -> Exception
+
+3 -> Si c'est checked il fau rajouter des try/catch, Sinon il suffit de bien coder
+
+4 -> Si l'exception matchée par le catch est la même que celle ui est levée.
