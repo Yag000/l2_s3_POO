@@ -19,7 +19,10 @@ public class Exo4 {
         frame.pack();
 
         int delay = 1000; // milliseconds
-        ActionListener afficheHeure = evt -> System.out.println(LocalTime.now());
+        ActionListener afficheHeure = evt -> {
+            System.out.println(LocalTime.now());
+            label.setText(String.valueOf(LocalTime.now()));
+        };
 
         Timer t1 = new Timer(delay, afficheHeure);
 
@@ -29,6 +32,7 @@ public class Exo4 {
 
             public void actionPerformed(ActionEvent evt) {
                 System.out.println(++last);
+                label.setText(String.valueOf(last));
             }
         };
 

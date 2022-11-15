@@ -87,15 +87,15 @@ class Exo2 {
             ex.f();
         } catch (CallF e) {
             System.out.println(" Catch f ( ) "); //
-            // ex.g(); unhandled exception
+            // ex.g(); Unhandled exception
         } finally {
-            System.out.println(" F i n a l l y "); //
+            System.out.println(" Finally "); //
         }
 
         try {
             // ex.f(); Unhandled exception
         } finally {
-            System.out.println(" F i n a l l y ");
+            System.out.println(" Finally "); //
             // ex.g(); Unhandled exception
         }
     }
