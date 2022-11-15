@@ -17,4 +17,10 @@ interface BoiteAEntiers {
         throw new UnsupportedOperationException(" La méthode retirer n'est pas définie.");
     }
 
+    default void ajoutRisque(Object o) throws IllegalArgumentException {
+        if (o instanceof Integer value)
+            ajouter(value);
+        else
+            throw new IllegalArgumentException();
+    }
 }
