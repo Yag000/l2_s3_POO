@@ -66,4 +66,7 @@ public class Universite {
         nbEtu -= nb;
     }
 
+    // Question 5: On peut rajouter un argument à l'exception de type int qui
+    // represente le surplus.
+
 }
