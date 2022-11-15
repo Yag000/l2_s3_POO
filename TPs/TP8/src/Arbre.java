@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.imageio.stream.FileCacheImageInputStream;
+
 /**
  * Classe qui represente une arborescence de fichiers et dossier avec certaines
  * fonctions simples de manipulation.
@@ -115,7 +117,7 @@ public class Arbre {
          */
         private void deleteFile(Noeud enfant) throws UnableToDeleteFileException {
             if (repertoire) {
-                if (enfant.file.getParentFile().canWrite())
+                if (file.canWrite())
                     fils.remove(enfant);
                 else
                     throw new UnableToDeleteFileException(enfant.file.getPath());
