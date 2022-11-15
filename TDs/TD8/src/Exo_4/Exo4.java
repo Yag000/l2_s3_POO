@@ -14,7 +14,8 @@ public class Exo4 {
         JFrame frame = new JFrame("Relief Valve");
         frame.setResizable(false);
         frame.setLocation(500, 300);
-        JLabel label = new JLabel("this is my text");
+
+        JLabel label = new JLabel();
         frame.add(label);
         frame.pack();
 
