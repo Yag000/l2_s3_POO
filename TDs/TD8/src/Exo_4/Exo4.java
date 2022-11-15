@@ -1,6 +1,5 @@
 package Exo_4;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.time.LocalTime;
@@ -19,11 +18,7 @@ public class Exo4 {
         frame.pack();
 
         int delay = 1000; // milliseconds
-        ActionListener afficheHeure = new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                System.out.println(LocalTime.now());
-            }
-        };
+        ActionListener afficheHeure = evt -> System.out.println(LocalTime.now());
 
         Timer t1 = new Timer(delay, afficheHeure);
 
