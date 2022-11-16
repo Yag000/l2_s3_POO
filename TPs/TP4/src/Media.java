@@ -1,6 +1,6 @@
+import javax.swing.UIDefaults.ProxyLazyValue;
 
 public class Media {
-
     private final String titre;
     private static int numeroElements = 0;
     private final int id;
@@ -25,6 +25,7 @@ public class Media {
      * public boolean plusPetit(Media doc) {
      * return id < doc.id;
      * }
+     * 
      * 
      * public boolean plusPetit(Livre doc) {
      * if (this instanceof Livre)
