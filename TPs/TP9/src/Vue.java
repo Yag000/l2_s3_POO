@@ -18,6 +18,8 @@ public class Vue extends JFrame {
         panneauColore.setBackground(initialColor);
 
         this.getContentPane().add(panneauColore);
-        panneauColore.add(etiqCouleur);
+
+        panneauColore.add(etiqCouleur, BorderLayout.CENTER);
+
     }
 }
