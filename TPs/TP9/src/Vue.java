@@ -19,6 +19,8 @@ public class Vue extends JFrame {
 
         panneauColore.setBackground(initialColor);
 
+        this.getContentPane().setLayout(new GridLayout());
+
         this.getContentPane().add(panneauColore);
 
         panneauColore.setLayout(new BorderLayout());
