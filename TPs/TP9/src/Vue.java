@@ -7,6 +7,7 @@ import java.awt.*;
 public class Vue extends JFrame {
 
     Model model;
+    Controller controller;
 
     JPanel panneauColore = new JPanel();
 
@@ -70,6 +71,10 @@ public class Vue extends JFrame {
         slider.setMajorTickSpacing(25);
         slider.setMinorTickSpacing(5);
         slider.setPaintTicks(true);
+
+        slider.addChangeListener((event) -> {
+            controller.sliderMoved();
+        });
 
         panneauChoix.add(slider);
 

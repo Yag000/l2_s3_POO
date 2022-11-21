@@ -14,6 +14,7 @@ public class Controller {
         model.setVert(sliders[1].getValue());
         model.setBleu(sliders[2].getValue());
 
+        vue.miseAJour();
     }
 
 }
