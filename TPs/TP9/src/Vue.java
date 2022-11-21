@@ -89,6 +89,5 @@ public class Vue extends JFrame {
         initSlider(bleuSlider, "bleu");
 
         initButtons();
-
-    };
+    }
 }
