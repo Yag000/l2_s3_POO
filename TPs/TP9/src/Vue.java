@@ -13,7 +13,7 @@ public class Vue extends JFrame {
 
         Color initialColor = new Color(0, 255, 0);
 
-        panneauColoer.setBackground(initialColor);
+        panneauColore.setBackground(initialColor);
 
         this.getContentPane().add(panneauColore);
     }
