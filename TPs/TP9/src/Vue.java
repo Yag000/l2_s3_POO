@@ -21,6 +21,8 @@ public class Vue extends JFrame {
 
         panneauColore.setLayout(new BorderLayout());
 
+        etiqCouleur.setHorizontalAlignment(SwingConstants.CENTER);
+
         panneauColore.add(etiqCouleur, BorderLayout.CENTER);
 
     }
