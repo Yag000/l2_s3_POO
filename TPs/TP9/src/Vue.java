@@ -5,6 +5,8 @@ public class Vue extends JFrame {
 
     JPanel panneauColore = new JPanel();
 
+    JLabel etiqCouleur = new JLabel("Vert");
+
     Vue() {
         setTitle("Palette");
         setSize(800, 600);
@@ -16,5 +18,6 @@ public class Vue extends JFrame {
         panneauColore.setBackground(initialColor);
 
         this.getContentPane().add(panneauColore);
+        panneauColore.add(etiqCouleur);
     }
 }
