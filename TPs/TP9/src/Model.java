@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 public class Model {
     private int rouge;
     private int vert;
@@ -10,6 +12,10 @@ public class Model {
         this.rouge = rouge;
         this.vert = vert;
         this.bleu = bleu;
+    }
+
+    public Color getColor() {
+        return new Color(rouge, vert, bleu);
     }
 
 }

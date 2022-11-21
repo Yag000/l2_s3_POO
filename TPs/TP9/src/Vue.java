@@ -6,6 +6,8 @@ import java.awt.*;
 
 public class Vue extends JFrame {
 
+    Model model;
+
     JPanel panneauColore = new JPanel();
 
     JPanel panneauChoix = new JPanel();
@@ -20,7 +22,8 @@ public class Vue extends JFrame {
     JSlider vertSlider;
     JSlider bleuSlider;
 
-    Vue() {
+    Vue(Model model) {
+        this.model = model;
         setTitle("Palette");
         setSize(800, 600);
 
@@ -46,6 +49,12 @@ public class Vue extends JFrame {
 
     }
 
+    public void miseAJour() {
+        panneauColore.setBackground(model.getColor());
+
+        etiqCouleur.setText("#" + Integer.toHexString(getBackground().getRGB()).substring(2));
+    }
+
     private void initSlider(JSlider slider, String name) {
 
         slider = new JSlider(0, 100);
@@ -57,7 +66,6 @@ public class Vue extends JFrame {
         slider.setMajorTickSpacing(25);
         slider.setMinorTickSpacing(5);
         slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
 
         panneauChoix.add(slider);
 
@@ -82,7 +90,7 @@ public class Vue extends JFrame {
 
     private void initPanneauChoix() {
 
-        panneauChoix.setLayout(new GridLayout(4, 1));
+        panneauChoix.setLayout(new GridLayout(4, 1, 0, 100));
 
         initSlider(rougeSlider, "rouge");
         initSlider(vertSlider, "vert");
