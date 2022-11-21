@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Vue extends JFrame {
 
-    JPanel panneauColor = new JPanel();
+    JPanel panneauColore = new JPanel();
 
     Vue() {
         setTitle("Palette");
@@ -13,6 +13,8 @@ public class Vue extends JFrame {
 
         Color initialColor = new Color(0, 255, 0);
 
-        panneauColor.setBackground(initialColor);
+        panneauColoer.setBackground(initialColor);
+
+        this.getContentPane().add(panneauColore);
     }
 }
