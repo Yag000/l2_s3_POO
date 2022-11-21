@@ -1,5 +1,7 @@
 import java.awt.Color;
 
+import javax.swing.JSlider;
+
 public class Controller {
     Model model;
     Vue vue;
@@ -10,9 +12,9 @@ public class Controller {
     }
 
     public void sliderMoved() {
-        var sliders = vue.getSliders();
+        int[] slidersValues = vue.getSlidersValues();
 
-        model.setColor(new Color(sliders[0].getValue(), sliders[1].getValue(), sliders[2].getValue()));
+        model.setColor(new Color(slidersValues[0], slidersValues[1], slidersValues[2]));
 
         vue.miseAJour();
     }

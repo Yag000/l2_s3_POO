@@ -12,9 +12,17 @@ public class Model {
     }
 
     public Model(int rouge, int vert, int bleu) {
-        this.rouge = (int) (rouge * 255. / 100.);
-        this.vert = (int) (vert * 255. / 100.);
-        this.bleu = (int) (bleu * 255. / 100.);
+        lastColor = new Color(rouge, vert, bleu);
+        this.rouge = rouge;
+        this.vert = vert;
+        this.bleu = bleu;
+    }
+
+    public Model(Color c) {
+        lastColor = c;
+        this.rouge = c.getRed();
+        this.vert = c.getGreen();
+        this.bleu = c.getBlue();
     }
 
     public Color getColor() {

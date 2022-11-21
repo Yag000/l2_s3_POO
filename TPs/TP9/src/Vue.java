@@ -14,7 +14,7 @@ public class Vue extends JFrame {
 
     JPanel panneauChoix = new JPanel();
 
-    JLabel etiqCouleur = new JLabel("Vert");
+    JLabel etiqCouleur = new JLabel();
 
     JButton memoButton;
     JButton rappelButton;
@@ -24,34 +24,26 @@ public class Vue extends JFrame {
     JSlider vertSlider;
     JSlider bleuSlider;
 
-    Vue() {
+    Vue(Color initialColor) {
         setTitle("Palette");
         setSize(800, 600);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        Color initialColor = new Color(0, 255, 0);
-
-        panneauColore.setBackground(initialColor);
-
         this.getContentPane().setLayout(new GridLayout());
-
-        this.getContentPane().add(panneauChoix);
-
-        panneauColore.setLayout(new BorderLayout());
-
-        etiqCouleur.setHorizontalAlignment(SwingConstants.CENTER);
-
-        panneauColore.add(etiqCouleur, BorderLayout.CENTER);
 
         initPanneauChoix();
 
-        this.getContentPane().add(panneauColore);
+        this.getContentPane().add(panneauChoix);
 
+        initPanneauColore(initialColor);
+
+        this.getContentPane().add(panneauColore);
     }
 
-    public JSlider[] getSliders() {
-        return new JSlider[] { rougeSlider, vertSlider, bleuSlider };
+    public int[] getSlidersValues() {
+        return new int[] { (int) (rougeSlider.getValue() * (255. / 100.)),
+                (int) (vertSlider.getValue() * (255. / 100.)), (int) (bleuSlider.getValue() * (255. / 100.)) };
     }
 
     public void miseAJour() {
@@ -61,6 +53,17 @@ public class Vue extends JFrame {
         etiqCouleur.setText("#" + Integer.toHexString(color.getRGB()).substring(2));
         etiqCouleur.setForeground(model.getComplementary());
 
+    }
+
+    private void initPanneauColore(Color initialColor) {
+
+        panneauColore.setLayout(new BorderLayout());
+
+        etiqCouleur.setHorizontalAlignment(SwingConstants.CENTER);
+
+        panneauColore.add(etiqCouleur, BorderLayout.CENTER);
+
+        panneauColore.setBackground(initialColor);
     }
 
     private JSlider initSlider(JSlider slider, String name) {

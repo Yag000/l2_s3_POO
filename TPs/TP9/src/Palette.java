@@ -1,11 +1,15 @@
+import java.awt.Color;
+
 public class Palette {
     private Vue view;
     private Model model;
     private Controller controller;
 
+    private final static Color INITIAL_COLOR = Color.GREEN;
+
     public Palette() {
-        model = new Model(255, 0, 0);
-        view = new Vue();
+        model = new Model(INITIAL_COLOR);
+        view = new Vue(INITIAL_COLOR);
 
         controller = new Controller(model, view);
 
@@ -14,7 +18,7 @@ public class Palette {
 
         view.setVisible(true);
 
-        view.miseAJour();
+        controller.updateColor(INITIAL_COLOR);
     }
 
     public static void main(String[] args) {
