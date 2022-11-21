@@ -1,5 +1,6 @@
 import java.awt.Color;
 
+//TODO: RGB odes not work use 255 values
 public class Model {
     private int rouge;
     private int vert;
@@ -35,9 +36,6 @@ public class Model {
     }
 
     public Color getComplementary() {
-        System.out.println(rouge);
-        System.out.println(vert);
-        System.out.println(bleu);
         return new Color(255 - rouge, 255 - vert, 255 - bleu);
     }
 

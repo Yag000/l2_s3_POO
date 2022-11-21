@@ -123,9 +123,9 @@ public class Vue extends JFrame {
     }
 
     public void updateSliders(Color c) {
-        rougeSlider.setValue(c.getRed());
-        vertSlider.setValue(c.getGreen());
-        bleuSlider.setValue(c.getBlue());
+        rougeSlider.setValue((int) (c.getRed() * (100. / 255.)));
+        vertSlider.setValue((int) (c.getGreen() * (100. / 255.)));
+        bleuSlider.setValue((int) (c.getBlue() * (100. / 255.)));
     }
 
     public void setModel(Model model) {
