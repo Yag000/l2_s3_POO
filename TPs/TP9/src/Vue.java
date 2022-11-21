@@ -5,6 +5,8 @@ public class Vue extends JFrame {
 
     JPanel panneauColore = new JPanel();
 
+    JPanel panneauChoix = new JPanel();
+
     JLabel etiqCouleur = new JLabel("Vert");
 
     Vue() {
