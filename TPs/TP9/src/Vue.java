@@ -10,5 +10,9 @@ public class Vue extends JFrame {
         setSize(800, 600);
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        Color initialColor = new Color(0, 255, 0);
+
+        panneauColor.setBackground(initialColor);
     }
 }
