@@ -1,13 +1,18 @@
 import java.awt.Color;
 
+/**
+ * Cette classe sert à initialiser la palette de couleurs.
+ */
 public class Palette {
-    private Vue view;
-    private Model model;
-    private Controller controller;
+    private Vue view; // Vue du MVC
+    private Model model; // Model du MVC
+    private Controller controller; // Controller du MVC
 
-    private final static Color INITIAL_COLOR = Color.GREEN;
+    private final static Color INITIAL_COLOR = Color.GREEN; // Couleur initiale
 
     public Palette() {
+        // Initialisation du MVC
+
         model = new Model(INITIAL_COLOR);
         view = new Vue(INITIAL_COLOR);
 

@@ -1,16 +1,24 @@
 import java.awt.Color;
 
-import javax.swing.JSlider;
-
+/**
+ * Cette classe est le Controller du modèle MVC.
+ */
 public class Controller {
-    Model model;
-    Vue vue;
+    Model model; // Model du MVC
+    Vue vue; // Vue du MVC
 
+    // Constructors
     public Controller(Model model, Vue vue) {
         this.model = model;
         this.vue = vue;
     }
 
+    // Methods
+
+    /**
+     * Cette méthode est appelée par la Vue quand un slider est modifié. Elle
+     * change la couleur du modèle et met à jour la couleur du panneau.
+     */
     public void sliderMoved() {
         int[] slidersValues = vue.getSlidersValues();
 
@@ -19,6 +27,13 @@ public class Controller {
         vue.miseAJour();
     }
 
+    /**
+     * Cette méthode est appelée par la Vue quand un bouton est cliqué. Elle
+     * change la couleur du modèle, met à jour la couleur du panneau et met à jour
+     * les sliders.
+     * 
+     * @param c Nouvelle couleur
+     */
     public void updateColor(Color c) {
         model.setColor(c);
         vue.miseAJour();

@@ -1,28 +1,23 @@
 import javax.swing.*;
-
 import java.awt.*;
 
-//TODO: complemetaire ne marche pas
-//TODO: problemes avec les buttons (exceptions)
-
+/**
+ * Cette classe est la Vue du modèle MVC.
+ */
 public class Vue extends JFrame {
 
-    Model model;
-    Controller controller;
+    Model model; // Model du MVC
+    Controller controller; // Controller du MVC
 
-    JPanel panneauColore = new JPanel();
+    JPanel panneauColore = new JPanel(); // Panneau qui affiche la couleur
 
-    JPanel panneauChoix = new JPanel();
+    JPanel panneauChoix = new JPanel(); // Panneau qui controle la couleur
 
-    JLabel etiqCouleur = new JLabel();
+    JLabel etiqCouleur = new JLabel(); // Label qui affiche la couleur
 
-    JButton memoButton;
-    JButton rappelButton;
-    JButton complementaireButton;
-
-    JSlider rougeSlider;
-    JSlider vertSlider;
-    JSlider bleuSlider;
+    JSlider rougeSlider; // Slider pour le rouge
+    JSlider vertSlider; // Slider pour le vert
+    JSlider bleuSlider; // Slider pour le bleu
 
     Vue(Color initialColor) {
         setTitle("Palette");
@@ -30,6 +25,7 @@ public class Vue extends JFrame {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        // Initialisation de tous les éléments du Frame
         this.getContentPane().setLayout(new GridLayout());
 
         initPanneauChoix();
@@ -41,20 +37,39 @@ public class Vue extends JFrame {
         this.getContentPane().add(panneauColore);
     }
 
+    // Getters
+
+    /**
+     * Retourne la liste avec les valeurs des Sliders convertis en RGB (Le slider
+     * represente un pourcentage de chaque couleur, il suffit de convertir ça à
+     * l'échelle 0-255)
+     * 
+     * @return Liste avec les valeurs des Sliders convertis en RGB
+     */
     public int[] getSlidersValues() {
         return new int[] { (int) (rougeSlider.getValue() * (255. / 100.)),
                 (int) (vertSlider.getValue() * (255. / 100.)), (int) (bleuSlider.getValue() * (255. / 100.)) };
     }
 
-    public void miseAJour() {
-        Color color = model.getColor();
-        panneauColore.setBackground(color);
+    // Setters
 
-        etiqCouleur.setText("#" + Integer.toHexString(color.getRGB()).substring(2));
-        etiqCouleur.setForeground(model.getComplementary());
-
+    public void setModel(Model model) {
+        this.model = model;
     }
 
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    // Méthodes
+
+    // Méthodes privées de type init
+
+    /**
+     * Initialise le panneau de la couleur.
+     * 
+     * @param initialColor La couleur initiale.
+     */
     private void initPanneauColore(Color initialColor) {
 
         panneauColore.setLayout(new BorderLayout());
@@ -66,6 +81,13 @@ public class Vue extends JFrame {
         panneauColore.setBackground(initialColor);
     }
 
+    /**
+     * Initialisation d'un slider {@code slider} passé en argument.
+     * 
+     * @param slider Le slider à initialiser.
+     * @param name   Le nom du slider.
+     * @return Le slider initialisé.
+     */
     private JSlider initSlider(JSlider slider, String name) {
 
         slider = new JSlider(0, 100);
@@ -88,32 +110,34 @@ public class Vue extends JFrame {
 
     }
 
+    /**
+     * Initialise les boutons de la vue
+     */
     private void initButtons() {
-        var panneauChoixButton = new JPanel();
-
+        var panneauChoixButton = new JPanel(); // Panneau pour les boutons
         panneauChoixButton.setLayout(new GridLayout(1, 3, 0, 200));
 
-        memoButton = new JButton("Mémoriser");
+        // Bouton pour stocker la couleur
+        JButton memoButton = new JButton("Mémoriser");
         panneauChoixButton.add(memoButton);
-        memoButton.addActionListener((event) -> {
-            model.setLastColor(model.getColor());
-        });
+        memoButton.addActionListener(event -> model.setLastColor(model.getColor()));
 
-        rappelButton = new JButton("S'en rappeler");
+        // Bouton pour récupérer la couleur mémorisée
+        JButton rappelButton = new JButton("S'en rappeler");
         panneauChoixButton.add(rappelButton);
-        rappelButton.addActionListener((event) -> {
-            controller.updateColor(model.getLastColor());
-        });
+        rappelButton.addActionListener((event) -> controller.updateColor(model.getLastColor()));
 
-        complementaireButton = new JButton("Complémentaire");
+        // Bouton pour la couleur complémentaire
+        JButton complementaireButton = new JButton("Complémentaire");
         panneauChoixButton.add(complementaireButton);
-        complementaireButton.addActionListener((event) -> {
-            controller.updateColor(model.getComplementary());
-        });
+        complementaireButton.addActionListener(event -> controller.updateColor(model.getComplementary()));
 
         panneauChoix.add(panneauChoixButton);
     }
 
+    /**
+     * Initialise le tableau de choix
+     */
     private void initPanneauChoix() {
 
         panneauChoix.setLayout(new GridLayout(4, 1, 0, 100));
@@ -125,18 +149,35 @@ public class Vue extends JFrame {
         initButtons();
     }
 
+    // Méthodes publiques de type update
+
+    /**
+     * Met à jour la couleur du panneau de couleur.
+     */
+    public void miseAJour() {
+
+        Color color = model.getColor();
+        panneauColore.setBackground(color);
+
+        // Update de l'etiquette de couleur
+
+        // On obtient la valeur hexadécimale de la couleur
+        etiqCouleur.setText("#" + Integer.toHexString(color.getRGB()).substring(2));
+
+        // On met comme couleur des lettres la couleur inverse de la couleur du panneau
+        etiqCouleur.setForeground(model.getComplementary());
+
+    }
+
+    /**
+     * Met à jour les sliders.
+     * 
+     * @param c la couleur à partir de laquelle on met à jour les sliders.
+     */
     public void updateSliders(Color c) {
         rougeSlider.setValue((int) (c.getRed() * (100. / 255.)));
         vertSlider.setValue((int) (c.getGreen() * (100. / 255.)));
         bleuSlider.setValue((int) (c.getBlue() * (100. / 255.)));
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
-    public void setController(Controller controller) {
-        this.controller = controller;
     }
 
 }
