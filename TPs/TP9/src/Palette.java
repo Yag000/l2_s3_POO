@@ -1,11 +1,17 @@
 public class Palette {
     private Vue view;
     private Model model;
-    private Controller controller = new Controller(model, view);
+    private Controller controller;
 
     public Palette() {
         model = new Model(255, 0, 0);
-        view = new Vue(model);
+        view = new Vue();
+
+        controller = new Controller(model, view);
+
+        view.setController(controller);
+        view.setModel(model);
+
         view.setVisible(true);
 
         view.miseAJour();

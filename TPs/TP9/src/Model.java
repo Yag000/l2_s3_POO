@@ -5,29 +5,40 @@ public class Model {
     private int vert;
     private int bleu;
 
+    private Color lastColor;
+
     public Model() {
     }
 
     public Model(int rouge, int vert, int bleu) {
-        this.rouge = rouge;
-        this.vert = vert;
-        this.bleu = bleu;
+        this.rouge = (int) (rouge * 255. / 100.);
+        this.vert = (int) (vert * 255. / 100.);
+        this.bleu = (int) (bleu * 255. / 100.);
     }
 
     public Color getColor() {
         return new Color(rouge, vert, bleu);
     }
 
-    public void setRouge(int rouge) {
-        this.rouge = rouge;
+    public void setLastColor(Color c) {
+        lastColor = c;
     }
 
-    public void setVert(int vert) {
-        this.vert = vert;
+    public Color getLastColor() {
+        return lastColor;
     }
 
-    public void setBleu(int bleu) {
-        this.bleu = bleu;
+    public void setColor(Color c) {
+        rouge = c.getRed();
+        vert = c.getGreen();
+        bleu = c.getBlue();
+    }
+
+    public Color getComplementary() {
+        System.out.println(rouge);
+        System.out.println(vert);
+        System.out.println(bleu);
+        return new Color(255 - rouge, 255 - vert, 255 - bleu);
     }
 
 }

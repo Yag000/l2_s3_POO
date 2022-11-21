@@ -1,8 +1,9 @@
-import javax.lang.model.util.ElementScanner14;
 import javax.swing.*;
-import javax.swing.plaf.PanelUI;
 
 import java.awt.*;
+
+//TODO: complemetaire ne marche pas
+//TODO: problemes avec les buttons (exceptions)
 
 public class Vue extends JFrame {
 
@@ -23,8 +24,7 @@ public class Vue extends JFrame {
     JSlider vertSlider;
     JSlider bleuSlider;
 
-    Vue(Model model) {
-        this.model = model;
+    Vue() {
         setTitle("Palette");
         setSize(800, 600);
 
@@ -55,12 +55,15 @@ public class Vue extends JFrame {
     }
 
     public void miseAJour() {
-        panneauColore.setBackground(model.getColor());
+        Color color = model.getColor();
+        panneauColore.setBackground(color);
 
-        etiqCouleur.setText("#" + Integer.toHexString(getBackground().getRGB()).substring(2));
+        etiqCouleur.setText("#" + Integer.toHexString(color.getRGB()).substring(2));
+        etiqCouleur.setForeground(model.getComplementary());
+
     }
 
-    private void initSlider(JSlider slider, String name) {
+    private JSlider initSlider(JSlider slider, String name) {
 
         slider = new JSlider(0, 100);
 
@@ -78,21 +81,32 @@ public class Vue extends JFrame {
 
         panneauChoix.add(slider);
 
+        return slider;
+
     }
 
     private void initButtons() {
         var panneauChoixButton = new JPanel();
 
-        panneauChoixButton.setLayout(new GridLayout(1, 3));
+        panneauChoixButton.setLayout(new GridLayout(1, 3, 0, 200));
 
         memoButton = new JButton("Mémoriser");
         panneauChoixButton.add(memoButton);
+        memoButton.addActionListener((event) -> {
+            model.setLastColor(model.getColor());
+        });
 
         rappelButton = new JButton("S'en rappeler");
         panneauChoixButton.add(rappelButton);
+        rappelButton.addActionListener((event) -> {
+            controller.updateColor(model.getLastColor());
+        });
 
         complementaireButton = new JButton("Complémentaire");
         panneauChoixButton.add(complementaireButton);
+        complementaireButton.addActionListener((event) -> {
+            controller.updateColor(model.getComplementary());
+        });
 
         panneauChoix.add(panneauChoixButton);
     }
@@ -101,10 +115,25 @@ public class Vue extends JFrame {
 
         panneauChoix.setLayout(new GridLayout(4, 1, 0, 100));
 
-        initSlider(rougeSlider, "rouge");
-        initSlider(vertSlider, "vert");
-        initSlider(bleuSlider, "bleu");
+        this.rougeSlider = initSlider(rougeSlider, "rouge");
+        this.vertSlider = initSlider(vertSlider, "vert");
+        this.bleuSlider = initSlider(bleuSlider, "bleu");
 
         initButtons();
     }
+
+    public void updateSliders(Color c) {
+        rougeSlider.setValue(c.getRed());
+        vertSlider.setValue(c.getGreen());
+        bleuSlider.setValue(c.getBlue());
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
 }
