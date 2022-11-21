@@ -18,4 +18,16 @@ public class Model {
         return new Color(rouge, vert, bleu);
     }
 
+    public void setRouge(int rouge) {
+        this.rouge = rouge;
+    }
+
+    public void setVert(int vert) {
+        this.vert = vert;
+    }
+
+    public void setBleu(int bleu) {
+        this.bleu = bleu;
+    }
+
 }

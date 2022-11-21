@@ -7,4 +7,13 @@ public class Controller {
         this.vue = vue;
     }
 
+    public void sliderMoved() {
+        var sliders = vue.getSliders();
+
+        model.setRouge(sliders[0].getValue());
+        model.setVert(sliders[1].getValue());
+        model.setBleu(sliders[2].getValue());
+
+    }
+
 }

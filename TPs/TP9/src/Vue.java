@@ -49,6 +49,10 @@ public class Vue extends JFrame {
 
     }
 
+    public JSlider[] getSliders() {
+        return new JSlider[] { rougeSlider, vertSlider, bleuSlider };
+    }
+
     public void miseAJour() {
         panneauColore.setBackground(model.getColor());
 
