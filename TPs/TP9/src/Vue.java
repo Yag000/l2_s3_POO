@@ -82,15 +82,14 @@ public class Vue extends JFrame {
     }
 
     /**
-     * Initialisation d'un slider {@code slider} passé en argument.
+     * Initialisation d'un slider avec les valeurs par défaut.
      * 
-     * @param slider Le slider à initialiser.
-     * @param name   Le nom du slider.
+     * @param name Le nom du slider.
      * @return Le slider initialisé.
      */
-    private JSlider initSlider(JSlider slider, String name) {
+    private JSlider initSlider(String name) {
 
-        slider = new JSlider(0, 100);
+        JSlider slider = new JSlider(0, 100);
 
         slider.setName(name);
 
@@ -120,12 +119,12 @@ public class Vue extends JFrame {
         // Bouton pour stocker la couleur
         JButton memoButton = new JButton("Mémoriser");
         panneauChoixButton.add(memoButton);
-        memoButton.addActionListener(event -> model.setLastColor(model.getColor()));
+        memoButton.addActionListener(event -> controller.updateLastColor());
 
         // Bouton pour récupérer la couleur mémorisée
         JButton rappelButton = new JButton("S'en rappeler");
         panneauChoixButton.add(rappelButton);
-        rappelButton.addActionListener((event) -> controller.updateColor(model.getLastColor()));
+        rappelButton.addActionListener(event -> controller.updateColor(model.getLastColor()));
 
         // Bouton pour la couleur complémentaire
         JButton complementaireButton = new JButton("Complémentaire");
@@ -142,9 +141,9 @@ public class Vue extends JFrame {
 
         panneauChoix.setLayout(new GridLayout(4, 1, 0, 100));
 
-        this.rougeSlider = initSlider(rougeSlider, "rouge");
-        this.vertSlider = initSlider(vertSlider, "vert");
-        this.bleuSlider = initSlider(bleuSlider, "bleu");
+        this.rougeSlider = initSlider("rouge");
+        this.vertSlider = initSlider("vert");
+        this.bleuSlider = initSlider("bleu");
 
         initButtons();
     }

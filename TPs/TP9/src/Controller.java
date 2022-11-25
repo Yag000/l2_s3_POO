@@ -40,4 +40,11 @@ public class Controller {
         vue.updateSliders(c);
     }
 
+    /**
+     * La couleur stocké du modèle est mise à jour avec la valeur actuelle.
+     */
+    public void updateLastColor() {
+        model.setLastColor(model.getColor());
+    }
+
 }
