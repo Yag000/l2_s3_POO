@@ -124,12 +124,12 @@ public class Vue extends JFrame {
         // Bouton pour récupérer la couleur mémorisée
         JButton rappelButton = new JButton("S'en rappeler");
         panneauChoixButton.add(rappelButton);
-        rappelButton.addActionListener(event -> controller.updateColor(model.getLastColor()));
+        rappelButton.addActionListener(event -> controller.setColorToLast());
 
         // Bouton pour la couleur complémentaire
         JButton complementaireButton = new JButton("Complémentaire");
         panneauChoixButton.add(complementaireButton);
-        complementaireButton.addActionListener(event -> controller.updateColor(model.getComplementary()));
+        complementaireButton.addActionListener(event -> controller.setColorToComplementary());
 
         panneauChoix.add(panneauChoixButton);
     }

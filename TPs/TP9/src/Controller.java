@@ -41,6 +41,20 @@ public class Controller {
     }
 
     /**
+     * La couleur est mise à jour avec la couleur stocké.
+     */
+    public void setColorToLast() {
+        updateColor(model.getLastColor());
+    }
+
+    /**
+     * La couleur devient la couleur complementaire.
+     */
+    public void setColorToComplementary() {
+        updateColor(model.getComplementary());
+    }
+
+    /**
      * La couleur stocké du modèle est mise à jour avec la valeur actuelle.
      */
     public void updateLastColor() {
