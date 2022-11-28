@@ -44,6 +44,11 @@ public class ImageEditModel {
 
     private class CutEdit extends AbstractUndoableEdit {
         Coupe c;
+
+        public CutEdit(ImageEditModel.Coupe c) {
+            this.c = c;
+        }
+
     }
 
     public BufferedImage getImage() {
