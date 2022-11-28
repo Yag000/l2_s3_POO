@@ -1,6 +1,11 @@
+import java.awt.Dimension;
+import java.awt.Graphics;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.image.BufferedImage;
 
 public class ImageEditView extends JFrame {
 
@@ -14,6 +19,13 @@ public class ImageEditView extends JFrame {
     private class ImagePane extends JPanel {
 
         Selection selection = new Selection();
+
+        public ImagePane() {
+            setPreferredSize(new Dimension(model.getImage().getWidth(), model.getImage().getHeight()));
+
+            addMouseListener(selection);
+            addMouseMotionListener(selection);
+        }
 
         @Override
         public void paintComponent(Graphics g) {
