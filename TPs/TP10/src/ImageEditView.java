@@ -13,5 +13,13 @@ public class ImageEditView extends JFrame {
 
     private class ImagePane extends JPanel {
 
+        Selection selection = new Selection();
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(model.getImage(), 0, 0, this);
+        }
+
     }
 }
