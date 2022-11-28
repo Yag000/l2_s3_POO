@@ -8,10 +8,13 @@ import javax.imageio.ImageIO;
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 public class ImageEditModel {
 
     BufferedImage image;
+
+    UndoManager undoManager = new UndoManager();
 
     public ImageEditModel(String chemin) {
         try {
