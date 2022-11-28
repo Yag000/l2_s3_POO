@@ -28,18 +28,17 @@ public class ImageEditModel {
         Rectangle z;
         int[][] pixels;
 
-        Coupe(int x, int y, int height, int width, BufferedImage image) {
-            this.z = new Rectangle(x, y, height, width);
-            this.pixels = new int[height][width];
+        Coupe(int x, int y, int width, int height, BufferedImage image) {
+            this.z = new Rectangle(x, y, width, height);
+            this.pixels = new int[width][height];
 
-            for (int i = 0; i < height; i++)
-                for (int j = 0; j < width; j++)
-                    this.pixels[i][j] = image.getRGB(x + i, y + j);
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    this.pixels[i][j] = image.getRGB(i, j);
         }
 
         void doit() {
             ImageEditModel.this.clearzone(z);
-            ;
         }
 
         void undo() {
@@ -72,16 +71,17 @@ public class ImageEditModel {
 
     public void fillzone(Rectangle z, int[][] pixels) {
 
-        if (z.getHeight() != pixels.length)
+        if (z.getWidth() != pixels.length)
             throw new IllegalArgumentException("La zone et le tableau ne sont pas de la même taille");
 
         for (int[] ligne : pixels)
-            if (z.getWidth() != ligne.length)
+            if (z.getHeight() != ligne.length)
                 throw new IllegalArgumentException("La zone et le tableau ne sont pas de la même taille");
 
-        for (int i = 0; i < pixels.length; i++)
-            for (int j = 0; j < pixels[i].length; j++)
+        for (int i = 0; i < z.getWidth(); i++)
+            for (int j = 0; j < z.getHeight(); j++)
                 image.setRGB((int) z.getX() + i, (int) z.getY() + j, pixels[i][j]);
+
     }
 
     public void clearzone(Rectangle z) {

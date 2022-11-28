@@ -7,7 +7,6 @@ public class Launcher {
         ImageEditView view = new ImageEditView(model);
 
         EventQueue.invokeLater(() -> {
-
             view.pack();
             view.setVisible(true);
         });

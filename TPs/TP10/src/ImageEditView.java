@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 
+//TODO: add quit button
+
 public class ImageEditView extends JFrame {
 
     JButton cutButton;
@@ -35,8 +37,8 @@ public class ImageEditView extends JFrame {
         // TODO: Put correct names for the buttons
 
         cutButton = new JButton("Couper");
-        undoButton = new JButton("Annuler");
-        redoButton = new JButton("Rétablir");
+        undoButton = new JButton("Undo");
+        redoButton = new JButton("Redo");
 
         cutButton.setEnabled(false);
         undoButton.setEnabled(false);
@@ -96,7 +98,10 @@ public class ImageEditView extends JFrame {
 
         private class Selection extends MouseAdapter implements MouseMotionListener {
 
-            int x0, x1, y0, y1;
+            int x0;
+            int x1;
+            int y0;
+            int y1;
 
             public Rectangle getRectangle() {
                 return new Rectangle(x0, y0, x1 - x0, y1 - y0);
