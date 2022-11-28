@@ -5,6 +5,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
+import javax.swing.undo.AbstractUndoableEdit;
+
 public class ImageEditModel {
 
     BufferedImage image;
@@ -38,6 +40,10 @@ public class ImageEditModel {
         void undo() {
             ImageEditModel.this.fillzone(z, pixels);
         }
+    }
+
+    private class CutEdit extends AbstractUndoableEdit {
+        Coupe c;
     }
 
     public BufferedImage getImage() {
