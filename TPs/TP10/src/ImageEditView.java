@@ -42,6 +42,14 @@ public class ImageEditView extends JFrame {
         undoButton.setEnabled(false);
         redoButton.setEnabled(false);
 
+        cutButton.addActionListener(e -> {
+            model.saveCut(imagePane.selection.getRectangle());
+            imagePane.repaint();
+            cutButton.setEnabled(false);
+            undoButton.setEnabled(true);
+            redoButton.setEnabled(true);
+        });
+
         menuBar.add(cutButton);
         menuBar.add(undoButton);
         menuBar.add(redoButton);
