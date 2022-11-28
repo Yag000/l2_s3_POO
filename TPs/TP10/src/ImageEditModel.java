@@ -38,7 +38,7 @@ public class ImageEditModel {
         }
 
         void doit() {
-            ImageEditModel.this.clearzone(z);
+            ImageEditModel.this.clearZone(z);
         }
 
         void undo() {
@@ -84,7 +84,7 @@ public class ImageEditModel {
 
     }
 
-    public void clearzone(Rectangle z) {
+    public void clearZone(Rectangle z) {
         Color color = Color.white;
         int srgb = color.getRGB();
 
