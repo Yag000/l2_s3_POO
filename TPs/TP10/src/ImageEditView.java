@@ -93,7 +93,8 @@ public class ImageEditView extends JFrame {
                 x1 = event.getX();
                 y1 = event.getY();
 
-                cutButton.setEnabled(true);
+                if (x0 != x1 || y0 != y1)
+                    cutButton.setEnabled(true);
 
                 imagePane.repaint();
             }

@@ -17,6 +17,20 @@ public class ImageEditModel {
         }
     }
 
+    private class Coupe {
+        Rectangle z;
+        int[][] pixels;
+
+        Coupe(int x, int y, int height, int width, BufferedImage image) {
+            this.z = new Rectangle(x, y, height, width);
+            this.pixels = new int[height][width];
+
+            for (int i = 0; i < height; i++)
+                for (int j = 0; j < width; j++)
+                    this.pixels[i][j] = image.getRGB(x + i, y + j);
+        }
+    }
+
     public BufferedImage getImage() {
         return image;
     }
