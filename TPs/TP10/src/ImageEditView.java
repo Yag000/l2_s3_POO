@@ -10,8 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-
-//TODO: add quit button
+import javax.swing.undo.CannotRedoException;
 
 public class ImageEditView extends JFrame {
 
@@ -33,43 +32,7 @@ public class ImageEditView extends JFrame {
 
         setJMenuBar(menuBar);
 
-        // TODO: Put correct names for the buttons
-
-        cutButton = new JButton("Couper");
-        undoButton = new JButton("Undo");
-        redoButton = new JButton("Redo");
-
-        cutButton.setEnabled(false);
-        undoButton.setEnabled(false);
-        redoButton.setEnabled(false);
-
-        cutButton.addActionListener(e -> {
-            model.saveCut(imagePane.selection.getRectangle());
-
-            imagePane.repaint();
-
-            cutButton.setEnabled(false);
-            undoButton.setEnabled(true);
-            redoButton.setEnabled(true);
-        });
-
-        undoButton.addActionListener(e -> {
-            if (model.undoManager.canUndo()) {
-                model.undoManager.undo();
-                imagePane.repaint();
-            }
-        });
-
-        redoButton.addActionListener(e -> {
-            if (model.undoManager.canRedo()) {
-                model.undoManager.redo();
-                imagePane.repaint();
-            }
-        });
-
-        menuBar.add(cutButton);
-        menuBar.add(undoButton);
-        menuBar.add(redoButton);
+        initButtons(menuBar);
 
         imagePane = new ImagePane();
 
@@ -132,5 +95,54 @@ public class ImageEditView extends JFrame {
             }
 
         }
+    }
+
+    private void initButtons(JMenuBar menuBar) {
+
+        cutButton = new JButton("Cut");
+        undoButton = new JButton("Undo");
+        redoButton = new JButton("Redo");
+        JButton quitButton = new JButton("Quit");
+
+        cutButton.setEnabled(false);
+        undoButton.setEnabled(false);
+        redoButton.setEnabled(false);
+
+        cutButton.addActionListener(e -> {
+            model.saveCut(imagePane.selection.getRectangle());
+
+            imagePane.repaint();
+
+            cutButton.setEnabled(false);
+            undoButton.setEnabled(true);
+            redoButton.setEnabled(true);
+        });
+
+        undoButton.addActionListener(e -> {
+            if (model.undoManager.canUndo()) {
+                model.undoManager.undo();
+            }
+            imagePane.repaint();
+        });
+
+        redoButton.addActionListener(e -> {
+            try {
+                model.undoManager.redo();
+            } catch (CannotRedoException ex) {
+                // TODO: implement this without try/catch
+                // On essaye de redo l'action et on catch l'exception qui se lève si l'action
+                // est possible
+            }
+
+            imagePane.repaint();
+        });
+
+        quitButton.addActionListener(e -> System.exit(0));
+
+        menuBar.add(cutButton);
+        menuBar.add(undoButton);
+        menuBar.add(redoButton);
+        menuBar.add(quitButton);
+
     }
 }

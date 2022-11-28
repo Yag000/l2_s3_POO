@@ -49,7 +49,7 @@ public class ImageEditModel {
     private class CutEdit extends AbstractUndoableEdit {
         Coupe c;
 
-        public CutEdit(ImageEditModel.Coupe c) {
+        public CutEdit(Coupe c) {
             this.c = c;
         }
 
@@ -97,6 +97,7 @@ public class ImageEditModel {
 
         BufferedImage subImage = image.getSubimage((int) z.getX(), (int) z.getY(), (int) z.getWidth(),
                 (int) z.getHeight());
+
         Coupe c = new Coupe((int) z.getX(), (int) z.getY(), (int) z.getWidth(), (int) z.getHeight(), subImage);
 
         c.doit();
