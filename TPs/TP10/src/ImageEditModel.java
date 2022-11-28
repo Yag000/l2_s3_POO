@@ -6,6 +6,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import javax.swing.undo.AbstractUndoableEdit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
 
 public class ImageEditModel {
 
@@ -47,6 +49,16 @@ public class ImageEditModel {
 
         public CutEdit(ImageEditModel.Coupe c) {
             this.c = c;
+        }
+
+        @Override
+        public void redo() throws CannotRedoException {
+            c.doit();
+        }
+
+        @Override
+        public void undo() throws CannotUndoException {
+            c.undo();
         }
 
     }
