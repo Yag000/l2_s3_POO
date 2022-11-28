@@ -46,7 +46,7 @@ public class ImageEditView extends JFrame {
         menuBar.add(undoButton);
         menuBar.add(redoButton);
 
-        ImagePane imagePane = new ImagePane();
+        imagePane = new ImagePane();
 
         setContentPane(imagePane);
 
