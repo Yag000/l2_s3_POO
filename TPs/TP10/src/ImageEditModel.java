@@ -93,4 +93,17 @@ public class ImageEditModel {
                 image.setRGB((int) z.getX() + i, (int) z.getY() + j, srgb);
     }
 
+    public void saveCut(Rectangle z) {
+
+        BufferedImage subImage = image.getSubimage((int) z.getX(), (int) z.getY(), (int) z.getWidth(),
+                (int) z.getHeight());
+        Coupe c = new Coupe((int) z.getX(), (int) z.getY(), (int) z.getWidth(), (int) z.getHeight(), subImage);
+
+        c.doit();
+
+        CutEdit ce = new CutEdit(c);
+
+        undoManager.addEdit(ce);
+    }
+
 }
