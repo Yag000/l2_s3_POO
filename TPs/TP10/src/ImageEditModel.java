@@ -1,10 +1,10 @@
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.awt.Color;
+
 import java.io.File;
 
 import javax.imageio.ImageIO;
-
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
