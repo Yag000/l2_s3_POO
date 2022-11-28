@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JMenuBar;
 
 public class ImageEditView extends JFrame {
 
@@ -19,6 +20,37 @@ public class ImageEditView extends JFrame {
 
     ImagePane imagePane;
     ImageEditModel model;
+
+    public ImageEditView(ImageEditModel model) {
+        this.model = model;
+
+        setTitle("Mon éditeur d'image");
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+
+        setJMenuBar(menuBar);
+
+        // TODO: Put correct names for the buttons
+
+        cutButton = new JButton("Couper");
+        undoButton = new JButton("Annuler");
+        redoButton = new JButton("Rétablir");
+
+        cutButton.setEnabled(false);
+        undoButton.setEnabled(false);
+        redoButton.setEnabled(false);
+
+        menuBar.add(cutButton);
+        menuBar.add(undoButton);
+        menuBar.add(redoButton);
+
+        ImagePane imagePane = new ImagePane();
+
+        setContentPane(imagePane);
+
+    }
 
     private class ImagePane extends JPanel {
 
