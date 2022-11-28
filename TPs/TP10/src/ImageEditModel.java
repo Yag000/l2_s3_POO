@@ -29,6 +29,15 @@ public class ImageEditModel {
                 for (int j = 0; j < width; j++)
                     this.pixels[i][j] = image.getRGB(x + i, y + j);
         }
+
+        void doit() {
+            ImageEditModel.this.clearzone(z);
+            ;
+        }
+
+        void undo() {
+            ImageEditModel.this.fillzone(z, pixels);
+        }
     }
 
     public BufferedImage getImage() {
