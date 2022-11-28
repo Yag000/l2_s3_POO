@@ -59,6 +59,13 @@ public class ImageEditView extends JFrame {
             }
         });
 
+        redoButton.addActionListener(e -> {
+            if (model.undoManager.canRedo()) {
+                model.undoManager.redo();
+                imagePane.repaint();
+            }
+        });
+
         menuBar.add(cutButton);
         menuBar.add(undoButton);
         menuBar.add(redoButton);
