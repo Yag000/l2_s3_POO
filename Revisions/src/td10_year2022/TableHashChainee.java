@@ -28,11 +28,9 @@ public class TableHashChainee implements TableHash {
         try {
             searchVal(clef);
             throw new ClefPresentException();
-        } catch (Exception e) {
+        } catch (ClefAbsentException e) {
+            t[computeIndex(clef)].addFirst(new Entree(clef, val));
         }
-
-        t[computeIndex(clef)].addFirst(new Entree(clef, val));
-
     }
 
     @Override
