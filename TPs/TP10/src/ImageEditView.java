@@ -12,14 +12,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.undo.CannotRedoException;
 
+/**
+ * Implementation graphique de l’application.
+ */
 public class ImageEditView extends JFrame {
 
-    JButton cutButton;
-    JButton undoButton;
-    JButton redoButton;
+    JButton cutButton; // Button qui controle l'action de couper
+    JButton undoButton;// Button qui controle l'undo
+    JButton redoButton;// Button qui controle le redo
 
-    ImagePane imagePane;
-    ImageEditModel model;
+    ImagePane imagePane;// Le pane principal de l'application
+    ImageEditModel model;// Model de l'application
+
+    // COnstructeur
 
     public ImageEditView(ImageEditModel model) {
         this.model = model;
@@ -37,9 +42,13 @@ public class ImageEditView extends JFrame {
         imagePane = new ImagePane();
 
         setContentPane(imagePane);
-
     }
 
+    // Classes membres
+
+    /**
+     * Classe qui controle les actions de l'utilisateur sur l'image.
+     */
     private class ImagePane extends JPanel {
 
         Selection selection = new Selection();
@@ -51,13 +60,9 @@ public class ImageEditView extends JFrame {
             addMouseMotionListener(selection);
         }
 
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(model.getImage(), 0, 0, this);
-            ((Graphics2D) g).draw(selection.getRectangle());
-        }
-
+        /**
+         * Classe qui controle les actions de l'utilisateur sur la selection.
+         */
         private class Selection extends MouseAdapter implements MouseMotionListener {
 
             int x0;
@@ -93,10 +98,23 @@ public class ImageEditView extends JFrame {
             @Override
             public void mouseMoved(MouseEvent event) {
             }
+        }
 
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(model.getImage(), 0, 0, this);
+            ((Graphics2D) g).draw(selection.getRectangle());
         }
     }
 
+    // Helper methods
+
+    /**
+     * Méthode pour initialiser les buttons
+     * 
+     * @param menuBar Le menu où les buttons seront ajoutés
+     */
     private void initButtons(JMenuBar menuBar) {
 
         cutButton = new JButton("Cut");
@@ -129,11 +147,9 @@ public class ImageEditView extends JFrame {
             try {
                 model.undoManager.redo();
             } catch (CannotRedoException ex) {
-                // TODO: implement this without try/catch
-                // On essaye de redo l'action et on catch l'exception qui se lève si l'action
-                // est possible
+                // On essaye de redo l'action et on catch l'exception
+                // qui se lève si l'action est possible
             }
-
             imagePane.repaint();
         });
 
@@ -143,6 +159,5 @@ public class ImageEditView extends JFrame {
         menuBar.add(undoButton);
         menuBar.add(redoButton);
         menuBar.add(quitButton);
-
     }
 }
