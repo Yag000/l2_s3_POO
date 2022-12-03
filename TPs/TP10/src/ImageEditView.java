@@ -71,13 +71,16 @@ public class ImageEditView extends JFrame {
             int y1;
 
             public Rectangle getRectangle() {
-                return new Rectangle(x0, y0, x1 - x0, y1 - y0);
+                return new Rectangle(Math.min(x0, x1), Math.min(y0, y1), Math.abs(x1 - x0), Math.abs(y1 - y0));
             }
 
             @Override
             public void mousePressed(MouseEvent event) {
                 x0 = event.getX();
                 y0 = event.getY();
+
+                x1 = x0;
+                y1 = y0;
 
                 cutButton.setEnabled(false);
 
