@@ -21,7 +21,7 @@ public class ImageEditModel {
 
     UndoManager undoManager = new UndoManager();
 
-    // Constructeurs
+    // Constructeur
 
     public ImageEditModel(String chemin) {
         try {
@@ -102,7 +102,7 @@ public class ImageEditModel {
      * forme d'un array de pixels
      * 
      * @param z      Zone a remplir
-     * @param pixels Array qui contint l'image
+     * @param pixels Array qui contient l'image
      */
     public void fillzone(Rectangle z, int[][] pixels) {
 

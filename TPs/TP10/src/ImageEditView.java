@@ -24,7 +24,7 @@ public class ImageEditView extends JFrame {
     ImagePane imagePane;// Le pane principal de l'application
     ImageEditModel model;// Model de l'application
 
-    // COnstructeur
+    // Constructeur
 
     public ImageEditView(ImageEditModel model) {
         this.model = model;
@@ -79,6 +79,13 @@ public class ImageEditView extends JFrame {
                 x0 = event.getX();
                 y0 = event.getY();
 
+                // On fait attention a ne pas sortir de l'image
+                x0 = Math.min(x0, model.getImage().getWidth());
+                y0 = Math.min(y0, model.getImage().getHeight());
+
+                x0 = Math.max(x0, 0);
+                y0 = Math.max(y0, 0);
+
                 x1 = x0;
                 y1 = y0;
 
@@ -91,6 +98,13 @@ public class ImageEditView extends JFrame {
             public void mouseDragged(MouseEvent event) {
                 x1 = event.getX();
                 y1 = event.getY();
+
+                // On fait attention a ne pas sortir de l'image
+                x1 = Math.min(x1, model.getImage().getWidth());
+                y1 = Math.min(y1, model.getImage().getHeight());
+
+                x1 = Math.max(x1, 0);
+                y1 = Math.max(y1, 0);
 
                 if (x0 != x1 || y0 != y1)
                     cutButton.setEnabled(true);
