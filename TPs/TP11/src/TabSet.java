@@ -1,7 +1,5 @@
 import java.util.Iterator;
 
-import javax.swing.text.html.HTMLDocument.RunElement;
-
 class TabSet<E> implements Iterable<E> {
 
     private E[] tableau;
@@ -86,6 +84,34 @@ class TabSet<E> implements Iterable<E> {
 
     boolean isEmpty() {
         return size() == 0;
+    }
+
+    private int findIndex(E e) {
+        int pos = 0;
+        int counter = 0;
+        boolean found = false;
+        for (E e : tableau) {
+            if (e == null && pos == 0) {
+                pos = counter;
+                found = true;
+            }
+            counter++;
+        }
+
+        return found ? pos : -1;
+    }
+
+    public boolean add(E e) {
+        if (contains(e))
+            return false;
+
+        int pos = findIndex(e);
+
+        if (pos == -1)
+            return false;
+
+        tableau[pos] = e;
+        return true;
     }
 
 }
