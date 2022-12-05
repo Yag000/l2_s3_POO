@@ -13,8 +13,8 @@ class TabSet<E> implements Iterable<E>, Set<E> {
      * @param n la capacité initiale du TabSet
      */
     @SuppressWarnings("unchecked")
-    public TabSet(int n) {
-        tableau = (E[]) new Object[n];
+    public TabSet() {
+        tableau = (E[]) new Object[10];
     }
 
     /**
@@ -84,8 +84,11 @@ class TabSet<E> implements Iterable<E>, Set<E> {
 
         int pos = findIndex(e);
 
-        if (pos == -1)
-            return false;
+        if (pos == -1) {
+            int length = tableau.length;
+            resize();
+            pos = length;
+        }
 
         tableau[pos] = e;
         return true;
@@ -169,8 +172,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         Object[] tab = new Object[size()];
         int i = 0;
         for (E e : this) {
-            tab[i] = e;
-            i++;
+            tab[i++] = e;
         }
         return tab;
     }
@@ -213,6 +215,16 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         // Sinon, on retourne le nouveau tableau
         else
             return newArray;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resize() {
+        E[] newArray = (E[]) new Object[tableau.length * 2];
+        int i = 0;
+        for (E e : tableau) {
+            newArray[i++] = e;
+        }
+        tableau = newArray;
     }
 
     private class TabIter implements Iterator<E> {

@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Test {
@@ -11,8 +12,7 @@ public class Test {
 
         System.out.println("--------------------- Test TabSet ---------------------");
 
-        // Création d'un nouveau TabSet avec une capacité de 5 éléments
-        TabSet<String> set1 = new TabSet<>(5);
+        TabSet<String> set1 = new TabSet<>();
 
         // Ajout de quelques éléments au TabSet
         set1.add("A");
@@ -46,8 +46,7 @@ public class Test {
 
         System.out.println("--------------------- Test TabSet 2 ---------------------");
 
-        // Création d'un nouveau TabSet avec une capacité de 5 éléments
-        TabSet<String> set2 = new TabSet<>(5);
+        TabSet<String> set2 = new TabSet<>();
 
         // Ajout de quelques éléments au TabSet
         set2.add("A");
@@ -71,8 +70,7 @@ public class Test {
 
         System.out.println("--------------------- Test TabSet 3 ---------------------");
 
-        // Création d'un nouveau TabSet avec une capacité de 5 éléments
-        TabSet<String> set3 = new TabSet<>(5);
+        TabSet<String> set3 = new TabSet<>();
 
         // Ajout de quelques éléments au TabSet
         set3.add("A");
@@ -80,7 +78,7 @@ public class Test {
         set3.add("C");
 
         // Création d'un autre TabSet contenant les éléments "B" et "D"
-        TabSet<String> set4 = new TabSet<>(2);
+        TabSet<String> set4 = new TabSet<>();
         set4.add("B");
         set4.add("D");
 
@@ -95,7 +93,7 @@ public class Test {
         System.out.println(set3.containsAll(set4)); // Doit renvoyer true
 
         // Création d'un troisième TabSet contenant les éléments "A" et "C"
-        TabSet<String> thirdSet = new TabSet<>(2);
+        TabSet<String> thirdSet = new TabSet<>();
         thirdSet.add("A");
         thirdSet.add("C");
 
@@ -111,5 +109,28 @@ public class Test {
 
         // Vérification que le TabSet est vide après l'appel à la méthode clear()
         System.out.println(set3.isEmpty()); // Doit renvoyer true
+
+        System.out.println("--------------------- Test TabSet 4 ---------------------");
+
+        TabSet<String> tabSet = new TabSet<>();
+
+        // Ajout d'éléments dans le TabSet
+        tabSet.add("Hello");
+        tabSet.add("World");
+        tabSet.add("!");
+
+        // Test de la méthode toArray()
+        Object[] array = tabSet.toArray();
+        System.out.println(Arrays.toString(array)); // [Hello, World, !]
+
+        // Test de la méthode toArray(T[] a) avec un tableau assez grand
+        String[] array2 = new String[5];
+        String[] array3 = tabSet.toArray(array2);
+        System.out.println(Arrays.toString(array3)); // [Hello, World, !, null, null]
+
+        // Test de la méthode toArray(T[] a) avec un tableau trop petit
+        String[] array4 = new String[2];
+        String[] array5 = tabSet.toArray(array4);
+        System.out.println(Arrays.toString(array5)); // [Hello, World, !]
     }
 }
