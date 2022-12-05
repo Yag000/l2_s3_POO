@@ -6,7 +6,6 @@ public class TestIter<E> implements Iterator<E> {
 
     public TestIter(E[] tableau) {
         this.tableau = tableau;
-        this.index = 0;
     }
 
     @Override
