@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.function.DoubleUnaryOperator;
 
 class TabSet<E> implements Iterable<E> {
 
@@ -89,16 +90,23 @@ class TabSet<E> implements Iterable<E> {
     private int findIndex(E e) {
         int pos = 0;
         int counter = 0;
-        boolean found = false;
-        for (E e : tableau) {
-            if (e == null && pos == 0) {
+
+        boolean full = true;
+
+        for (E element : tableau) {
+
+            if (element != null && element.equals(e))
+                return -1;
+
+            if (element != null && pos == 0) {
                 pos = counter;
-                found = true;
+                full = false;
             }
+
             counter++;
         }
 
-        return found ? pos : -1;
+        return !full ? pos : -1;
     }
 
     public boolean add(E e) {
