@@ -1,7 +1,8 @@
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.function.DoubleUnaryOperator;
+import java.util.Set;
 
-class TabSet<E> implements Iterable<E> {
+class TabSet<E> implements Iterable<E>, Set<E> {
 
     private E[] tableau;
 
@@ -74,8 +75,9 @@ class TabSet<E> implements Iterable<E> {
 
         @Override
         public void remove() {
+
             if (index == 0)
-                return;
+                throw new IllegalStateException();
 
             int lastIndex = findLastIdex();
 
@@ -84,27 +86,28 @@ class TabSet<E> implements Iterable<E> {
         }
     }
 
+    @Override
     public boolean contains(Object o) {
-        for (E e : tableau) {
+        for (E e : this) {
             if (e.equals(o))
                 return true;
         }
         return false;
     }
 
-    int size() {
+    @Override
+    public int size() {
         int count = 0;
 
-        for (E e : tableau) {
-            if (e != null) {
-                count++;
-            }
+        for (E e : this) {
+            count++;
         }
 
         return count;
     }
 
-    boolean isEmpty() {
+    @Override
+    public boolean isEmpty() {
         return size() == 0;
     }
 
@@ -157,12 +160,56 @@ class TabSet<E> implements Iterable<E> {
         return false;
     }
 
-    void clear() {
+    @Override
+    public void clear() {
         Iterator<E> it = iterator();
         while (it.hasNext()) {
             E e = it.next();
             it.remove();
         }
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        for (Object e : c) {
+            if (!contains(e))
+                return false;
+        }
+        return true;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public boolean addAll(Collection<? extends E> c) {
+        boolean wasModified = false;
+        for (Object e : c) {
+            if (add((E) e)) {
+                wasModified = true;
+            }
+        }
+        return wasModified;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        boolean wasModified = false;
+        for (E e : this) {
+            if (!c.contains(e) && remove(e)) {
+                wasModified = true;
+            }
+        }
+        return wasModified;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        boolean wasModified = false;
+        for (Object e : c) {
+            if (remove(c)) {
+                wasModified = true;
+            }
+        }
+        return wasModified;
     }
 
 }
