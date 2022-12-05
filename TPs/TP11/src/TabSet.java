@@ -1,5 +1,7 @@
 import java.util.Iterator;
 
+import javax.swing.text.html.HTMLDocument.RunElement;
+
 class TabSet<E> implements Iterable<E> {
 
     private E[] tableau;
@@ -36,7 +38,7 @@ class TabSet<E> implements Iterable<E> {
             return true;
         }
 
-        private int find_nextIndex() {
+        private int findNextIndex() {
             // On parcourt le tableau à partir de la position courante jusqu'à la fin du
             // tableau
             for (int i = index; i < tableau.length; i++) {
@@ -51,14 +53,39 @@ class TabSet<E> implements Iterable<E> {
 
         @Override
         public E next() {
-            if (hasNext()) {
-                int lastIndex = index;
-                index = find_nextIndex();
-                return tableau[lastIndex];
-            } else {
+            int lastIndex = index;
+            int nextIndex = findNextIndex();
+
+            if (nextIndex == -1)
                 throw new IllegalStateException();
+
+            index = nextIndex;
+            return tableau[lastIndex];
+        }
+    }
+
+    public boolean contains(Object o) {
+        for (E e : tableau) {
+            if (e.equals(o))
+                return true;
+        }
+        return false;
+    }
+
+    int size() {
+        int count = 0;
+
+        for (E e : tableau) {
+            if (e != null) {
+                count++;
             }
         }
+
+        return count;
+    }
+
+    boolean isEmpty() {
+        return size() == 0;
     }
 
 }
