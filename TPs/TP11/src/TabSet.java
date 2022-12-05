@@ -61,6 +61,27 @@ class TabSet<E> implements Iterable<E> {
             index = nextIndex;
             return tableau[lastIndex];
         }
+
+        private int findLastIdex() {
+
+            for (int i = index - 1; i >= 0; i--) {
+                if (tableau[i] != null)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        @Override
+        public void remove() {
+            if (index == 0)
+                return;
+
+            int lastIndex = findLastIdex();
+
+            if (lastIndex != -1)
+                tableau[lastIndex] = null;
+        }
     }
 
     public boolean contains(Object o) {
@@ -120,6 +141,28 @@ class TabSet<E> implements Iterable<E> {
 
         tableau[pos] = e;
         return true;
+    }
+
+    public boolean remove(Object o) {
+
+        Iterator<E> it = iterator();
+        while (it.hasNext()) {
+            E e = it.next();
+            if (e.equals(o)) {
+                it.remove();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void clear() {
+        Iterator<E> it = iterator();
+        while (it.hasNext()) {
+            E e = it.next();
+            it.remove();
+        }
     }
 
 }
