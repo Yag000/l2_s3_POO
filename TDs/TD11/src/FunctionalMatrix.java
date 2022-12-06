@@ -7,18 +7,18 @@ public class FunctionalMatrix<T extends Number> extends Matrix<T> {
 
     @Override
     protected boolean checkContent(T[][] tab) {
-        for (T[] row : tab) {
-            boolean flag = false;
-
-            for (T elem : row) {
-                if (elem.intValue() != 0) {
-                    if (flag)
+        for (int i = 0; i < tab[0].length; i++) {
+            int count = 0;
+            for (int j = 0; j < tab.length; j++) {
+                if (tab[j][i].intValue() != 0) {
+                    if (count == 0)
+                        count++;
+                    else
                         return false;
-                    flag = true;
+
                 }
             }
         }
-
         return true;
     }
 

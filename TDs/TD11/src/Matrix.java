@@ -4,7 +4,7 @@ public class Matrix<T> {
 
     private T[][] tab;
 
-    protected class MatrixScanner<S> implements Accumulator<S> {
+    public class MatrixScanner<S> implements Accumulator<S> {
 
         private S acc;
 
