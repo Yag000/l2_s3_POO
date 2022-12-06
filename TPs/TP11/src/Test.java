@@ -4,9 +4,7 @@ import utilities.TestFunction;
 
 public class Test {
     public static void main(String[] args) {
-
         new TestFunction() {
-
             @Override
             public void function() {
                 Integer[] tableau = new Integer[] { 1, 2, 3, 4, 5 };
@@ -16,11 +14,9 @@ public class Test {
                     System.out.println(iter.next());
                 }
             }
-
         }.runTest("TestIter");
 
         new TestFunction() {
-
             @Override
             public void function() {
 
@@ -36,18 +32,15 @@ public class Test {
                 Iterator<String> iter2 = set1.iterator();
                 System.out.println("Test de l'itérateur: " + iter2.hasNext());
 
-                // Affichage de la taille actuelle du TabSet
                 System.out.println("Taille actuelle du TabSet : " + set1.size()); // Affiche : Taille actuelle du TabSet
                                                                                   // : 3
 
                 // Vérification si le TabSet contient l'élément "A"
                 System.out.println("Contient A : " + set1.contains("A")); // Affiche : Contient A : true
             }
-
         }.runTest("Add, size et contains");
 
         new TestFunction() {
-
             @Override
             public void function() {
                 TabSet<String> set1 = new TabSet<>();
@@ -68,20 +61,13 @@ public class Test {
                 System.out.println("Contient B : " + set1.contains("B")); // Affiche : Contient B : false
 
                 System.out.println("Après: ");
-                // Itération sur les éléments du TabSet
-                set1.affiche();
-                // Affiche :
-                // A
-                // C
+                set1.affiche(); // Affiche : A C
             }
-
         }.runTest("Remove");
 
         new TestFunction() {
-
             @Override
             public void function() {
-
                 TabSet<String> set2 = new TabSet<>();
 
                 // Ajout de quelques éléments au TabSet
@@ -92,33 +78,17 @@ public class Test {
                 set2.add("D");
                 set2.add(null);
 
-                // Itération sur les éléments du TabSet
-                set2.afficheAll();
-                // Affiche :
-                // A
-                // B
-                // C
-                // D
-                // null
-                // null
-                // null
-                // null
-                // null
-                // null
+                set2.afficheAll(); // Affiche : A B C D null null null null null null
 
                 System.out.println("Size: " + set2.size()); // Affiche : Size: 4
-
             }
-
         }.runTest("Size avec des null");
 
         new TestFunction() {
-
             @Override
             public void function() {
                 TabSet<String> set3 = new TabSet<>();
 
-                // Ajout de quelques éléments au TabSet
                 set3.add("A");
                 set3.add("B");
                 set3.add("C");
@@ -161,7 +131,7 @@ public class Test {
                 System.out.println();
                 set3.affiche(); // Doit afficher A C
 
-                // Vérification de la taille du TabSet après l'opération de "retain"
+                // Vérification de la taille du TabSet après l'opération retain
                 System.out.println(set3.size() == 2); // Doit renvoyer true
 
                 // Suppression de tous les éléments du TabSet
@@ -170,16 +140,13 @@ public class Test {
                 // Vérification que le TabSet est vide après l'appel à la méthode clear()
                 System.out.println(set3.isEmpty()); // Doit renvoyer true
             }
-
         }.runTest("containsAll, addAll, retainsAll, removeAll");
 
         new TestFunction() {
-
             @Override
             public void function() {
                 TabSet<String> tabSet = new TabSet<>();
 
-                // Ajout d'éléments dans le TabSet
                 tabSet.add("Hello");
                 tabSet.add("World");
                 tabSet.add("!");
@@ -198,15 +165,11 @@ public class Test {
                 String[] array5 = tabSet.toArray(array4);
                 System.out.println(Arrays.toString(array5)); // [Hello, World, !]
             }
-
         }.runTest("toArray");
 
         new TestFunction() {
-
             @Override
             public void function() {
-
-                // On crée un nouveau TabSet
                 TabSet<Integer> ts = new TabSet<>();
 
                 // On ajoute plus d'éléments que la capacité initiale du tableau
@@ -217,7 +180,6 @@ public class Test {
                 // On affiche le contenu du TabSet
                 ts.affiche();
             }
-
         }.runTest("Tableau de taille dynamique");
     }
 }
