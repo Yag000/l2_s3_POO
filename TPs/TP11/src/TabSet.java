@@ -48,13 +48,12 @@ class TabSet<E> implements Iterable<E>, Set<E> {
     }
 
     /**
-     * Cherche l'index de l'élément spécifié dans la collection.
+     * Cherche la premiere case vide du tableau.
      *
-     * @param e l'élément à rechercher
-     * @return l'index de l'élément spécifié, ou {@code -1} si l'élément n'est pas
-     *         dans la collection
+     * @return l'index de la premiere case vide du tableau, ou {@code -1} si le
+     *         tableau est plein.
      */
-    private int findIndex(E e) {
+    private int findIndex() {
         int counter = 0;
 
         for (E element : tableau) {
@@ -69,23 +68,30 @@ class TabSet<E> implements Iterable<E>, Set<E> {
 
     @Override
     public boolean add(E e) {
+        // Si l'élément est déjà présent dans le tableau, on ne l'ajoute pas
         if (contains(e))
             return false;
 
-        int pos = findIndex(e);
+        // On cherche la première case vide du tableau
+        int pos = findIndex();
 
+        // Si le tableau est plein, on le redimensionne
         if (pos == -1) {
             int length = tableau.length;
             resize();
             pos = length;
         }
 
+        // On ajoute l'élément à la première case vide du tableau
         tableau[pos] = e;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
+        // On parcourt le TabSet avec un itérateur et si on trouve l'élément à
+        // supprimer, on le supprime avec la méthode remove et on renvoie true
+
         Iterator<E> it = iterator();
         while (it.hasNext()) {
             E e = it.next();
@@ -100,6 +106,8 @@ class TabSet<E> implements Iterable<E>, Set<E> {
 
     @Override
     public void clear() {
+        // On parcourt le TabSet avec un itérateur et on supprime tous les
+        // éléments avec la méthode remove
         Iterator<E> it = iterator();
         while (it.hasNext()) {
             it.next();
@@ -144,7 +152,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
     public boolean removeAll(Collection<?> c) {
         boolean wasModified = false;
         for (Object e : c) {
-            if (remove(c)) {
+            if (remove(e)) {
                 wasModified = true;
             }
         }
