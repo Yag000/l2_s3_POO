@@ -1,9 +1,9 @@
 package utilities;
 
 /**
- * Classe abstraite pour simplifier les test des fonctions.
+ * Interface pour simplifier les test des fonctions.
  */
-public abstract class TestFunction {
+public interface TestFunction {
 
     /**
      * Fonction a tester.
@@ -15,7 +15,7 @@ public abstract class TestFunction {
      * 
      * @param testName Nom du test
      */
-    public void runTest(String testName) {
+    default void runTest(String testName) {
         System.out.println();
         System.out.println("-----------\\ Test " + testName + " /-----------");
         System.out.println();
