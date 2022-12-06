@@ -4,7 +4,44 @@ public class Matrix<T> {
 
     private T[][] tab;
 
-    private class MatrixScanner<S> {
+    private class MatrixScanner<S> implements Accumulator<S> {
+
+        private S acc;
+
+        private int x;
+        private int y;
+
+        private int stepX;
+        private int stepY;
+
+        private AccFunction<S, T> accFunction;
+
+        public MatrixScanner(S acc, int x, int y, int stepX, int stepY, AccFunction<S, T> accFunction) {
+            this.acc = acc;
+            this.x = x;
+            this.y = y;
+            this.stepX = stepX;
+            this.stepY = stepY;
+            this.accFunction = accFunction;
+        }
+
+        @Override
+        public void accumulate(S s) {
+            accFunction.apply(acc, s, tab[x][y]);
+            x += stepX;
+            y += stepY;
+
+        }
+
+        @Override
+        public S read() {
+            return acc;
+        }
+
+        @Override
+        public boolean isOver() {
+            return x < 0 || x >= tab.length || y < 0 || y >= tab[0].length;
+        }
 
     }
 
