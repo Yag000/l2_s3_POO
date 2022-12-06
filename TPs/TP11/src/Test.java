@@ -3,6 +3,9 @@ import java.util.Iterator;
 
 public class Test {
     public static void main(String[] args) {
+
+        System.out.println("--------------------- Test TestIter ---------------------");
+
         Integer[] tableau = new Integer[] { 1, 2, 3, 4, 5 };
         TestIter<Integer> iter = new TestIter<>(tableau);
 
@@ -10,7 +13,7 @@ public class Test {
             System.out.println(iter.next());
         }
 
-        System.out.println("--------------------- Test TabSet ---------------------");
+        System.out.println("--------------------- Test TabSet 1 ---------------------");
 
         TabSet<String> set1 = new TabSet<>();
 
@@ -37,9 +40,7 @@ public class Test {
         System.out.println("Contient B : " + set1.contains("B")); // Affiche : Contient B : false
 
         // Itération sur les éléments du TabSet
-        for (String element : set1) {
-            System.out.println(element);
-        }
+        set1.affiche();
         // Affiche :
         // A
         // C
@@ -57,14 +58,18 @@ public class Test {
         set2.add(null);
 
         // Itération sur les éléments du TabSet
-        for (String element : set2) {
-            System.out.println(element);
-        }
+        set2.afficheAll();
         // Affiche :
         // A
         // B
         // C
         // D
+        // null
+        // null
+        // null
+        // null
+        // null
+        // null
 
         System.out.println("Size: " + set2.size()); // Affiche : Size: 4
 
@@ -132,5 +137,18 @@ public class Test {
         String[] array4 = new String[2];
         String[] array5 = tabSet.toArray(array4);
         System.out.println(Arrays.toString(array5)); // [Hello, World, !]
+
+        System.out.println("--------------------- Test TabSet 5 ---------------------");
+
+        // On crée un nouveau TabSet
+        TabSet<Integer> ts = new TabSet<>();
+
+        // On ajoute plus d'éléments que la capacité initiale du tableau
+        for (int i = 0; i < 15; i++) {
+            ts.add(i);
+        }
+
+        // On affiche le contenu du TabSet
+        ts.affiche();
     }
 }

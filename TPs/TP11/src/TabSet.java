@@ -8,33 +8,20 @@ class TabSet<E> implements Iterable<E>, Set<E> {
     private E[] tableau;
 
     /**
-     * Constructeur prenant en paramètre la capacité initiale du TabSet
+     * Constructeur prenant en paramètre la capacité initiale du {@code TabSet}.
      * 
-     * @param n la capacité initiale du TabSet
+     * @param n la capacité initiale du {@code TabSet}
      */
     @SuppressWarnings("unchecked")
     public TabSet() {
         tableau = (E[]) new Object[10];
     }
 
-    /**
-     * Renvoie un itérateur permettant de parcourir les éléments du TabSet
-     * 
-     * @return un itérateur pour parcourir les éléments du TabSet
-     */
     @Override
     public TabIter iterator() {
         return new TabIter();
     }
 
-    /**
-     * Renvoie true si l'élément passé en paramètre est présent dans le TabSet,
-     * false
-     * sinon
-     * 
-     * @param o l'élément dont on veut savoir s'il est présent dans le TabSet
-     * @return true si l'élément est présent dans le TabSet, false sinon
-     */
     @Override
     public boolean contains(Object o) {
         for (E e : this) {
@@ -44,11 +31,6 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return false;
     }
 
-    /**
-     * Renvoie la taille du TabSet, c'est-à-dire le nombre d'éléments qu'il contient
-     * 
-     * @return la taille du TabSet
-     */
     @Override
     public int size() {
         int count = 0;
@@ -65,6 +47,13 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return size() == 0;
     }
 
+    /**
+     * Cherche l'index de l'élément spécifié dans la collection.
+     *
+     * @param e l'élément à rechercher
+     * @return l'index de l'élément spécifié, ou {@code -1} si l'élément n'est pas
+     *         dans la collection
+     */
     private int findIndex(E e) {
         int counter = 0;
 
@@ -78,6 +67,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return -1;
     }
 
+    @Override
     public boolean add(E e) {
         if (contains(e))
             return false;
@@ -94,8 +84,8 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return true;
     }
 
+    @Override
     public boolean remove(Object o) {
-
         Iterator<E> it = iterator();
         while (it.hasNext()) {
             E e = it.next();
@@ -161,7 +151,20 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return wasModified;
     }
 
+    /**
+     * Affiche tous les éléments de la collection sur la sortie standard.
+     */
     public void affiche() {
+        for (E e : this) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Affiche tous les éléments de la collection et les éléments nuls sur la sortie
+     * standard.
+     */
+    public void afficheAll() {
         for (E e : tableau) {
             System.out.println(e);
         }
@@ -177,15 +180,6 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         return tab;
     }
 
-    /**
-     * Remplit le tableau passé en paramètre avec les éléments du TabSet, et met
-     * null ensuite s'il y a suffisamment de place dans le tableau. Si le tableau
-     * n'est pas assez grand, un nouveau tableau de même type que a est créé et
-     * renvoyé.
-     * 
-     * @param a le tableau à remplir avec les éléments du {@code TabSet}
-     * @return le tableau rempli avec les éléments du {@code TabSet}
-     */
     @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] a) {
@@ -194,7 +188,6 @@ class TabSet<E> implements Iterable<E>, Set<E> {
 
         // Création d'un nouveau tableau de type T[] qui contiendra les éléments du
         // TabSet
-
         T[] newArray = (T[]) Array.newInstance(c, size());
 
         // Copie des éléments du TabSet dans le nouveau tableau
@@ -217,6 +210,10 @@ class TabSet<E> implements Iterable<E>, Set<E> {
             return newArray;
     }
 
+    /**
+     * Redimensionne le tableau interne de la collection pour qu'il puisse contenir
+     * deux fois plus d'éléments.
+     */
     @SuppressWarnings("unchecked")
     private void resize() {
         E[] newArray = (E[]) new Object[tableau.length * 2];
@@ -227,10 +224,16 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         tableau = newArray;
     }
 
+    /**
+     * Classe privée permettant d'itérer sur les éléments du {@code TabSet}.
+     */
     private class TabIter implements Iterator<E> {
 
         private int index;
 
+        /**
+         * Initialise l'index de l'itérateur à 0.
+         */
         public TabIter() {
             index = 0;
         }
@@ -253,6 +256,13 @@ class TabSet<E> implements Iterable<E>, Set<E> {
             return false;
         }
 
+        /**
+         * Cherche l'index du prochain élément non null dans le tableau.
+         *
+         * @return l'index du prochain élément non null dans le tableau, ou la taille du
+         *         tableau si aucun
+         *         élément non null n'est trouvé.
+         */
         private int findNextIndex() {
             // On parcourt le tableau à partir de la position courante jusqu'à la fin du
             // tableau
@@ -278,6 +288,12 @@ class TabSet<E> implements Iterable<E>, Set<E> {
             }
         }
 
+        /**
+         * Cherche l'index du dernier élément non null dans le tableau.
+         *
+         * @return l'index du dernier élément non null dans le tableau, ou {@code -1} si
+         *         aucun élément non null n'est trouvé.
+         */
         private int findLastIndex() {
 
             for (int i = index - 1; i >= 0; i--) {
