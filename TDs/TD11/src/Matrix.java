@@ -72,9 +72,11 @@ public class Matrix<T> {
     }
 
     public <S> MatrixScanner<S> rowScanner(int i, AccFunction<S, T> accFunc, S initial) {
+        return new MatrixScanner<S>(initial, i, 0, 1, 0, accFunc);
     }
 
     public <S> MatrixScanner<S> colScanner(int i, AccFunction<S, T> accFunc, S initial) {
+        return new MatrixScanner<S>(initial, 0, i, 0, 1, accFunc);
     }
 
 }
