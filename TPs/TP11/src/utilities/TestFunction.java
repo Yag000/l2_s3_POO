@@ -19,7 +19,9 @@ public interface TestFunction {
         System.out.println();
         System.out.println("-----------\\ Test " + testName + " /-----------");
         System.out.println();
+
         function();
+
         System.out.println();
         System.out.println("-------------------------------" + "-".repeat(testName.length()));
     }

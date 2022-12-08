@@ -1,26 +1,36 @@
 import java.lang.reflect.Array;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-class TabSet<E> implements Iterable<E>, Set<E> {
+class TabSet<E> implements Set<E> {
+
+    // L'interface Set<E> étend l'interface Collection<E> qui étend l'interface
+    // Iterable<E> c'est pour cela qu'il suffit d'implémenter l'interface
+    // Iterable<E> pour que notre classe TabSet<E> soit un ensemble d'éléments de
+    // type E qui est itérable.
 
     private E[] tableau;
 
+    // Constructeur
     /**
-     * Constructeur prenant en paramètre la capacité initiale du {@code TabSet}.
-     * 
-     * @param n la capacité initiale du {@code TabSet}
+     * Constructeur. Il construit un nouveau ensemble vide. Le tableau interne est
+     * de taille 10.
      */
     @SuppressWarnings("unchecked")
     public TabSet() {
         tableau = (E[]) new Object[10];
     }
 
+    // Méthodes de l'interface Iterable<E>
+
     @Override
     public TabIter iterator() {
         return new TabIter();
     }
+
+    // Méthodes de l'interface Set<E>
 
     @Override
     public boolean contains(Object o) {
@@ -232,28 +242,33 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         tableau = newArray;
     }
 
+    // Classe interne privée
+
     /**
-     * Classe privée permettant d'itérer sur les éléments du {@code TabSet}.
+     * Classe interne privée permettant d'itérer sur les éléments du {@code TabSet}.
      */
     private class TabIter implements Iterator<E> {
 
-        private int index;
+        private int currentIndex;
 
+        // Constructeur
         /**
          * Initialise l'index de l'itérateur à 0.
          */
         public TabIter() {
-            index = 0;
+            currentIndex = 0;
         }
+
+        // Méthodes
 
         @Override
         public boolean hasNext() {
-            if (index >= tableau.length)
+            if (currentIndex >= tableau.length)
                 return false;
 
             // On parcourt le tableau à partir de la position courante jusqu'à la fin du
             // tableau
-            for (int i = index; i < tableau.length; i++) {
+            for (int i = currentIndex; i < tableau.length; i++) {
                 // Si on rencontre un élément null, cela signifie qu'il n'y a plus d'éléments à
                 // parcourir
                 if (tableau[i] != null)
@@ -274,7 +289,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         private int findNextIndex() {
             // On parcourt le tableau à partir de la position courante jusqu'à la fin du
             // tableau
-            for (int i = index + 1; i < tableau.length; i++) {
+            for (int i = currentIndex + 1; i < tableau.length; i++) {
                 // Si on rencontre un élément non null, on renvoie son index
                 if (tableau[i] != null)
                     return i;
@@ -287,8 +302,8 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         @Override
         public E next() {
             if (hasNext()) {
-                int lastIndex = index;
-                index = findNextIndex();
+                int lastIndex = currentIndex;
+                currentIndex = findNextIndex();
 
                 return tableau[lastIndex];
             } else {
@@ -304,7 +319,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
          */
         private int findLastIndex() {
 
-            for (int i = index - 1; i >= 0; i--) {
+            for (int i = currentIndex - 1; i >= 0; i--) {
                 if (tableau[i] != null)
                     return i;
             }
@@ -315,7 +330,7 @@ class TabSet<E> implements Iterable<E>, Set<E> {
         @Override
         public void remove() {
 
-            if (index == 0)
+            if (currentIndex == 0)
                 throw new IllegalStateException();
 
             int lastIndex = findLastIndex();

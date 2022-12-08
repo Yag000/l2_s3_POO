@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Iterator;
+
 import utilities.TestFunction;
 
 public class Test {
@@ -30,7 +31,7 @@ public class Test {
                 set1.affiche();
 
                 Iterator<String> iter2 = set1.iterator();
-                System.out.println("Test de l'itérateur: " + iter2.hasNext());
+                System.out.println("Test de l'itérateur: " + iter2.hasNext()); // Affiche : Test de l'itérateur: true
 
                 System.out.println("Taille actuelle du TabSet : " + set1.size()); // Affiche : Taille actuelle du TabSet
                                                                                   // : 3
@@ -78,7 +79,7 @@ public class Test {
                 set2.add("D");
                 set2.add(null);
 
-                set2.afficheAll(); // Affiche : A B C D null null null null null null
+                set2.afficheAll(); // Affiche : A B C D null null null null null null null
 
                 System.out.println("Size: " + set2.size()); // Affiche : Size: 4
             }
@@ -104,6 +105,7 @@ public class Test {
                 // Ajout de tous les éléments de l'autre TabSet au TabSet principal
                 System.out.println(set3.addAll(set4)); // Doit renvoyer true
                 System.out.println();
+
                 set3.affiche(); // Doit afficher A B C D
 
                 // Vérification si le TabSet contient maintenant tous les éléments de l'autre
