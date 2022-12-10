@@ -1,0 +1,45 @@
+1. Peut-on instancier directement une interface ? une classe abstraite ?
+
+Non (il faut implement ou extends)
+
+
+2. Peut-on munir une interface d’un constructeur sans corps ? d’un constructeur avec un corps ? Mêmes questions pour une classe abstraite.
+
+Interface: Non,non
+Classe abstraite: non, yes
+
+
+3. Considérons l’instruction suivante : A a = new B() ;
+Quelles sont les deux conditions que doit vérifier la classe B pour que cette
+instruction soit valide :
+
+— lorsque A est une classe abstraite ? B est une class ancêtre qui étends A
+— lorsque A est une interface ? B ou l'un de ses ancêtres implémente l'interface A.
+
+
+4. Une interface peut-elle contenir des champs ? Avec quels modificateurs ?
+
+Interface: Oui, avec le modificateur public static final
+Classe abstraite: Sans problèmes
+
+
+5. Une interface peut-elle contenir des méthodes statiques/non-statiques,
+abstraites/non-abstraites ? 
+
+Interface:  Les méthodes, en general, sont abstraites et non-statiques. On peut avoir des méthodes statiques mais elles doivent être définies
+
+Classe abstraite: On peut tout avoir sauf des méthodes non-statiques abstraites définies par défaut:
+    - Méthodes abstraites
+    - Méthodes concretes
+    . Méthodes concretes et statiques
+
+
+6. Une interface peut-elle hériter d’une autre interface ? d’une classe abstraite ?
+
+Oui, non
+
+
+7. Une classe abstraite peut-elle hériter d’une autre classe abstraite ? d’une
+interface ?
+
+Oui, oui (le mot correcte est étendre, pas hérite)
