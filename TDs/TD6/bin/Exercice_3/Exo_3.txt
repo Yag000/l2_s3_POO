@@ -1,0 +1,43 @@
+1)
+
+public abstract class Instrument
+
+public abstract class InstrumentMecanique extends Instrument
+
+
+public abstract class Corde extends InstrumentMecanique
+
+public abstract class CordePincée extends Corde
+public abstract class CordeFrappée extends Corde
+public abstract class CordeFrottée extends Corde
+
+public abstract class Vent extends InstrumentMecanique
+
+public abstract class VentBois extends Corde
+public abstract class VentCuivre extends Corde
+
+public abstract class Percussion extends InstrumentMecanique
+
+public abstract class PercussionBois extends Corde
+public abstract class PercussionMetal extends Corde
+public abstract class PercussionPeau extends Corde
+
+public abstract class InstrumentElectronique extends Instrument
+
+public interface Son
+
+public interface SonMecanique extends Son
+public interface SonElectronique extends Son
+
+2)
+
+public class piano extends CordeFrappée implements SonMecanique
+public class saxophone extends VentCuivre implements SonMecanique
+public class guitare électrique  extends CordeFrappée implements SonElectronique
+
+3)
+
+Rajouter une interface Clavier
+
+
+
