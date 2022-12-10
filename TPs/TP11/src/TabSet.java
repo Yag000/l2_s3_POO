@@ -59,6 +59,11 @@ class TabSet<E> implements Set<E> {
 
     /**
      * Cherche la premiere case vide du tableau.
+     * 
+     * Pour cette fonction, et seulement pour cette fonction, on n'utilise pas
+     * l'iterator car il saute les éléments nuls. Or comme on a besoin de trouver le
+     * premier élément nul, on ne peut pas utiliser l'iterator. C'est pour cela
+     * qu'on utilise {@code tableau}.
      *
      * @return l'index de la premiere case vide du tableau, ou {@code -1} si le
      *         tableau est plein.
@@ -78,9 +83,17 @@ class TabSet<E> implements Set<E> {
 
     @Override
     public boolean add(E e) {
-        // Si l'élément est déjà présent dans le tableau, on ne l'ajoute pas
-        if (contains(e))
+        // Si l'élément est null, on ne l'ajoute pas
+        if (e == null) {
+            System.out.println("L'élément est null");
             return false;
+        }
+
+        // Si l'élément est déjà présent dans le tableau, on ne l'ajoute pas
+        if (contains(e)) {
+            System.out.println("L'élément est déjà present");
+            return false;
+        }
 
         // On cherche la première case vide du tableau
         int pos = findIndex();
