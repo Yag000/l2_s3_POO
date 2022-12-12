@@ -1,6 +1,7 @@
 package partie1;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
@@ -9,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 public class Cadre extends JFrame {
 
+    JPanel etiquette;
     JPanel mainPanel;
     Model model = new Model();
     Carre[] carres;
@@ -31,6 +33,56 @@ public class Cadre extends JFrame {
 
     public boolean gagne() {
         return model.gagne();
+    }
+
+    public void finJeu() {
+        if (!gagne())
+            return;
+
+        etiquette = new JPanel();
+        etiquette.setBounds(0, 0, 600, 600);
+        etiquette.setBackground(Color.WHITE);
+        mainPanel.add(etiquette);
+        etiquette.add(new JLabel("Bravo !"));
+
+        etiquette.addMouseListener(new MouseInputListener() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+
+        });
+
     }
 
     private class Carre extends JPanel implements MouseInputListener {
