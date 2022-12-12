@@ -2,6 +2,7 @@ package partie1;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import java.awt.Color;
 
 public class Cadre extends JFrame {
 
@@ -13,10 +14,22 @@ public class Cadre extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel();
+        mainPanel.setLayout(null);
 
+        setContentPane(mainPanel);
+
+        Carre c = new Carre();
+        mainPanel.add(c);
     }
 
     private class Carre extends JPanel {
+
+        public Carre() {
+
+            setBackground(Color.BLUE);
+            setBounds(100, 200, 50, 50);
+
+        }
 
     }
 
