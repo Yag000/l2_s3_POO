@@ -10,7 +10,8 @@ import java.awt.event.MouseEvent;
 public class Cadre extends JFrame {
 
     JPanel mainPanel;
-    Model model = new Model();;
+    Model model = new Model();
+    Carre[] carres;
 
     public Cadre() {
         this.setSize(600, 600);
@@ -20,8 +21,12 @@ public class Cadre extends JFrame {
         mainPanel = new JPanel(null);
         setContentPane(mainPanel);
 
-        Carre c = new Carre();
-        mainPanel.add(c);
+        carres = new Carre[model.getNbColors()];
+
+        for (int i = 0; i < model.getNbColors(); i++) {
+            carres[i] = new Carre();
+            mainPanel.add(carres[i]);
+        }
     }
 
     public boolean gagne() {
@@ -42,7 +47,7 @@ public class Cadre extends JFrame {
             id = nb++;
 
             setBackground(model.getColor(id));
-            setBounds(100, 200, 50, 50);
+            setBounds((int) (Math.random() * 550), (int) (Math.random() * 550), 50, 50);
             addMouseListener(this);
             addMouseMotionListener(this);
 
@@ -55,6 +60,8 @@ public class Cadre extends JFrame {
             yClick = e.getY();
             isMoving = !isMoving;
             System.out.println(isMoving);
+            model.setColor(id, Color.GREEN);
+            setBackground(Color.GREEN);
 
         }
 
@@ -70,7 +77,10 @@ public class Cadre extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            // TODO Auto-generated method stub
+            if (!isMoving) {
+                model.setColor(id, Color.BLUE);
+                setBackground(Color.BLUE);
+            }
 
         }
 

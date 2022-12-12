@@ -30,7 +30,7 @@ public class Model {
             case 3:
                 return Color.GRAY;
             case 4:
-                return Color.GREEN;
+                return Color.YELLOW;
             case 5:
                 return Color.LIGHT_GRAY;
             case 6:
@@ -42,7 +42,7 @@ public class Model {
             case 9:
                 return Color.RED;
             case 10:
-                return Color.YELLOW;
+                return Color.GREEN;
             default:
                 return Color.BLUE;
         }
@@ -54,6 +54,10 @@ public class Model {
 
     public int getNbColors() {
         return colors.length;
+    }
+
+    public void setColor(int i, Color c) {
+        colors[i] = c;
     }
 
     public boolean gagne() {
