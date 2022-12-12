@@ -3,7 +3,6 @@ package partie1;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.basic.BasicBorders.SplitPaneBorder;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
@@ -11,6 +10,7 @@ import java.awt.event.MouseEvent;
 public class Cadre extends JFrame {
 
     JPanel mainPanel;
+    Model model = new Model();;
 
     public Cadre() {
         this.setSize(600, 600);
@@ -24,15 +24,24 @@ public class Cadre extends JFrame {
         mainPanel.add(c);
     }
 
+    public boolean gagne() {
+        return model.gagne();
+    }
+
     private class Carre extends JPanel implements MouseInputListener {
 
-        boolean isMoving = false;
+        static int nb = 0;
 
-        int xClick, yClick;
+        int id;
+
+        boolean isMoving = false;
+        int xClick;
+        int yClick;
 
         public Carre() {
+            id = nb++;
 
-            setBackground(Color.BLUE);
+            setBackground(model.getColor(id));
             setBounds(100, 200, 50, 50);
             addMouseListener(this);
             addMouseMotionListener(this);

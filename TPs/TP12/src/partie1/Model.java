@@ -4,53 +4,65 @@ import java.awt.Color;
 
 public class Model {
 
-    Color color;
+    Color[] colors;
 
     /**
      * Constructeur avec une coleus aléatoire entre 10 choix.
      */
     public Model() {
 
-        int random = (int) (Math.random() * 10);
+        int random = (int) (Math.random() * 10 + 1);
 
-        switch (random) {
-            case 0:
-                color = Color.BLUE;
-                break;
-            case 1:
-                color = Color.CYAN;
-                break;
-            case 2:
-                color = Color.DARK_GRAY;
-                break;
-            case 3:
-                color = Color.GRAY;
-                break;
-            case 4:
-                color = Color.GREEN;
-                break;
-            case 5:
-                color = Color.LIGHT_GRAY;
-                break;
-            case 6:
-                color = Color.MAGENTA;
-                break;
-            case 7:
-                color = Color.ORANGE;
-                break;
-            case 8:
-                color = Color.PINK;
-                break;
-            case 9:
-                color = Color.RED;
-                break;
-            case 10:
-                color = Color.YELLOW;
-                break;
-            default:
-                color = Color.BLACK;
-                break;
+        colors = new Color[random];
+
+        for (int i = 0; i < random; i++) {
+            colors[i] = intToColor(i + 1);
         }
 
+    }
+
+    private Color intToColor(int i) {
+        switch (i) {
+            case 1:
+                return Color.CYAN;
+            case 2:
+                return Color.DARK_GRAY;
+            case 3:
+                return Color.GRAY;
+            case 4:
+                return Color.GREEN;
+            case 5:
+                return Color.LIGHT_GRAY;
+            case 6:
+                return Color.MAGENTA;
+            case 7:
+                return Color.ORANGE;
+            case 8:
+                return Color.PINK;
+            case 9:
+                return Color.RED;
+            case 10:
+                return Color.YELLOW;
+            default:
+                return Color.BLUE;
+        }
+    }
+
+    public Color getColor(int i) {
+        return colors[i];
+    }
+
+    public int getNbColors() {
+        return colors.length;
+    }
+
+    public boolean gagne() {
+        for (int i = 0; i < colors.length; i++) {
+            if (colors[i] != colors[0]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
