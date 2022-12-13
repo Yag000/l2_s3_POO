@@ -1,14 +1,17 @@
 package partie1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MonObservable {
 
     private boolean changed = false;
-    private List<Observer> observers = new ArrayList<>();
+    private List<MonObserver> observers = new ArrayList<>();
 
     MonObservable() {
     }
 
-    void addObserver(Observer o) {
+    void addObserver(MonObserver o) {
         observers.add(o);
     }
 
@@ -24,7 +27,7 @@ public class MonObservable {
         changed = false;
     }
 
-    notifyObservers(Object arg){
+    void notifyObservers(Object arg) {
         if (!hasChanged())
             return;
         observers.forEach(o -> o.update(this, arg));
