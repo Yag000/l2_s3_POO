@@ -1,3 +1,5 @@
+package partie1;
+
 public class MonObservable {
 
     private boolean changed = false;
