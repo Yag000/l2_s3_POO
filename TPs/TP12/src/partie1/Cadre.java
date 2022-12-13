@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 public class Cadre extends JFrame {
-
     JPanel etiquette;
     JPanel mainPanel;
     Model model = new Model();
@@ -42,8 +41,10 @@ public class Cadre extends JFrame {
         etiquette = new JPanel();
         etiquette.setBounds(0, 0, 600, 600);
         etiquette.setBackground(Color.WHITE);
+        JLabel label = new JLabel("Bravo !");
+        etiquette.add(label);
         mainPanel.add(etiquette);
-        etiquette.add(new JLabel("Bravo !"));
+        etiquette.setVisible(true);
 
         etiquette.addMouseListener(new MouseInputListener() {
 
@@ -114,6 +115,7 @@ public class Cadre extends JFrame {
             System.out.println(isMoving);
             model.setColor(id, Color.GREEN);
             setBackground(Color.GREEN);
+            finJeu();
 
         }
 
@@ -132,6 +134,7 @@ public class Cadre extends JFrame {
             if (!isMoving) {
                 model.setColor(id, Color.BLUE);
                 setBackground(Color.BLUE);
+                finJeu();
             }
 
         }
