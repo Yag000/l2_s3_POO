@@ -1,7 +1,5 @@
 package partie1;
 
-import java.util.Arrays;
-
 public class Test {
     public static void main(String[] args) {
         // partie declarative
@@ -15,8 +13,10 @@ public class Test {
         // h_ab conserve l'historique des modifications de a et b
         // h_bc conserve l'historique des modifications de b et c
 
-        h_ab.followHistory(Arrays.asList(a, b));
-        h_bc.followHistory(Arrays.asList(b, c));
+        a.addObserver(h_ab);
+        b.addObserver(h_ab);
+        b.addObserver(h_bc);
+        c.addObserver(h_bc);
         // ...
         // ...
         // modifications

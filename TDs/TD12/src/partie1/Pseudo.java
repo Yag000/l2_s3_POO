@@ -1,14 +1,11 @@
 package partie1;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Pseudo<T> {
+public class Pseudo<T> extends MonObservable {
 
     private T pseudo;
-    private List<ChangePseudoHistory<T>> history = new ArrayList<>();
 
     public Pseudo(T pseudo) {
+        super();
         this.pseudo = pseudo;
     }
 
@@ -17,12 +14,9 @@ public class Pseudo<T> {
     }
 
     public void set(T pseudo) {
-        history.forEach(h -> h.add(new Pair<>(this.pseudo, pseudo)));
+        setChanged();
+        notifyObservers(pseudo);
         this.pseudo = pseudo;
-    }
-
-    public void setHistory(ChangePseudoHistory<T> history) {
-        this.history.add(history);
     }
 
 }
