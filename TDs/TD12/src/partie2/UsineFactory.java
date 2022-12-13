@@ -6,7 +6,7 @@ public class UsineFactory {
 
     Usine createUsine() {
         if (debugMode)
-            return new UsineProxy();
+            return new UsineProxy<MonUsine>();
         else
             return new MonUsine();
     }
