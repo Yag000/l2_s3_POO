@@ -10,7 +10,7 @@ public class ChangePseudoHistory<T> implements MonObserver {
         history = new ArrayList<>();
     }
 
-    public void add(Pair<T> pseudo) {
+    private void add(Pair<T> pseudo) {
         history.add(pseudo);
     }
 
