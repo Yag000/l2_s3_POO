@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 public class Cadre extends JFrame {
     JPanel etiquette;
     JPanel mainPanel;
+
     Model model = new Model();
     Carre[] carres;
 
@@ -38,13 +39,18 @@ public class Cadre extends JFrame {
         if (!gagne())
             return;
 
+        for (int i = 0; i < model.getNbColors(); i++) {
+            mainPanel.remove(carres[i]);
+        }
+
         etiquette = new JPanel();
         etiquette.setBounds(0, 0, 600, 600);
         etiquette.setBackground(Color.WHITE);
         JLabel label = new JLabel("Bravo !");
+
         etiquette.add(label);
-        mainPanel.add(etiquette);
-        etiquette.setVisible(true);
+        setContentPane(etiquette);
+        this.repaint();
 
         etiquette.addMouseListener(new MouseInputListener() {
 
@@ -162,6 +168,14 @@ public class Cadre extends JFrame {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(
+                () -> {
+                    Cadre c = new Cadre();
+                    c.setVisible(true);
+                });
     }
 
 }
