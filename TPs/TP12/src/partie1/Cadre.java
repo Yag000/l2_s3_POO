@@ -43,14 +43,12 @@ public class Cadre extends JFrame {
             mainPanel.remove(carres[i]);
         }
 
-        etiquette = new JPanel();
-        etiquette.setBounds(0, 0, 600, 600);
-        etiquette.setBackground(Color.WHITE);
-        JLabel label = new JLabel("Bravo !");
+
 
         etiquette.add(label);
         setContentPane(etiquette);
         this.repaint();
+
 
         etiquette.addMouseListener(new MouseInputListener() {
 
@@ -177,5 +175,6 @@ public class Cadre extends JFrame {
                     c.setVisible(true);
                 });
     }
+
 
 }
