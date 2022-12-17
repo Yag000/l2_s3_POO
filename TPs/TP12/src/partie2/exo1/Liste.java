@@ -1,4 +1,4 @@
-package partie2.exercice1;
+package partie2.exo1;
 
 public class Liste {
     public static void main(String[] args) {
