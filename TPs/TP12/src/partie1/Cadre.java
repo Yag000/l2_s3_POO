@@ -59,18 +59,14 @@ public class Cadre extends JFrame {
         if (!gagne())
             return;
 
-        for (int i = 0; i < model.getNbColors(); i++) {
-            mainPanel.remove(carres[i]);
-        }
-
         etiquette = new JPanel();
         etiquette.setBounds(0, 0, 600, 600);
         etiquette.setBackground(Color.WHITE);
-        JLabel label = new JLabel("Bravo !");
 
+        JLabel label = new JLabel("Bravo, vous avez gagné! Clickez pour fermer la fenêtre.");
         etiquette.add(label);
+
         setContentPane(etiquette);
-        this.repaint();
 
         etiquette.addMouseListener(new MouseInputListener() {
 
@@ -86,7 +82,7 @@ public class Cadre extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.exit(0);
+                dispose();
             }
 
             @Override
