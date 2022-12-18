@@ -6,6 +6,7 @@ public class Mediatheque {
     public Mediatheque() {
         this.baseDeDonnees = new ArrayList<Media>();
     }
+
     /**
      * Il ajoute un nouveau média à la base de données, au bon endroit
      * 
@@ -29,7 +30,6 @@ public class Mediatheque {
             if (m instanceof Livre)
                 System.out.println(m);
     }
-
 
     /**
      * Renvoie une liste de tous les médias de la base de données qui satisfont
@@ -67,7 +67,6 @@ public class Mediatheque {
         return s;
     }
 
-
     /**
      * Il affiche un en-tête pour un test
      * 
@@ -98,7 +97,6 @@ public class Mediatheque {
         Livre silmarillion = new Livre("The Silmarillion", "John Ronald Reuel Tolkien", 365);
 
         Image gondolin = new Image("Guard of Gondolin", 456, 750);
-
 
         Manga hxh = new Manga("Hunter x Hunter", "Yoshihiro Togashi", 192, "Yoshihiro Togashi", true);
 
