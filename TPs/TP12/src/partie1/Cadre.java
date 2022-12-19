@@ -5,17 +5,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
+import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 /**
  * Constructeur de la classe Cadre. Initialise la taille, le titre et la
- * fermeture de la fenêtre,
- * ainsi que les carrés à afficher.
+ * fermeture de la fenêtre, ainsi que les carrés à afficher.
  */
 public class Cadre extends JFrame {
     JPanel etiquette;
     JPanel mainPanel;
+
+    JPanel information;
+    JLabel informationLabel;
 
     Model model = new Model();
     Carre[] carres;
@@ -25,12 +29,20 @@ public class Cadre extends JFrame {
      * fermeture de la fenêtre, ainsi que les carrés à afficher.
      */
     public Cadre() {
-        this.setSize(600, 600);
+        this.setSize(600, 660);
         this.setTitle("TP 12");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         mainPanel = new JPanel(null);
+        mainPanel.setBounds(0, 0, 600, 600);
         setContentPane(mainPanel);
+
+        information = new JPanel();
+        informationLabel = new JLabel(model.toString());
+        information.add(informationLabel);
+        information.setBounds(0, 600, 600, 60);
+        information.setBackground(Color.LIGHT_GRAY);
+        mainPanel.add(information);
 
         carres = new Carre[model.getNbColors()];
 
@@ -38,6 +50,11 @@ public class Cadre extends JFrame {
             carres[i] = new Carre();
             mainPanel.add(carres[i]);
         }
+    }
+
+    private void updateInfomation() {
+        informationLabel.setText(model.toString());
+        information.repaint();
     }
 
     /**
@@ -51,19 +68,19 @@ public class Cadre extends JFrame {
 
     /**
      * Méthode qui affiche un message de félicitation lorsque l'utilisateur a gagné
-     * la partie.
-     * Ajoute également un écouteur d'événement de souris pour quitter l'application
-     * lorsque l'utilisateur clique sur le message.
+     * la partie. Ajoute également un écouteur d'événement de souris pour quitter
+     * l'application lorsque l'utilisateur clique sur le message.
      */
     public void finJeu() {
         if (!gagne())
             return;
 
         etiquette = new JPanel();
-        etiquette.setBounds(0, 0, 600, 600);
+        etiquette.setBounds(0, 0, 600, 660);
         etiquette.setBackground(Color.WHITE);
 
-        JLabel label = new JLabel("Bravo, vous avez gagné! Clickez pour fermer la fenêtre.");
+        JLabel label = new JLabel("Bravo, vous avez gagné! Cliquez pour fermer la fenêtre.");
+        etiquette.setLayout(new GridBagLayout());
         etiquette.add(label);
 
         setContentPane(etiquette);
@@ -162,6 +179,7 @@ public class Cadre extends JFrame {
             model.setColor(id, Color.GREEN);
             setBackground(Color.GREEN);
             finJeu();
+            updateInfomation();
 
         }
 
@@ -186,6 +204,7 @@ public class Cadre extends JFrame {
                 model.setColor(id, Color.BLUE);
                 setBackground(Color.BLUE);
                 finJeu();
+                updateInfomation();
             }
 
         }
@@ -318,6 +337,29 @@ public class Cadre extends JFrame {
 
             return true;
         }
+
+        @Override
+        public String toString() {
+            int green = 0;
+            int blue = 0;
+            int other = 0;
+
+            for (Color c : colors) {
+                if (c == Color.BLUE) {
+                    blue++;
+                }
+
+                else if (c == Color.GREEN) {
+                    green++;
+                } else {
+                    other++;
+                }
+
+            }
+
+            return "Il y a " + blue + " carrés bleus, " + green + " verts et " + other + " d'autres couleurs.";
+        }
+
     }
 
     public static void main(String[] args) {
