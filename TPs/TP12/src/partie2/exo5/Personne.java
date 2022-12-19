@@ -27,7 +27,7 @@ public class Personne {
 
         try {
 
-            CSVReader reader = new CSVReader(new FileReader("src/partie2/exo5/data.csv"), ',');
+            CSVReader reader = new CSVReader(new FileReader("data.csv"), ',');
 
             String[] nextLine;
             List<Personne> personnes = new LinkedList<>();

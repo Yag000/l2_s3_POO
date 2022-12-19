@@ -1,14 +1,13 @@
 package partie1;
 
+import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
-
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.Color;
-import java.awt.event.MouseEvent;
 
 /**
  * Constructeur de la classe Cadre. Initialise la taille, le titre et la
@@ -29,7 +28,7 @@ public class Cadre extends JFrame {
      * fermeture de la fenêtre, ainsi que les carrés à afficher.
      */
     public Cadre() {
-        this.setSize(600, 660);
+        this.setSize(600, 650);
         this.setTitle("TP 12");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -40,7 +39,7 @@ public class Cadre extends JFrame {
         information = new JPanel();
         informationLabel = new JLabel(model.toString());
         information.add(informationLabel);
-        information.setBounds(0, 600, 600, 60);
+        information.setBounds(0, 600, 600, 50);
         information.setBackground(Color.LIGHT_GRAY);
         mainPanel.add(information);
 
@@ -50,11 +49,6 @@ public class Cadre extends JFrame {
             carres[i] = new Carre();
             mainPanel.add(carres[i]);
         }
-    }
-
-    private void updateInfomation() {
-        informationLabel.setText(model.toString());
-        information.repaint();
     }
 
     /**
@@ -76,7 +70,7 @@ public class Cadre extends JFrame {
             return;
 
         etiquette = new JPanel();
-        etiquette.setBounds(0, 0, 600, 660);
+        etiquette.setBounds(0, 0, 600, 650);
         etiquette.setBackground(Color.WHITE);
 
         JLabel label = new JLabel("Bravo, vous avez gagné! Cliquez pour fermer la fenêtre.");
@@ -134,13 +128,14 @@ public class Cadre extends JFrame {
      */
     private class Carre extends JPanel implements MouseInputListener {
 
-        private static boolean isMouseOnASquare = false;
+        private static boolean isMouseOnASquare = false;// Vrai si un carre se déplace
 
         static int nb = 0;
 
         int id;
 
-        boolean isMoving = false;
+        boolean isMoving = false; // Vrai si ce carré se déplace
+
         int xClick;
         int yClick;
 
@@ -156,7 +151,6 @@ public class Cadre extends JFrame {
             setBounds((int) (Math.random() * 550), (int) (Math.random() * 550), 50, 50);
             addMouseListener(this);
             addMouseMotionListener(this);
-
         }
 
         /**
@@ -178,9 +172,9 @@ public class Cadre extends JFrame {
 
             model.setColor(id, Color.GREEN);
             setBackground(Color.GREEN);
-            finJeu();
-            updateInfomation();
 
+            finJeu();
+            updateInformation();
         }
 
         @Override
@@ -200,13 +194,13 @@ public class Cadre extends JFrame {
          */
         @Override
         public void mouseEntered(MouseEvent e) {
-            if (!isMouseOnASquare) {
-                model.setColor(id, Color.BLUE);
-                setBackground(Color.BLUE);
-                finJeu();
-                updateInfomation();
-            }
+            if (isMouseOnASquare)
+                return;
 
+            model.setColor(id, Color.BLUE);
+            setBackground(Color.BLUE);
+            finJeu();
+            updateInformation();
         }
 
         @Override
@@ -225,14 +219,19 @@ public class Cadre extends JFrame {
          */
         @Override
         public void mouseMoved(MouseEvent e) {
-            if (isMoving) {
-                int x = getX() + e.getX() - xClick;
-                int y = getY() + e.getY() - yClick;
+            if (!isMoving)
+                return;
 
-                setLocation(x, y);
-            }
+            int x = getX() + e.getX() - xClick;
+            int y = getY() + e.getY() - yClick;
+
+            setLocation(x, y);
         }
 
+        private void updateInformation() {
+            informationLabel.setText(model.toString());
+            information.repaint();
+        }
     }
 
     /**
@@ -249,7 +248,6 @@ public class Cadre extends JFrame {
          * utilisées dans l'application et crée le tableau de couleurs.
          */
         public Model() {
-
             int random = (int) (Math.random() * 10 + 1);
 
             colors = new Color[random];
@@ -257,7 +255,6 @@ public class Cadre extends JFrame {
             for (int i = 0; i < random; i++) {
                 colors[i] = intToColor(i + 1);
             }
-
         }
 
         /**
@@ -347,19 +344,15 @@ public class Cadre extends JFrame {
             for (Color c : colors) {
                 if (c == Color.BLUE) {
                     blue++;
-                }
-
-                else if (c == Color.GREEN) {
+                } else if (c == Color.GREEN) {
                     green++;
                 } else {
                     other++;
                 }
-
             }
 
             return "Il y a " + blue + " carrés bleus, " + green + " verts et " + other + " d'autres couleurs.";
         }
-
     }
 
     public static void main(String[] args) {
@@ -369,5 +362,4 @@ public class Cadre extends JFrame {
                     c.setVisible(true);
                 });
     }
-
 }
