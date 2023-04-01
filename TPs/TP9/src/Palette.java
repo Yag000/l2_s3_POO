@@ -8,7 +8,7 @@ public class Palette {
     private Model model; // Model du MVC
     private Controller controller; // Controller du MVC
 
-    private final static Color INITIAL_COLOR = Color.GREEN; // Couleur initiale
+    private static final Color INITIAL_COLOR = Color.GREEN; // Couleur initiale
 
     public Palette() {
         // Initialisation du MVC
