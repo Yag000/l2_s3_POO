@@ -18,5 +18,4 @@ public abstract class Element {
         return "fichier de type " + getType();
 
     }
-
 }

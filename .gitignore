@@ -28,6 +28,9 @@ hs_err_pid*
 .vscode/
 *settings.json
 
-# Project
+# IntelliJ IDEA
+.idea/
+*.pdf
 
+# Project
 bin/
