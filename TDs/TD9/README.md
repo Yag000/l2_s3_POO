@@ -1,1 +1,1 @@
-This TD was done in collaboration with two people. The first one is **GitFenixZ** and the second one is **GabinDDL**. The TD can be found at [https://github.com/Yag000/TD9](https://github.com/Yag000/TD9).
+
